@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
-
                                 Icon(
                                   FontAwesomeIcons.ellipsisV,
                                   size: 14.0,
@@ -50,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.only(right: 10.0),
                                 child: CircleAvatar(
                                   backgroundImage:
-                                  AssetImage("assets/cm8.jpg"),
+                                      AssetImage("assets/cm8.jpeg"),
                                 ),
                               ),
                               Column(
@@ -101,7 +100,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 1.0,
                       color: Colors.grey[300],
                     ),
-
                     Container(
                       height: 20.0,
                       color: Colors.white,
@@ -132,8 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-
-
                     Container(
                       height: 50.0,
                       color: Colors.white,
@@ -143,7 +139,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Icon(FontAwesomeIcons.thumbsUp,size: 18,),
+                                Icon(
+                                  FontAwesomeIcons.thumbsUp,
+                                  size: 18,
+                                ),
                                 Container(
                                   padding: EdgeInsets.only(left: 5.0),
                                   child: Text("Like"),
@@ -155,7 +154,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Icon(Icons.chat,size: 18,),
+                                Icon(
+                                  Icons.chat,
+                                  size: 18,
+                                ),
                                 Container(
                                   padding: EdgeInsets.only(left: 5.0),
                                   child: Text("Comment"),
@@ -167,7 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Icon(FontAwesomeIcons.shareAlt,size: 18,),
+                                Icon(
+                                  FontAwesomeIcons.shareAlt,
+                                  size: 18,
+                                ),
                                 Container(
                                   padding: EdgeInsets.only(left: 5.0),
                                   child: Text("Share"),
@@ -185,15 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-        },
+        onPressed: () {},
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
       ),
-
     );
   }
 }
-
