@@ -36,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: new FlatButton(
               child: new Text(
                 "Log In",
-                style: new TextStyle(color: Colors.grey, fontSize: 17),
+                style: new TextStyle(color: Colors.grey, fontSize: 16),
               ),
               onPressed: () {
                 Navigator.push(
@@ -52,13 +52,13 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Text(
                 "Let's Join Our Community",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
               ),
               SizedBox(
                 height: 70,

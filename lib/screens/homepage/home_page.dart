@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:dev_hub/util/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -193,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.lightAccent,
       ),
     );
   }

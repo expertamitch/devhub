@@ -1,4 +1,6 @@
-import 'package:dev_hub/util/const.dart';
+import 'package:dev_hub/ui/sign_up_screen.dart';
+import 'package:dev_hub/ui/splash_screen.dart';
+import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,7 +37,10 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: Constants.appName,
       theme: isDark ? Constants.darkTheme : Constants.lightTheme,
-      home: SignUpPage(),
+      home: Splash(),
+        routes: <String, WidgetBuilder>{
+          '/SignUp': (BuildContext context) => new SignUp()
+        }
     );
   }
 }

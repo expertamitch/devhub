@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Text(
           'DevHub',
-          style: TextStyle(fontSize: 27.0),
+          style: TextStyle(fontSize: 27.0,color: Colors.white),
         ),
         actions: <Widget>[
           IconButton(
@@ -148,12 +148,14 @@ class _MainScreenState extends State<MainScreen> {
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.message,
+                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.group_work,
+                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),
@@ -166,12 +168,14 @@ class _MainScreenState extends State<MainScreen> {
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.card_travel,
+                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.event,
+                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),

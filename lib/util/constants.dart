@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 
 class Constants {
-  static String appName = "Social app";
+  static String appName = "Devhub";
 
   //Colors for theme
-  static Color lightPrimary = Color(0xfffcfcff);
+  static Color lightPrimary =  Colors.blue;
   static Color darkPrimary = Colors.black;
   static Color lightAccent = Colors.blue;
   static Color darkAccent = Colors.blueAccent;
   static Color lightBG = Color(0xfffcfcff);
   static Color darkBG = Colors.black;
   static Color badgeColor = Colors.red;
+
+  static Color flatButtonTextColor = Colors.blue;
+  static Color buttonColor = Colors.blue;
+//static Color flatButtonTextColor = Color(0xffff531f);
+//  static Color buttonColor = Color(0xffff531f);
+
+  static const int splash_time = 2;
 
   static ThemeData lightTheme = ThemeData(
     backgroundColor: lightBG,
