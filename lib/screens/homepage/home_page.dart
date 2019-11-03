@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            height: 50.0,
+                            height: 20.0,
                             padding: EdgeInsets.all(10.0),
                             color: Colors.white,
                             child: Row(

@@ -1,5 +1,6 @@
 import 'package:dev_hub/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
+
 import 'Events/events_home.dart';
 import 'communities/communities_home.dart';
 import 'connects/friends.dart';
@@ -7,7 +8,6 @@ import 'homepage/home.dart';
 import 'jobs/jobs_home.dart';
 import 'messages/chats.dart';
 import 'notifications.dart';
-import 'profile/profile.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -24,7 +24,6 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Text(
           'DevHub',
-          style: TextStyle(fontSize: 27.0,color: Colors.white),
         ),
         actions: <Widget>[
           IconButton(
@@ -46,7 +45,6 @@ class _MainScreenState extends State<MainScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            SizedBox(height: 50.0),
             InkWell(
               onTap: () {
                 Navigator.of(context).push(
@@ -162,6 +160,8 @@ class _MainScreenState extends State<MainScreen> {
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
+                color: Colors.white,
+
               ),
               title: Container(height: 0.0),
             ),

@@ -1,6 +1,5 @@
 import 'package:dev_hub/blocs/login_bloc.dart';
-import 'package:dev_hub/screens/main_screen.dart';
-import 'package:dev_hub/ui/edit_profile.dart';
+import 'package:dev_hub/ui/edit_profile_basic_details.dart';
 import 'package:dev_hub/ui/sign_up_screen.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,11 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login> {
   LoginBloc _loginBloc;
+  @override
+  void dispose() {
+    _loginBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +56,7 @@ class LoginState extends State<Login> {
                       onChanged: (String email) =>
                           _loginBloc.validateEmail(email),
                       keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           errorText: snapshot.hasError ? snapshot.error : null,
                           border: const OutlineInputBorder(),
@@ -68,6 +73,7 @@ class LoginState extends State<Login> {
                       onChanged: (String password) =>
                           _loginBloc.validatePassword(password),
                       keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           errorText: snapshot.hasError ? snapshot.error : null,
                           border: const OutlineInputBorder(),
@@ -272,7 +278,7 @@ class LoginState extends State<Login> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return EditProfile();
+          return EditProfileBasicDetails();
         },
       ),
     );

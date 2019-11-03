@@ -4,7 +4,7 @@ import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'edit_profile.dart';
+import 'edit_profile_basic_details.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -59,6 +59,7 @@ class SignUpState extends State<SignUp> {
                       onChanged: (String email) =>
                           _signUpBloc.validateEmail(email),
                       keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           errorText: snapshot.hasError ? snapshot.error : null,
                           border: const OutlineInputBorder(),
@@ -75,6 +76,7 @@ class SignUpState extends State<SignUp> {
                       return TextField(
                         onChanged:(String phone)=>_signUpBloc.validatePhone(phone),
                         keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                             border: const OutlineInputBorder(),
                             hintText: "Phone",
@@ -91,6 +93,8 @@ class SignUpState extends State<SignUp> {
                       onChanged: (String password) =>
                           _signUpBloc.validatePassword(password),
                       keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.next,
+
                       decoration: InputDecoration(
                           errorText: snapshot.hasError ? snapshot.error : null,
                           border: const OutlineInputBorder(),
@@ -287,7 +291,7 @@ class SignUpState extends State<SignUp> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return EditProfile();
+          return EditProfileBasicDetails();
         },
       ),
     );
