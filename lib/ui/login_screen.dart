@@ -72,7 +72,7 @@ class LoginState extends State<Login> {
                     builder: (context, snapshot) => TextField(
                       onChanged: (String password) =>
                           _loginBloc.validatePassword(password),
-                      keyboardType: TextInputType.visiblePassword,
+//                      keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           errorText: snapshot.hasError ? snapshot.error : null,
@@ -90,7 +90,6 @@ class LoginState extends State<Login> {
                     height: 10,
                   ),
                   FlatButton(
-
                     onPressed: submit,
                     child: Text("Forgot Password?"),
                   ),

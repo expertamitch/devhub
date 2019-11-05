@@ -1,9 +1,10 @@
-
 import 'dart:io';
 
 import 'package:dev_hub/blocs/profile_basic_details_bloc.dart';
 import 'package:dev_hub/util/constants.dart';
+import 'package:dev_hub/util/disabled_focus.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'edit_profile_professional_details.dart';
 
@@ -32,12 +33,12 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
   ProfileBasicDetailsBloc _bloc;
   Future<File> profilePic;
 
+  DateTime selectedDate = DateTime.now();
+  var selectedDob = TextEditingController();
+  DateFormat df = DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {
     _bloc = ProfileBasicDetailsBloc();
-
-    DateTime selectedDate = DateTime.now();
-    var selectedDob = TextEditingController();
 
     Future<Null> _selectDate() async {
       final DateTime picked = await showDatePicker(
@@ -49,8 +50,8 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
       if (picked != null && picked != selectedDate)
         setState(() {
           selectedDate = picked;
-          print("${selectedDate.toLocal()}");
-          selectedDob.text = "${selectedDate.toLocal()}";
+          print("${df.format(selectedDate.toLocal())}");
+          selectedDob.text = "${df.format(selectedDate.toLocal())}";
         });
     }
 
@@ -158,6 +159,7 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
                           return TextField(
                             onTap: _selectDate,
                             onChanged: (String dob) => _bloc.validateDob(dob),
+                            focusNode: AlwaysDisabledFocusNode(),
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.text,
                             controller: selectedDob,
@@ -205,7 +207,7 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
                         SizedBox(
                           width: 20,
                         ),
-                      /*  StreamBuilder<List<DropdownMenuItem<String>>>(
+                        /*  StreamBuilder<List<DropdownMenuItem<String>>>(
                             stream: _bloc.countryListStream,
                             builder: (context,
                                 AsyncSnapshot<List<DropdownMenuItem<String>>>

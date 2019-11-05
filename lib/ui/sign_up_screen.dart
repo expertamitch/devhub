@@ -71,19 +71,19 @@ class SignUpState extends State<SignUp> {
                     height: 20,
                   ),
                   StreamBuilder<String>(
-                    stream: _signUpBloc.phoneStream,
-                    builder: (context, snapshot) {
-                      return TextField(
-                        onChanged:(String phone)=>_signUpBloc.validatePhone(phone),
-                        keyboardType: TextInputType.phone,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            hintText: "Phone",
-                            labelText: "Phone"),
-                      );
-                    }
-                  ),
+                      stream: _signUpBloc.phoneStream,
+                      builder: (context, snapshot) {
+                        return TextField(
+                          onChanged: (String phone) =>
+                              _signUpBloc.validatePhone(phone),
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              hintText: "Phone",
+                              labelText: "Phone"),
+                        );
+                      }),
                   SizedBox(
                     height: 20,
                   ),
@@ -92,7 +92,7 @@ class SignUpState extends State<SignUp> {
                     builder: (context, snapshot) => TextField(
                       onChanged: (String password) =>
                           _signUpBloc.validatePassword(password),
-                      keyboardType: TextInputType.visiblePassword,
+//                      keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.next,
 
                       decoration: InputDecoration(
