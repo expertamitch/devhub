@@ -1,5 +1,6 @@
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class EventHomePage extends StatefulWidget {
   @override
@@ -74,7 +75,9 @@ class _EventHomePageState extends State<EventHomePage> {
                     icon: Icon(
                       Icons.share,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Share.share('check out my website https://example.com');
+                    },
                   ),
                   IconButton(
                     icon: Icon(

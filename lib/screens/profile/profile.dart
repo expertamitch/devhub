@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
@@ -281,7 +282,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.blue,
@@ -328,7 +328,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ],
                           ),
-                          SizedBox(height:5.0),
+                          SizedBox(height: 5.0),
                           Row(
                             children: <Widget>[
                               Container(
@@ -402,33 +402,33 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: <Widget>[
                               Expanded(
                                   child: Card(
-                                    child: Image.network(
-                                        'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
-                                  )),
+                                child: Image.network(
+                                    'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
+                              )),
                               Expanded(
                                   child: Card(
-                                    child: Image.network(
-                                        'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
-                                  ))
+                                child: Image.network(
+                                    'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
+                              ))
                             ],
                           ),
                           Row(
                             children: <Widget>[
                               Expanded(
                                   child: Card(
-                                    child: Image.network(
-                                        'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
-                                  )),
+                                child: Image.network(
+                                    'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
+                              )),
                               Expanded(
                                   child: Card(
-                                    child: Image.network(
-                                        'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
-                                  )),
+                                child: Image.network(
+                                    'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
+                              )),
                               Expanded(
                                   child: Card(
-                                    child: Image.network(
-                                        'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
-                                  ))
+                                child: Image.network(
+                                    'https://nation.com.pk/print_images/large/2014-12-28/truck-art-1419719431-3924.png'),
+                              ))
                             ],
                           )
                         ],
@@ -491,9 +491,13 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: EdgeInsets.all(10.0),
               child: Row(
                 children: <Widget>[
-                  Icon(
-                    Icons.share,
-                    color: Colors.black,
+                  IconButton(
+                    icon: Icon(
+                      Icons.share,
+                    ),
+                    onPressed: () {
+                      Share.share('check out my website https://example.com');
+                    },
                   ),
                   SizedBox(
                     width: 10.0,

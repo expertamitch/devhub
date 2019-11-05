@@ -36,6 +36,7 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
   DateTime selectedDate = DateTime.now();
   var selectedDob = TextEditingController();
   DateFormat df = DateFormat('yyyy-MM-dd');
+
   @override
   Widget build(BuildContext context) {
     _bloc = ProfileBasicDetailsBloc();
