@@ -136,6 +136,7 @@ class _MainScreenState extends State<MainScreen> {
         data: Theme.of(context).copyWith(
           // sets the background color of the `BottomNavigationBar`
           canvasColor: Theme.of(context).primaryColor,
+
           // sets the active color of the `BottomNavigationBar` if `Brightness` is light
           primaryColor: Theme.of(context).accentColor,
           textTheme: Theme.of(context).textTheme.copyWith(
@@ -143,40 +144,37 @@ class _MainScreenState extends State<MainScreen> {
               ),
         ),
         child: BottomNavigationBar(
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.message,
-                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.group_work,
-                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
-                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.card_travel,
-                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.event,
-                color: Colors.white,
               ),
               title: Container(height: 0.0),
             ),
