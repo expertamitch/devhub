@@ -7,6 +7,7 @@ import 'connects/friends.dart';
 import 'homepage/home.dart';
 import 'jobs/jobs_home.dart';
 import 'messages/chats.dart';
+import 'new_home/home_page.dart';
 import 'notifications.dart';
 
 class MainScreen extends StatefulWidget {
@@ -125,7 +126,8 @@ class _MainScreenState extends State<MainScreen> {
         children: <Widget>[
           Chats(),
           CommunitiesHome(),
-          NewsFeed(),
+//          NewsFeed(),
+          HomePage(),
           JobsHome(),
           EventsHome(),
         ],
@@ -161,7 +163,6 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(
                 Icons.home,
                 color: Colors.white,
-
               ),
               title: Container(height: 0.0),
             ),
