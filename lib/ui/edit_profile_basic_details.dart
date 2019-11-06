@@ -4,7 +4,6 @@ import 'package:dev_hub/blocs/profile_basic_details_bloc.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/disabled_focus.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'edit_profile_professional_details.dart';
 
@@ -35,7 +34,6 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
 
   DateTime selectedDate = DateTime.now();
   var selectedDob = TextEditingController();
-  DateFormat df = DateFormat('yyyy-MM-dd');
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +49,8 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
       if (picked != null && picked != selectedDate)
         setState(() {
           selectedDate = picked;
-          print("${df.format(selectedDate.toLocal())}");
-          selectedDob.text = "${df.format(selectedDate.toLocal())}";
+          selectedDob.text =
+              "${selectedDate.toLocal().day}-${selectedDate.toLocal().month}-${selectedDate.toLocal().year}";
         });
     }
 
