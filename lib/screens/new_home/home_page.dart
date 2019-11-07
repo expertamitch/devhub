@@ -1,6 +1,6 @@
 import 'package:dev_hub/blocs/login_bloc.dart';
 import 'package:dev_hub/blocs/new_events_and_jobs_bloc.dart';
-import 'package:dev_hub/blocs/recommended_jobs_bloc.dart';
+import 'package:dev_hub/blocs/jobs_bloc.dart';
 import 'package:dev_hub/blocs/upcoming_events_bloc.dart';
 import 'package:dev_hub/screens/Events/event_homepage.dart';
 import 'package:dev_hub/screens/jobs/job_details.dart';
@@ -27,7 +27,7 @@ class HomeState extends State<HomePage> {
 
   LoginBloc loginBloc;
   NewEventsAndJobsBloc _newEventsAndJobsBlock = NewEventsAndJobsBloc();
-  RecommendedJobsBloc _recommendedJobsBloc = RecommendedJobsBloc();
+  JobsBloc _recommendedJobsBloc = JobsBloc();
   UpcomingEventsBloc _upcomingEventsBloc = UpcomingEventsBloc();
 
   @override

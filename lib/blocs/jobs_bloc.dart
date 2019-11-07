@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:dev_hub/util/data.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'base_bloc.dart';
 
-class RecommendedJobsBloc extends BaseBloc {
-  final _recommendedJobsController = StreamController<List<dynamic>>();
+class JobsBloc extends BaseBloc {
+  final _recommendedJobsController = BehaviorSubject<List<dynamic>>();
 
   Stream<List<dynamic>> get stream => _recommendedJobsController.stream;
 
-  RecommendedJobsBloc() {
+  JobsBloc() {
     _recommendedJobsController.add(jobsDetails);
   }
 
