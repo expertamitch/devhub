@@ -13,6 +13,22 @@ List jobsDetails = [
     "img": "assets/1.jpeg",
     "time": "1 day ago",
     "location": "Colombo, Sri Lanka",
+    "companyname": "DynamicTech",
+    "technologies": [
+      "Java",
+      "Android",
+      "Kotlin",
+      "MVVM",
+      "Live Data",
+      "Navigation Architecture",
+      "Constraint Layout"
+    ],
+    "requirement": [
+      "2-3 years of Experience.",
+      "Fluent in English.",
+      "Should know MVVM and Android architectural components.",
+      "Night shift."
+    ],
     "details": "Pellentesque in ipsum id orci porta dapibus. "
         "Nulla porttitor accumsan tincidunt. Donec rutrum "
         "congue leo eget malesuada. "
@@ -27,7 +43,23 @@ List jobsDetails = [
     "name": "Senior Software Engineer",
     "img": "assets/2.jpeg",
     "time": r"1 day ago",
+    "technologies": [
+      "Java",
+      "Android",
+      "Kotlin",
+      "MVVM",
+      "Live Data",
+      "Navigation Architecture",
+      "Constraint Layout"
+    ],
     "location": "Colombo, Sri Lanka",
+    "companyname": "DynamicTech",
+    "requirement": [
+      "2-3 years of Experience.",
+      "Fluent in English.",
+      "Should know MVVM and Android architectural components.",
+      "Night shift."
+    ],
     "details": "Pellentesque in ipsum id orci porta dapibus. "
         "Nulla porttitor accumsan tincidunt. Donec rutrum "
         "congue leo eget malesuada. "
@@ -43,6 +75,22 @@ List jobsDetails = [
     "img": "assets/3.jpeg",
     "time": r"1 week ago",
     "location": "Paris, France",
+    "technologies": [
+      "Java",
+      "Android",
+      "Kotlin",
+      "MVVM",
+      "Live Data",
+      "Navigation Architecture",
+      "Constraint Layout"
+    ],
+    "companyname": "DynamicTech",
+    "requirement": [
+      "2-3 years of Experience.",
+      "Fluent in English.",
+      "Should know MVVM and Android architectural components.",
+      "Night shift."
+    ],
     "details": "Pellentesque in ipsum id orci porta dapibus. "
         "Nulla porttitor accumsan tincidunt. Donec rutrum "
         "congue leo eget malesuada. "
@@ -58,6 +106,22 @@ List jobsDetails = [
     "img": "assets/4.jpeg",
     "time": r"1 week ago",
     "location": "Colombo, Sri lanka",
+    "companyname": "DynamicTech",
+    "technologies": [
+      "Java",
+      "Android",
+      "Kotlin",
+      "MVVM",
+      "Live Data",
+      "Navigation Architecture",
+      "Constraint Layout"
+    ],
+    "requirement": [
+      "2-3 years of Experience.",
+      "Fluent in English.",
+      "Should know MVVM and Android architectural components.",
+      "Night shift."
+    ],
     "details": "Pellentesque in ipsum id orci porta dapibus. "
         "Nulla porttitor accumsan tincidunt. Donec rutrum "
         "congue leo eget malesuada. "
@@ -73,6 +137,22 @@ List jobsDetails = [
     "img": "assets/5.jpeg",
     "time": r"2 weeks ago",
     "location": "Colombo, Sri Lanka",
+    "companyname": "DynamicTech",
+    "technologies": [
+      "Java",
+      "Android",
+      "Kotlin",
+      "MVVM",
+      "Live Data",
+      "Navigation Architecture",
+      "Constraint Layout"
+    ],
+    "requirement": [
+      "2-3 years of Experience.",
+      "Fluent in English.",
+      "Should know MVVM and Android architectural components.",
+      "Night shift."
+    ],
     "details": "Pellentesque in ipsum id orci porta dapibus. "
         "Nulla porttitor accumsan tincidunt. Donec rutrum "
         "congue leo eget malesuada. "
@@ -264,5 +344,3 @@ List events = [
         "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.",
   },
 ];
-
-
