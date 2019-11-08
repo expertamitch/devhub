@@ -1,5 +1,6 @@
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share/share.dart';
 
 class EventHomePage extends StatefulWidget {
@@ -18,35 +19,58 @@ class _EventHomePageState extends State<EventHomePage> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              FontAwesomeIcons.heart,
+            ),
+            onPressed: () => {},
+          )
+        ],
       ),
       body: ListView(
+        //todo work on refine design
         children: <Widget>[
-          SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.only(left: 20),
-            height: 250,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              primary: false,
-              itemCount: events == null ? 0 : events.length,
-              itemBuilder: (BuildContext context, int index) {
-                Map place = events[index];
-
-                return Padding(
-                  padding: EdgeInsets.only(right: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      "${place["img"]}",
-                      height: 250,
-                      width: MediaQuery.of(context).size.width - 40,
-                      fit: BoxFit.cover,
-                    ),
+          Stack(
+            children: <Widget>[
+              Image.asset("assets/image_01.png",
+                  height: 200, width: MediaQuery.of(context).size.width,fit: BoxFit.cover,),
+              Container(
+                height: 100,
+                width: 100,
+                child: ClipRRect(
+                  borderRadius:BorderRadius.circular(50.0),
+                  child: Image.asset(
+                    "assets/images/logo.jpeg",
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
+//          Container(
+//            padding: EdgeInsets.only(left: 20),
+//            height: 250,
+//            child: ListView.builder(
+//              scrollDirection: Axis.horizontal,
+//              primary: false,
+//              itemCount: events == null ? 0 : events.length,
+//              itemBuilder: (BuildContext context, int index) {
+//                Map place = events[index];
+//                return Padding(
+//                  padding: EdgeInsets.only(right: 10),
+//                  child: ClipRRect(
+//                    borderRadius: BorderRadius.circular(10),
+//                    child: Image.asset(
+//                      "${place["img"]}",
+//                      height: 250,
+//                      width: MediaQuery.of(context).size.width - 40,
+//                      fit: BoxFit.cover,
+//                    ),
+//                  ),
+//                );
+//              },
+//            ),
+//          ),
           SizedBox(height: 20),
           ListView(
             padding: EdgeInsets.symmetric(horizontal: 20),

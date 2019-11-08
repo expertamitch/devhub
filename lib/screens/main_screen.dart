@@ -1,7 +1,7 @@
 import 'package:dev_hub/screens/profile/user_profile.dart';
+import 'package:dev_hub/ui/events/events_home.dart';
 import 'package:flutter/material.dart';
 
-import 'Events/events_home.dart';
 import 'communities/communities_home.dart';
 import 'connects/friends.dart';
 import 'homepage/home.dart';
