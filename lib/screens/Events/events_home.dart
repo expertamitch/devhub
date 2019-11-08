@@ -19,7 +19,6 @@ class EventsHomeState extends State<EventsHome> {
 
   EventHomeBloc _bloc = EventHomeBloc();
 
-
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
     for (var i = 0; i < list.length; i++) {
@@ -54,10 +53,7 @@ class EventsHomeState extends State<EventsHome> {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
+                    width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.symmetric(horizontal: 10.0),
                     decoration: BoxDecoration(
                       color: Colors.green,
@@ -80,8 +76,7 @@ class EventsHomeState extends State<EventsHome> {
               return Container(
                 width: 6.0,
                 height: 6.0,
-                margin:
-                EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _current == index ? Colors.black : Colors.grey,
@@ -106,13 +101,10 @@ class EventsHomeState extends State<EventsHome> {
             ),
           ),
           getSuggestedEvents(),
-
-
         ],
       ),
     );
   }
-
 
   getSearch() {
     return Padding(
@@ -172,182 +164,190 @@ class EventsHomeState extends State<EventsHome> {
 
   getUpcomingEvents() {
     //todo check this
-    return StreamBuilder<List<dynamic>>(
-        stream: _bloc.upcomingEventStream,
-        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          return snapshot.hasError ? Container() : ListView.builder(
-            scrollDirection: Axis.horizontal,
-            primary: false,
-            itemCount: snapshot.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              Map place = snapshot.data.reversed.toList()[index];
-              return Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: InkWell(
-                  child: Container(
-                    height: 140,
-                    width:MediaQuery.of(context).size.width,
-//                      color: Colors.green,
-                    child: Column(
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            "${place["img"]}",
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 250,
+      child: StreamBuilder<List<dynamic>>(
+          stream: _bloc.upcomingEventStream,
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            return snapshot.hasError
+                ? Container()
+                : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    primary: false,
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Map place = snapshot.data.reversed.toList()[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: InkWell(
+                          child: Container(
                             height: 140,
-                            width: 250,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${place["name"]}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                            width: MediaQuery.of(context).size.width,
+//                      color: Colors.green,
+                            child: Column(
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(
+                                    "${place["img"]}",
+                                    height: 140,
+                                    width: 250,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                SizedBox(height: 7),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "${place["name"]}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                    maxLines: 2,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                SizedBox(height: 3),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "${place["location"]}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: Colors.blueGrey[300],
+                                    ),
+                                    maxLines: 1,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                SizedBox(height: 3),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "${place["time"]}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: Colors.blueGrey[300],
+                                    ),
+                                    maxLines: 1,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ],
                             ),
-                            maxLines: 2,
-                            textAlign: TextAlign.left,
                           ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return EventHomePage();
+                                },
+                              ),
+                            );
+                          },
                         ),
-                        SizedBox(height: 3),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${place["location"]}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              color: Colors.blueGrey[300],
-                            ),
-                            maxLines: 1,
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        SizedBox(height: 3),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${place["time"]}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              color: Colors.blueGrey[300],
-                            ),
-                            maxLines: 1,
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return EventHomePage();
-                        },
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-          );
-        }
+                      );
+                    },
+                  );
+          }),
     );
   }
 
-
-
   getSuggestedEvents() {
-    return StreamBuilder<List<dynamic>>(
-        stream: _bloc.suggestedEventStream,
-        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          return snapshot.data == null ? Container() : ListView.builder(
-            scrollDirection: Axis.horizontal,
-            primary: false,
-            itemCount: snapshot.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              Map place = snapshot.data.reversed.toList()[index];
-              return Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: InkWell(
-                  child: Container(
-                    height: 140,
-                    width:MediaQuery.of(context).size.width,
-//                      color: Colors.green,
-                    child: Column(
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            "${place["img"]}",
+    return Container(
+      height: 250,
+      width: MediaQuery.of(context).size.width,
+      child: StreamBuilder<List<dynamic>>(
+          stream: _bloc.suggestedEventStream,
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            return snapshot.data == null
+                ? Container()
+                : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    primary: false,
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Map place = snapshot.data.reversed.toList()[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: InkWell(
+                          child: Container(
                             height: 140,
-                            width: 250,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${place["name"]}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                            width: MediaQuery.of(context).size.width,
+//                      color: Colors.green,
+                            child: Column(
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(
+                                    "${place["img"]}",
+                                    height: 140,
+                                    width: 250,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                SizedBox(height: 7),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "${place["name"]}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                    maxLines: 2,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                SizedBox(height: 3),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "${place["location"]}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: Colors.blueGrey[300],
+                                    ),
+                                    maxLines: 1,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                SizedBox(height: 3),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "${place["time"]}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: Colors.blueGrey[300],
+                                    ),
+                                    maxLines: 1,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ],
                             ),
-                            maxLines: 2,
-                            textAlign: TextAlign.left,
                           ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return EventHomePage();
+                                },
+                              ),
+                            );
+                          },
                         ),
-                        SizedBox(height: 3),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${place["location"]}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              color: Colors.blueGrey[300],
-                            ),
-                            maxLines: 1,
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        SizedBox(height: 3),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${place["time"]}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              color: Colors.blueGrey[300],
-                            ),
-                            maxLines: 1,
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return EventHomePage();
-                        },
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-          );
-        }
+                      );
+                    },
+                  );
+          }),
     );
   }
 }
