@@ -171,6 +171,7 @@ class EventsHomeState extends State<EventsHome> {
   }
 
   getUpcomingEvents() {
+    //todo check this
     return StreamBuilder<List<dynamic>>(
         stream: _bloc.upcomingEventStream,
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
