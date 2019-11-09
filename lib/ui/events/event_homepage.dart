@@ -1,6 +1,8 @@
+import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 
 class EventHomePage extends StatefulWidget {
@@ -29,23 +31,37 @@ class _EventHomePageState extends State<EventHomePage> {
         ],
       ),
       body: ListView(
-        //todo work on refine design
         children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Image.asset("assets/image_01.png",
-                  height: 200, width: MediaQuery.of(context).size.width,fit: BoxFit.cover,),
-              Container(
-                height: 100,
-                width: 100,
-                child: ClipRRect(
-                  borderRadius:BorderRadius.circular(50.0),
+          Padding(
+            padding: const EdgeInsets.only(left:8.0,right: 8.0),
+            child: Stack(
+              alignment:Alignment.bottomLeft,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50),
                   child: Image.asset(
-                    "assets/images/logo.jpeg",
+                    "assets/image_01.png",
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(color: Colors.red,shape: BoxShape.circle),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Image.asset(
+                        "assets/images/logo.jpeg",
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 //          Container(
 //            padding: EdgeInsets.only(left: 20),
@@ -79,115 +95,125 @@ class _EventHomePageState extends State<EventHomePage> {
             shrinkWrap: true,
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: <Widget>[
                   Expanded(
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "${events[0]["name"]}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${events[0]["name"]}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
+                                maxLines: 2,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+//                  IconButton(
+//                    icon: Icon(
+//                      Icons.share,
+//                    ),
+//                    onPressed: () {
+//                      Share.share('check out my website https://example.com');
+//                    },
+//                  ),
+//                  IconButton(
+//                    icon: Icon(
+//                      Icons.bookmark,
+//                    ),
+//                    onPressed: () {},
+//                  ),
+
+
+                          ],
                         ),
-                        maxLines: 2,
-                        textAlign: TextAlign.left,
-                      ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.location_on,
+                              size: 14,
+                              color: Colors.blueGrey[300],
+                            ),
+                            SizedBox(width: 3),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${events[0]["location"]}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  color: Colors.blueGrey[300],
+                                ),
+                                maxLines: 1,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.calendar_today,
+                              size: 14,
+                              color: Colors.blueGrey[300],
+                            ),
+                            SizedBox(width: 3),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${events[0]["time"]}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  color: Colors.blueGrey[300],
+                                ),
+                                maxLines: 1,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.share,
-                    ),
-                    onPressed: () {
-                      Share.share('check out my website https://example.com');
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.bookmark,
-                    ),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.location_on,
-                    size: 14,
-                    color: Colors.blueGrey[300],
-                  ),
-                  SizedBox(width: 3),
                   Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "${events[0]["location"]}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        color: Colors.blueGrey[300],
-                      ),
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(8.0)),
+                          color: Colors.blueGrey[200],
+                          shape: BoxShape.rectangle),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 12,
+                            bottom: 12,
+                            left: 4,
+                            right: 4),
+                        child: Text(
+                          formatDate("${events[0]["date"]}"),
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )),
                 ],
               ),
-              SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.calendar_today,
-                    size: 14,
-                    color: Colors.blueGrey[300],
-                  ),
-                  SizedBox(width: 3),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "${events[0]["time"]}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        color: Colors.blueGrey[300],
-                      ),
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.timeline,
-                    size: 14,
-                    color: Colors.blueGrey[300],
-                  ),
-                  SizedBox(width: 3),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "${events[0]["date"]}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        color: Colors.blueGrey[300],
-                      ),
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
+
+              SizedBox(height: 40.0),
+              RaisedButton(onPressed: (){},child: Text("Apply Event"),shape: StadiumBorder(),color: Constants.buttonColor,textColor: Colors.white,),
+
               SizedBox(height: 40.0),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Details",
+                  "About",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -229,5 +255,9 @@ class _EventHomePageState extends State<EventHomePage> {
         ],
       ),
     );
+  }
+  String formatDate(String dateToFormat) {
+    return DateFormat("dd MMM")
+        .format(DateFormat("yyyy MMMM dd").parse(dateToFormat));
   }
 }
