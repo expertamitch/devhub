@@ -1,9 +1,11 @@
 import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/data.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
+
+import 'apply_event.dart';
 
 class EventHomePage extends StatefulWidget {
   @override
@@ -28,45 +30,43 @@ class _EventHomePageState extends State<EventHomePage> {
         physics: ScrollPhysics(),
         shrinkWrap: true,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Stack(
-              alignment: Alignment.bottomLeft,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 50),
-                  child: Image.asset(
+          Stack(
+            alignment: Alignment.bottomLeft,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Image.asset(
 //                    "assets/image_01.png",
-                    "${events[0]["img"]}",
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.cover,
-                  ),
+                  "${events[0]["img"]}",
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    decoration: ShapeDecoration(
-                        shape: CircleBorder(), color: Colors.red),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Image.asset(
-                        "assets/images/logo.jpeg",
-                      ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  decoration:
+                      ShapeDecoration(shape: CircleBorder(), color: Colors.red),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: Image.asset(
+                      "assets/images/logo.jpeg",
                     ),
                   ),
                 ),
-              ],
-            ),),
+              ),
+            ],
+          ),
           Row(
             children: <Widget>[
               Expanded(
                 child: Column(
                   children: <Widget>[
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           alignment: Alignment.centerLeft,
@@ -167,48 +167,15 @@ class _EventHomePageState extends State<EventHomePage> {
             ],
           ),
           SizedBox(height: 20.0),
-          Text(
-            "Hosted By",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-          Row(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: Image.asset(
-                  "${events[0]["img"]}",
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(width: 4),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "${events[0]["name"]}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                  maxLines: 2,
-                  textAlign: TextAlign.left,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20.0),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              applyEvent();
+            },
             child: Text("Apply Event"),
             shape: StadiumBorder(),
             color: Constants.buttonColor,
             textColor: Colors.white,
           ),
-
           SizedBox(height: 20.0),
           Container(
             alignment: Alignment.centerLeft,
@@ -262,9 +229,10 @@ class _EventHomePageState extends State<EventHomePage> {
             steps: getScheduleSteps(),
             type: StepperType.vertical,
             controlsBuilder: (BuildContext context,
-                    {VoidCallback onStepContinue,
-                    VoidCallback onStepCancel}) =>
-                Container(height: 0,),
+                    {VoidCallback onStepContinue, VoidCallback onStepCancel}) =>
+                Container(
+              height: 0,
+            ),
           ),
           Text(
             "Speakers",
@@ -275,7 +243,9 @@ class _EventHomePageState extends State<EventHomePage> {
             maxLines: 1,
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           ListView.builder(
             scrollDirection: Axis.vertical,
             primary: false,
@@ -336,23 +306,17 @@ class _EventHomePageState extends State<EventHomePage> {
                             ),
                           ],
                         )
-
                       ],
                     ),
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return EventHomePage();
-                      },
-                    ),
-                  );
+                  //todo apply on tap
                 },
               );
             },
           ),
+          SizedBox(height: 20),
           Text(
             "Partners & Sponsers",
             style: TextStyle(
@@ -364,7 +328,7 @@ class _EventHomePageState extends State<EventHomePage> {
           ),
           SizedBox(height: 10),
           Container(
-            height: 90,
+            height: 120,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               primary: false,
@@ -377,71 +341,96 @@ class _EventHomePageState extends State<EventHomePage> {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         right: 8, left: 8, top: 4, bottom: 4),
-                    child: Container(
-                      height: 90,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(40),
-                            child: Image.asset(
-                              "${place["img"]}",
-                              height: 80,
-                              width: 80,
-                              fit: BoxFit.cover,
-                            ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Image.asset(
+                            "${place["img"]}",
+                            height: 80,
+                            width: 120,
+                            fit: BoxFit.cover,
                           ),
-                          SizedBox(width: 4),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "${place["name"]}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                                maxLines: 1,
-                                textAlign: TextAlign.left,
-                              ),
-                              Text(
-                                "${place["name"]}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
-                                maxLines: 1,
-                                textAlign: TextAlign.left,
-                              ),
-                              Text(
-                                "${place["name"]}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
-                                maxLines: 1,
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
-                          )
-
-                        ],
-                      ),
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          "${place["name"]}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(width: 4),
+                        Text(
+                          "${place["name"]}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        )
+                      ],
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return EventHomePage();
-                        },
-                      ),
-                    );
+                    //todo apply tap
                   },
                 );
               },
             ),
+          ),
+          SizedBox(height: 20.0),
+          Text(
+            "Contact the host",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: Image.asset(
+                        "${events[0]["img"]}",
+                        height: 50,
+                        width: 50,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "${events[0]["name"]}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              RaisedButton(
+                onPressed: () {},
+                child: Text("Contact"),
+                color: Constants.buttonColor,
+                textColor: Colors.white,
+              ),
+            ],
           )
         ],
       ),
@@ -497,5 +486,15 @@ class _EventHomePageState extends State<EventHomePage> {
           )),
     ];
     return scheduleSteps;
+  }
+
+  applyEvent() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return ApplyEvent();
+        },
+      ),
+    );
   }
 }
