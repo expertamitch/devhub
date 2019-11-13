@@ -34,13 +34,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: Constants.appName,
-      theme: isDark ? Constants.darkTheme : Constants.lightTheme,
-      home: Splash(),
+        debugShowCheckedModeBanner: false,
+        title: Constants.appName,
+        theme: isDark ? Constants.darkTheme : Constants.lightTheme,
+        home: Splash(),
         routes: <String, WidgetBuilder>{
           '/SignUp': (BuildContext context) => new SignUp()
-        }
-    );
+        });
   }
 }

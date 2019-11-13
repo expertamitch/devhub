@@ -1,4 +1,4 @@
-import 'package:dev_hub/util/data.dart';
+import 'package:dev_hub/blocs/chats_block.dart';
 import 'package:dev_hub/widgets/chat_item.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +9,7 @@ class Chats extends StatefulWidget {
 
 class _ChatsState extends State<Chats>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  ChatsBloc _chatsBloc = ChatsBloc();
   TabController _tabController;
 
   @override
@@ -46,56 +47,80 @@ class _ChatsState extends State<Chats>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          ListView.separated(
-            padding: EdgeInsets.all(10),
-            separatorBuilder: (BuildContext context, int index) {
-              return Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  child: Divider(),
-                ),
-              );
-            },
-            itemCount: chats.length,
-            itemBuilder: (BuildContext context, int index) {
-              Map chat = chats[index];
-              return ChatItem(
-                dp: chat['dp'],
-                name: chat['name'],
-                isOnline: chat['isOnline'],
-                counter: chat['counter'],
-                msg: chat['msg'],
-                time: chat['time'],
-              );
-            },
-          ),
-          ListView.separated(
-            padding: EdgeInsets.all(10),
-            separatorBuilder: (BuildContext context, int index) {
-              return Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  child: Divider(),
-                ),
-              );
-            },
-            itemCount: groups.length,
-            itemBuilder: (BuildContext context, int index) {
-              Map chat = groups[index];
-              return ChatItem(
-                dp: chat['dp'],
-                name: chat['name'],
-                isOnline: chat['isOnline'],
-                counter: chat['counter'],
-                msg: chat['msg'],
-                time: chat['time'],
-              );
-            },
-          ),
+          StreamBuilder<List<dynamic>>(
+              stream: _chatsBloc.chatsStream,
+              builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+                return snapshot.data == null
+                    ? Center(
+                        child: Container(
+                          child: CircularProgressIndicator(),
+                          width: MediaQuery.of(context).size.width * 0.1,
+                          height: MediaQuery.of(context).size.width * 0.1,
+                        ),
+                      )
+                    : ListView.separated(
+                        padding: EdgeInsets.all(10),
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              height: 0.5,
+                              width: MediaQuery.of(context).size.width / 1.3,
+                              child: Divider(),
+                            ),
+                          );
+                        },
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          Map chat = snapshot.data[index];
+                          return ChatItem(
+                            dp: chat['dp'],
+                            name: chat['name'],
+                            isOnline: chat['isOnline'],
+                            counter: chat['counter'],
+                            msg: chat['msg'],
+                            time: chat['time'],
+                          );
+                        },
+                      );
+              }),
+          StreamBuilder<List<dynamic>>(
+              stream: _chatsBloc.groupsStream,
+              builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+                return snapshot.data == null
+                    ? Center(
+                        child: Container(
+                          child: CircularProgressIndicator(),
+                          width: MediaQuery.of(context).size.width * 0.1,
+                          height: MediaQuery.of(context).size.width * 0.1,
+                        ),
+                      )
+                    : ListView.separated(
+                        padding: EdgeInsets.all(10),
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              height: 0.5,
+                              width: MediaQuery.of(context).size.width / 1.3,
+                              child: Divider(),
+                            ),
+                          );
+                        },
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          Map chat = snapshot.data[index];
+                          return ChatItem(
+                            dp: chat['dp'],
+                            name: chat['name'],
+                            isOnline: chat['isOnline'],
+                            counter: chat['counter'],
+                            msg: chat['msg'],
+                            time: chat['time'],
+                          );
+                        },
+                      );
+              }),
         ],
       ),
       floatingActionButton: FloatingActionButton(
