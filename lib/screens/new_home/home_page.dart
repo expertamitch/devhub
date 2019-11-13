@@ -3,7 +3,7 @@ import 'package:dev_hub/blocs/new_events_and_jobs_bloc.dart';
 import 'package:dev_hub/blocs/jobs_bloc.dart';
 import 'package:dev_hub/blocs/upcoming_events_bloc.dart';
 import 'package:dev_hub/screens/jobs/job_details.dart';
-import 'package:dev_hub/ui/events/event_homepage.dart';
+import 'package:dev_hub/ui/events/event_details.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 

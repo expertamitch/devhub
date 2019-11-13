@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'event_homepage.dart';
+import 'event_details.dart';
 
 class EventsHome extends StatefulWidget {
   EventsHome() : super();
@@ -324,7 +324,7 @@ class EventsHomeState extends State<EventsHome> {
                                 SizedBox(width: 4),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Container(
                                       alignment: Alignment.centerLeft,

@@ -282,7 +282,7 @@ List events = [
   {
     "name": "Google I/O 2019",
     "img": "assets/ggl.jpg",
-    "time": "From 03:30p.p.m to 5:30 p.m",
+    "time": "From 03:30 p.m to 5:30 p.m",
     "date": "23 December 2019",
     "location": "SLIIT Colombo, Sri Lanka",
     "details": "Pellentesque in ipsum id orci porta dapibus. "
@@ -298,7 +298,7 @@ List events = [
   {
     "name": "Angular 2 Event",
     "img": "assets/anglr2.png",
-    "time": "From 03:30p.p.m to 5:30 p.m",
+    "time": "From 03:30 p.m to 5:30 p.m",
     "date": "23 October 2019",
     "location": "Shangri La Colombo, Sri Lanka",
     "details": "Pellentesque in ipsum id orci porta dapibus."
@@ -314,7 +314,7 @@ List events = [
   {
     "name": "Flutter Sri Lanka 2019",
     "img": "assets/Fluttercmb.png",
-    "time": "From 03:30p.p.m to 5:30 p.m",
+    "time": "From 03:30 p.m to 5:30 p.m",
     "date": "3 November 2019",
     "location": "Hilton Ballroom Colombo, Sri Lanka",
     "details": "Pellentesque in ipsum id orci porta dapibus. "
@@ -330,7 +330,7 @@ List events = [
   {
     "name": "AWS Sri Lanka 2019",
     "img": "assets/aws.jpg",
-    "time": "From 03:30p.p.m to 5:30 p.m",
+    "time": "From 03:30 p.m to 5:30 p.m",
     "date": "30 October 2019",
     "location": "BMICH Colombo, Sri Lanka",
     "details": "Pellentesque in ipsum id orci porta dapibus. "
