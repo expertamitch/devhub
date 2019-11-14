@@ -1,3 +1,5 @@
+import 'package:dev_hub/blocs/conversation_bloc.dart';
+import 'package:dev_hub/screens/profile/user_profile.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:dev_hub/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +11,11 @@ class Conversation extends StatefulWidget {
 }
 
 class _ConversationState extends State<Conversation> {
+  ConversationBloc _bloc = ConversationBloc();
   static Random random = Random();
   String name = names[random.nextInt(10)];
+  TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,15 +63,69 @@ class _ConversationState extends State<Conversation> {
               ),
             ],
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return UserProfilePage();
+                },
+              ),
+            );
+          },
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.more_horiz,
-            ),
-            onPressed: () {},
-          ),
+          PopupMenuButton<int>(
+            icon: Icon(Icons.more_horiz),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 1,
+                child: Text('Mute'),
+              ),
+              PopupMenuDivider(),
+              PopupMenuItem(
+                value: 2,
+                child: Text('Block'),
+              ),
+              PopupMenuDivider(),
+              PopupMenuItem(
+                value: 3,
+                child: Text('Report'),
+              ),
+              PopupMenuDivider(),
+              PopupMenuItem(
+                value: 4,
+                child: Text('Clear chat'),
+              )
+            ],
+            onSelected: (item) {
+              switch (item) {
+                case 1:
+                  {
+                    confirmationDialog(
+                        'Are you sure you want to Mute this chat?');
+                  }
+                  break;
+                case 2:
+                  {
+                    confirmationDialog(
+                        'Are you sure you want to Bloc this user?');
+                  }
+                  break;
+                case 3:
+                  {
+                    confirmationDialog(
+                        'Are you sure you want to Report this user?');
+                  }
+                  break;
+                case 4:
+                  {
+                    confirmationDialog(
+                        'Are you sure you want to Clear this chat?');
+                  }
+                  break;
+              }
+            },
+          )
         ],
       ),
       body: Container(
@@ -75,46 +134,51 @@ class _ConversationState extends State<Conversation> {
           children: <Widget>[
             SizedBox(height: 10),
             Flexible(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                itemCount: conversation.length,
-                reverse: true,
-                itemBuilder: (BuildContext context, int index) {
-                  Map msg = conversation[index];
-                  return ChatBubble(
-                    message: msg['type'] == "text"
-                        ? messages[random.nextInt(10)]
-                        : "assets/cm${random.nextInt(10)}.jpeg",
-                    username: msg["username"],
-                    time: msg["time"],
-                    type: msg['type'],
-                    replyText: msg["replyText"],
-                    isMe: msg['isMe'],
-                    isGroup: msg['isGroup'],
-                    isReply: msg['isReply'],
-                    replyName: name,
-                  );
-                },
-              ),
+              child: StreamBuilder<List<dynamic>>(
+                  stream: _bloc.conversationStream,
+                  builder: (context, snapshot) {
+                    return ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      itemCount: snapshot.data.length,
+                      reverse: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        Map msg = snapshot.data[index];
+                        return ChatBubble(
+                          message: msg['type'] == "text"
+                              ? msg["text"]
+                              : msg["image"],
+                          username: msg["username"],
+                          time: msg["time"],
+                          type: msg['type'],
+                          replyText: msg["replyText"],
+                          isMe: msg['isMe'],
+                          isGroup: msg['isGroup'],
+                          isReply: msg['isReply'],
+                          replyName: name,
+                        );
+                      },
+                    );
+                  }),
             ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
+                margin: const EdgeInsets.only(top: 8),
 //                height: 140,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.white,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey[500],
                       offset: Offset(0.0, 1.5),
-                      blurRadius: 4.0,
+                      blurRadius: 2.0,
                     ),
                   ],
                 ),
                 constraints: BoxConstraints(
                   maxHeight: 190,
                 ),
-                child: Column(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Flexible(
@@ -128,6 +192,7 @@ class _ConversationState extends State<Conversation> {
                         ),
                         contentPadding: EdgeInsets.all(0),
                         title: TextField(
+                          textInputAction: TextInputAction.send,
                           style: TextStyle(
                             fontSize: 15.0,
                             color: Theme.of(context).textTheme.title.color,
@@ -153,13 +218,22 @@ class _ConversationState extends State<Conversation> {
                             ),
                           ),
                           maxLines: null,
+                          controller: textEditingController,
+                          onSubmitted: (text) {
+                            textEditingController.text = "";
+                            _bloc.sendMessage(text, false);
+                          },
                         ),
                         trailing: IconButton(
                           icon: Icon(
                             Icons.send,
                             color: Theme.of(context).accentColor,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _bloc.sendMessage(
+                                textEditingController.text, false);
+                            textEditingController.text = "";
+                          },
                         ),
                       ),
                     ),
@@ -171,5 +245,30 @@ class _ConversationState extends State<Conversation> {
         ),
       ),
     );
+  }
+
+  confirmationDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Alert'),
+            content: Text(message),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }

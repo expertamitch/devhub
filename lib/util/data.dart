@@ -256,6 +256,8 @@ List conversation = List.generate(
           "time": "${random.nextInt(50)} min ago",
           "type": types[random.nextInt(2)],
           "replyText": messages[random.nextInt(10)],
+          "image": "assets/cm${random.nextInt(10)}.jpeg",
+          "text": messages[random.nextInt(10)],
           "isMe": random.nextBool(),
           "isGroup": false,
           "isReply": random.nextBool(),

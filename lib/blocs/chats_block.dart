@@ -8,6 +8,7 @@ class ChatsBloc extends BaseBloc {
   final _groupsController = BehaviorSubject<List<dynamic>>();
 
   Stream<List<dynamic>> get chatsStream => _chatsController.stream;
+
   Stream<List<dynamic>> get groupsStream => _groupsController.stream;
 
   ChatsBloc() {
