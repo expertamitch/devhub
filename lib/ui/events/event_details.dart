@@ -1,3 +1,4 @@
+import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/cupertino.dart';
@@ -157,7 +158,7 @@ class _EventHomePageState extends State<EventHomePage> {
                     padding: const EdgeInsets.only(
                         top: 12, bottom: 12, left: 4, right: 4),
                     child: Text(
-                      formatDate("${events[0]["date"]}"),
+                      CommonUtils.formatDateDayMonth("${events[0]["date"]}"),
                       style: TextStyle(
                           fontSize: 14,
                           color: Colors.white,
@@ -214,7 +215,7 @@ class _EventHomePageState extends State<EventHomePage> {
             ),
             SizedBox(width: 10.0),
             Text(
-              formatDateWithDay("${events[0]["date"]}"),
+              CommonUtils.formatDateWithDayName("${events[0]["date"]}"),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -437,15 +438,7 @@ class _EventHomePageState extends State<EventHomePage> {
     );
   }
 
-  String formatDate(String dateToFormat) {
-    return DateFormat("dd MMM")
-        .format(DateFormat("dd MMMM yyyy").parse(dateToFormat));
-  }
 
-  String formatDateWithDay(String dateToFormat) {
-    return DateFormat("EEEE, MMMM dd, yyyy")
-        .format(DateFormat("dd MMMM yyyy").parse(dateToFormat));
-  }
 
   List<Step> getScheduleSteps() {
     List<Step> scheduleSteps = [

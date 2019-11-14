@@ -1,14 +1,15 @@
-import 'package:dev_hub/screens/profile/user_profile.dart';
 import 'package:dev_hub/ui/communities/communities_home.dart';
 import 'package:dev_hub/ui/events/events_home.dart';
+import 'package:dev_hub/ui/my_events/my_events.dart';
+import 'package:dev_hub/ui/my_jobs/my_jobs.dart';
+import 'package:dev_hub/ui/profile/user_profile.dart';
 import 'package:flutter/material.dart';
 
-import 'connects/friends.dart';
-import 'homepage/home.dart';
+import '../screens/connects/friends.dart';
+import '../screens/messages/chats.dart';
+import '../screens/notifications.dart';
 import 'jobs/jobs_home.dart';
-import 'messages/chats.dart';
 import 'new_home/home_page.dart';
-import 'notifications.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -67,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 50.0),
+            SizedBox(height: 10.0),
             ListTile(
               leading: Icon(Icons.link),
               title: Text('Connects'),
@@ -84,7 +85,15 @@ class _MainScreenState extends State<MainScreen> {
             ListTile(
               leading: Icon(Icons.event),
               title: Text('My Events'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return MyEvents();
+                    },
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.group),
@@ -94,7 +103,15 @@ class _MainScreenState extends State<MainScreen> {
             ListTile(
               leading: Icon(Icons.card_travel),
               title: Text('My Jobs'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return MyJobs();
+                    },
+                  ),
+                );
+              },
             ),
             Divider(height: 10.0),
             SizedBox(height: 14.0),

@@ -1,5 +1,5 @@
 import 'package:dev_hub/blocs/profile_contact_details_bloc.dart';
-import 'package:dev_hub/screens/main_screen.dart';
+import 'package:dev_hub/ui/main_screen.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
 

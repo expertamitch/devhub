@@ -1,3 +1,4 @@
+import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +8,11 @@ class CommunityHome extends StatefulWidget {
 }
 
 class _CommunityHomeState extends State<CommunityHome> {
-  var _followingStatus = "Follow";
+  var _followingStatus = "Join";
   var _dropDownMenuItems;
   List<String> _optionList = [
-    "Follow",
+    "Join",
+    "Joined",
     "Unfollow",
   ];
 
@@ -101,13 +103,19 @@ class _CommunityHomeState extends State<CommunityHome> {
                     onChanged: followUnfollow)
               ],
             ),
+            SizedBox(
+              height: 8,
+            ),
             Text(
               "About",
               style: TextStyle(
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
               textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              height: 4,
             ),
             Text(
               "${events[0]["details"]}",
@@ -116,6 +124,242 @@ class _CommunityHomeState extends State<CommunityHome> {
               ),
               textAlign: TextAlign.left,
             ),
+            SizedBox(
+              height: 12,
+            ),
+            Text(
+              "Events",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Container(
+              height: 180,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                primary: false,
+                itemCount: events.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map place = events.reversed.toList()[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: InkWell(
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(
+                                    "${place["img"]}",
+                                    height: 100,
+                                    width: 200,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Row(
+                                  children: <Widget>[
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "${place["name"]}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                            ),
+                                            maxLines: 2,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        SizedBox(height: 3),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "${place["location"]}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.blueGrey[300],
+                                            ),
+                                            maxLines: 1,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        SizedBox(height: 3),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "${place["time"]}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.blueGrey[300],
+                                            ),
+                                            maxLines: 1,
+                                            textAlign: TextAlign.left,
+                                          ),
+
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(width: 8),
+                                    Container(
+                                        alignment: Alignment.bottomRight,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8.0)),
+                                            color: Colors.blueGrey[200],
+                                            shape: BoxShape.rectangle),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 12,
+                                              bottom: 12,
+                                              left: 4,
+                                              right: 4),
+                                          child: Text(
+                                            CommonUtils.formatDateDayMonth("${place["date"]}"),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            ),
+
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return CommunityHome();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+            Text(
+              "Jobs",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Container(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                primary: false,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: jobsDetails.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map place = jobsDetails.reversed.toList()[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: InkWell(
+                      child: Container(
+                        child: Row(
+                          children: <Widget>[
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "${place["img"]}",
+                                height: 80,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "${place["name"]}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "${place["location"]}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                        color: Colors.blueGrey[300],
+                                      ),
+                                      maxLines: 1,
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "${place["time"]}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                        color: Colors.blueGrey[300],
+                                      ),
+                                      maxLines: 1,
+                                      textAlign: TextAlign.left,
+                                    ),
+
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return CommunityHome();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            )
           ],
         ));
   }

@@ -1,4 +1,4 @@
-import 'package:dev_hub/ui/sign_up_screen.dart';
+import 'package:dev_hub/ui/logins/sign_up_screen.dart';
 import 'package:dev_hub/ui/splash_screen.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
