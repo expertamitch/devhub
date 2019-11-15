@@ -1,6 +1,6 @@
 import 'package:dev_hub/blocs/login_bloc.dart';
-import 'package:dev_hub/ui/edit_profile_basic_details.dart';
-import 'package:dev_hub/ui/sign_up_screen.dart';
+import 'package:dev_hub/ui/profile/edit_profile_basic_details.dart';
+import 'package:dev_hub/ui/logins/sign_up_screen.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
