@@ -1,4 +1,5 @@
 import 'package:dev_hub/blocs/event_home_bloc.dart';
+import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -260,7 +261,7 @@ class EventsHomeState extends State<EventsHome> {
                                                 left: 4,
                                                 right: 4),
                                             child: Text(
-                                              formatDate("${place["date"]}"),
+                                              CommonUtils.formatDateDayMonth("${place["date"]}"),
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.white,
@@ -382,7 +383,7 @@ class EventsHomeState extends State<EventsHome> {
                                           left: 4,
                                           right: 4),
                                       child: Text(
-                                        formatDate("${place["date"]}"),
+                                        CommonUtils.formatDateDayMonth("${place["date"]}"),
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.white,
@@ -409,8 +410,4 @@ class EventsHomeState extends State<EventsHome> {
     );
   }
 
-  String formatDate(String dateToFormat) {
-    return DateFormat("dd MMM")
-        .format(DateFormat("yyyy MMMM dd").parse(dateToFormat));
-  }
 }

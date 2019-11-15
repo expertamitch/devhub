@@ -53,6 +53,7 @@ flutter:
   assets:
     - assets/images/logo.jpeg
     - assets/images/user_placeholder.jpg
+    - assets/images/blank_ticket.png
     - assets/cm1.jpeg
     - assets/cm2.jpeg
     - assets/cm3.jpeg

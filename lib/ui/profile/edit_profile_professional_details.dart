@@ -1,5 +1,5 @@
 import 'package:dev_hub/blocs/profile_professional_details_bloc.dart';
-import 'package:dev_hub/ui/edit_profile_contact_details.dart';
+import 'package:dev_hub/ui/profile/edit_profile_contact_details.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
 
