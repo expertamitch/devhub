@@ -1,6 +1,7 @@
 import 'package:dev_hub/blocs/login_bloc.dart';
 import 'package:dev_hub/ui/profile/edit_profile_basic_details.dart';
 import 'package:dev_hub/ui/logins/sign_up_screen.dart';
+import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,7 +14,10 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  LoginBloc _loginBloc;
+  LoginBloc _loginBloc = LoginBloc();
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
   @override
   void dispose() {
     _loginBloc.dispose();
@@ -22,7 +26,6 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    _loginBloc = LoginBloc();
     return Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.transparent,
@@ -52,39 +55,54 @@ class LoginState extends State<Login> {
                   ),
                   StreamBuilder<String>(
                     stream: _loginBloc.emailStream,
-                    builder: (context, snapshot) => TextField(
-                      onChanged: (String email) =>
-                          _loginBloc.validateEmail(email),
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          errorText: snapshot.hasError ? snapshot.error : null,
-                          border: const OutlineInputBorder(),
-                          hintText: "Email",
-                          labelText: "Email"),
-                    ),
+                    builder: (context, snapshot) =>
+                        TextFormField(
+                          onChanged: (String email) =>
+                              _loginBloc.validateEmail(email),
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          focusNode: _emailFocus,
+                          onFieldSubmitted: (term) {
+                            CommonUtils.fieldFocusChange(
+                                context, _emailFocus, _passwordFocus);
+                          },
+                          decoration: InputDecoration(
+                              errorText: snapshot.hasError
+                                  ? snapshot.error
+                                  : null,
+                              border: const OutlineInputBorder(),
+                              hintText: "Email",
+                              labelText: "Email"),
+                        ),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   StreamBuilder<String>(
                     stream: _loginBloc.passwordStream,
-                    builder: (context, snapshot) => TextField(
-                      onChanged: (String password) =>
-                          _loginBloc.validatePassword(password),
-//                      keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          errorText: snapshot.hasError ? snapshot.error : null,
-                          border: const OutlineInputBorder(),
-                          hintText: "Password",
-                          labelText: "Password",
-                          suffixIcon: GestureDetector(
-                            child: Icon(Icons.remove_red_eye),
-                            onTap: _toggle,
-                          )),
-                      obscureText: eye,
-                    ),
+                    builder: (context, snapshot) =>
+                        TextFormField(
+                          onChanged: (String password) =>
+                              _loginBloc.validatePassword(password),
+                      keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.next,
+                          focusNode: _passwordFocus,
+                          onFieldSubmitted: (term){
+                            _passwordFocus.unfocus();
+                          },
+                          decoration: InputDecoration(
+                              errorText: snapshot.hasError
+                                  ? snapshot.error
+                                  : null,
+                              border: const OutlineInputBorder(),
+                              hintText: "Password",
+                              labelText: "Password",
+                              suffixIcon: GestureDetector(
+                                child: Icon(Icons.remove_red_eye),
+                                onTap: _toggle,
+                              )),
+                          obscureText: eye,
+                        ),
                   ),
                   SizedBox(
                     height: 10,
@@ -101,12 +119,13 @@ class LoginState extends State<Login> {
                     height: 40,
                     child: StreamBuilder<bool>(
 //                    stream: _loginBloc.submitCheck,
-                      builder: (context, snapshot) => RaisedButton(
-                          shape: StadiumBorder(),
-                          color: Constants.buttonColor,
-                          child: Text("Login"),
-                          textColor: Colors.white,
-                          onPressed: snapshot.hasError ? null : submit),
+                      builder: (context, snapshot) =>
+                          RaisedButton(
+                              shape: StadiumBorder(),
+                              color: Constants.buttonColor,
+                              child: Text("Login"),
+                              textColor: Colors.white,
+                              onPressed: snapshot.hasError ? null : submit),
                     ),
                   ),
                   SizedBox(
@@ -149,21 +168,21 @@ class LoginState extends State<Login> {
                       SizedBox(width: 5),
                       Expanded(
                           child: OutlineButton(
-                        shape: StadiumBorder(),
-                        onPressed: submit,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(FontAwesomeIcons.facebookF),
-                              SizedBox(width: 5),
-                              Text("Facebook")
-                            ],
-                          ),
-                        ),
-                        highlightedBorderColor: Colors.black,
-                        borderSide: BorderSide(color: Colors.grey),
-                      )),
+                            shape: StadiumBorder(),
+                            onPressed: submit,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(FontAwesomeIcons.facebookF),
+                                  SizedBox(width: 5),
+                                  Text("Facebook")
+                                ],
+                              ),
+                            ),
+                            highlightedBorderColor: Colors.black,
+                            borderSide: BorderSide(color: Colors.grey),
+                          )),
                     ],
                   ),
                   Row(
@@ -189,21 +208,21 @@ class LoginState extends State<Login> {
                       SizedBox(width: 5),
                       Expanded(
                           child: OutlineButton(
-                        shape: StadiumBorder(),
-                        onPressed: submit,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(FontAwesomeIcons.stackOverflow),
-                              SizedBox(width: 5),
-                              Text("StackOverFlow")
-                            ],
-                          ),
-                        ),
-                        highlightedBorderColor: Colors.black,
-                        borderSide: BorderSide(color: Colors.grey),
-                      )),
+                            shape: StadiumBorder(),
+                            onPressed: submit,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(FontAwesomeIcons.stackOverflow),
+                                  SizedBox(width: 5),
+                                  Text("StackOverFlow")
+                                ],
+                              ),
+                            ),
+                            highlightedBorderColor: Colors.black,
+                            borderSide: BorderSide(color: Colors.grey),
+                          )),
                     ],
                   ),
                   Row(

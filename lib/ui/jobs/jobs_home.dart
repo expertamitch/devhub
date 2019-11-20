@@ -23,13 +23,13 @@ class _JobsHomeState extends State<JobsHome> {
             child: Text(
               "Lets find you \na job.",
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 28,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           getSearch(),
-          SizedBox(height: 5.0),
+          SizedBox(height: 8.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -41,7 +41,7 @@ class _JobsHomeState extends State<JobsHome> {
                 ),
               ),
               getFeatured(),
-              SizedBox(height: 15.0),
+              SizedBox(height: 12.0),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
@@ -67,7 +67,7 @@ class _JobsHomeState extends State<JobsHome> {
 
   getSearch() {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.only(left: 20,right: 20),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.blueGrey[50],
@@ -134,7 +134,6 @@ class _JobsHomeState extends State<JobsHome> {
                           child: Container(
                             height: 250,
                             width: 140,
-//                      color: Colors.green,
                             child: Column(
                               children: <Widget>[
                                 ClipRRect(

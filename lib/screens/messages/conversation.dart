@@ -1,5 +1,5 @@
 import 'package:dev_hub/blocs/conversation_bloc.dart';
-import 'package:dev_hub/screens/profile/user_profile.dart';
+import 'package:dev_hub/ui/profile/user_profile.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:dev_hub/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';

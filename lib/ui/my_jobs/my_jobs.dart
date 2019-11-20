@@ -20,7 +20,9 @@ class _MyJobState extends State<MyJobs> {
         length: 2,
         child: Scaffold(
             appBar: AppBar(
+              title: Text("My Jobs"), centerTitle: true,
               leading: IconButton(
+
                 icon: Icon(
                   Icons.arrow_back,
                 ),

@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:dev_hub/blocs/base_bloc.dart';
+import 'package:dev_hub/models/technology_model.dart';
+import 'package:dev_hub/util/data.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ProfileProfessionDetailsBloc implements BaseBloc {
   final _jobTitleController = StreamController<String>();
@@ -8,8 +11,8 @@ class ProfileProfessionDetailsBloc implements BaseBloc {
   final _educationController = StreamController<String>();
   final _collegeController = StreamController<String>();
   final _aboutController = StreamController<String>();
-  final _technologyListController =
-      StreamController<List<String>>();
+
+  final _technologyListController =BehaviorSubject<List<Technology>>();
 
   Stream<String> get jobTitleStream => _jobTitleController.stream;
 
@@ -21,7 +24,7 @@ class ProfileProfessionDetailsBloc implements BaseBloc {
 
   Stream<String> get aboutStream => _aboutController.stream;
 
-  Stream<List<String>> get technologyListStream =>
+  Stream<List<Technology>> get technologyListStream =>
       _technologyListController.stream;
 
   StreamSink<String> get jobTitleSink => _jobTitleController.sink;
@@ -34,9 +37,13 @@ class ProfileProfessionDetailsBloc implements BaseBloc {
 
   StreamSink<String> get aboutSink => _aboutController.sink;
 
-  StreamSink<List<String>> get technologyListSink =>
+  StreamSink<List<Technology>> get technologyListSink =>
       _technologyListController.sink;
 
+
+  ProfileProfessionDetailsBloc(){
+    _technologyListController.add(technologyList);
+  }
 
   void validateJobTitle(String jobTitle) {
     if (jobTitle.isNotEmpty) {

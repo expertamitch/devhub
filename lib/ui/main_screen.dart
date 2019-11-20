@@ -143,7 +143,6 @@ class _MainScreenState extends State<MainScreen> {
         children: <Widget>[
           Chats(),
           CommunitiesHome(),
-//          NewsFeed(),
           HomePage(),
           JobsHome(),
           EventsHome(),

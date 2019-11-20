@@ -271,7 +271,7 @@ class HomeState extends State<HomePage> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
-                                  return EventHomePage();
+                                  return EventDetails();
                                 },
                               ),
                             );
