@@ -19,6 +19,7 @@ class _MyEventState extends State<MyEvents> {
         length: 3,
         child: Scaffold(
             appBar: AppBar(
+              title: Text("My Events"), centerTitle: true,
               leading: IconButton(
                 icon: Icon(
                   Icons.arrow_back,

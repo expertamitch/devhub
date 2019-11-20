@@ -14,28 +14,38 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
   CommunityHomeBloc _bloc = CommunityHomeBloc();
 
   @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          getSearch(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Your Communities',
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          children: <Widget>[
+            getSearch(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Your Communities',
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          getYourCommunities(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Popular Communities',
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            getYourCommunities(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Popular Communities',
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          getPopularCommunities(),
-        ],
+            getPopularCommunities(),
+          ],
+        ),
       ),
     );
   }
@@ -87,60 +97,144 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
   }
 
   getYourCommunities() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 180,
-      child: StreamBuilder<List<dynamic>>(
-          stream: _bloc.upcomingEventStream,
-          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-            return snapshot.data == null
-                ? Container()
-                : ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    primary: false,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Map place = snapshot.data.reversed.toList()[index];
-                      return Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: InkWell(
-                          child: Container(
-                            height: 140,
-                            width: 180,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    "${place["img"]}",
-                                    height: 100,
-                                    width: 150,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "${place["name"]}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                          ),
-                                          maxLines: 2,
-                                          textAlign: TextAlign.left,
-                                        ),
+    return Padding(
+      padding: const EdgeInsets.only(left:8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 150,
+        child: StreamBuilder<List<dynamic>>(
+            stream: _bloc.yourCommunitiesStream,
+            builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+              return snapshot.data == null
+                  ? Container()
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      primary: false,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Map place = snapshot.data.reversed.toList()[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(left:8.0),
+                          child: InkWell(
+                            child: Card(
+                              child: Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(
+                                        "${place["img_logo"]}",
+                                        height: 80,
+                                        width: 150,
+                                        fit: BoxFit.contain,
                                       ),
-                                      SizedBox(height: 3),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "${place["location"]}",
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "${place["name"]}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                            ),
+                                            maxLines: 1,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(height: 3),
+                                          Text(
+                                            "${place["follower_count"]} followers",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.blueGrey[300],
+                                            ),
+                                            maxLines: 1,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return CommunityDetails();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+            }),
+      ),
+    );
+  }
+
+  getPopularCommunities() {
+    return Padding(
+      padding: const EdgeInsets.only(left:8.0,right: 8),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: StreamBuilder<List<dynamic>>(
+            stream: _bloc.popularCommunitiesStream,
+            builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+              return snapshot.data == null
+                  ? Container()
+                  : ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      primary: false,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Map place = snapshot.data.reversed.toList()[index];
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: InkWell(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      "${place["img_logo"]}",
+                                      height: 80,
+                                      width: 120,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "${place["name"]}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                            ),
+                                            maxLines: 2,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        SizedBox(height: 3),
+                                        Text(
+                                          "${place["follower_count"]} followers",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
@@ -149,116 +243,35 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
                                           maxLines: 1,
                                           textAlign: TextAlign.left,
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                )
-                              ],
+                                  SizedBox(width: 8),
+                                  RaisedButton(
+                                    onPressed: () {},
+                                    child: Text("Join"),
+                                    shape: StadiumBorder(),
+                                    color: Constants.buttonColor,
+                                    textColor: Colors.white,
+                                  )
+                                ],
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return CommunityDetails();
+                                    },
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return CommunityHome();
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
-          }),
-    );
-  }
-
-  getPopularCommunities() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: StreamBuilder<List<dynamic>>(
-          stream: _bloc.upcomingEventStream,
-          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-            return snapshot.data == null
-                ? Container()
-                : ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    primary: false,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Map place = snapshot.data.reversed.toList()[index];
-                      return Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: InkWell(
-                          child: Row(
-                            children: <Widget>[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  "${place["img"]}",
-                                  height: 80,
-                                  width: 120,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "${place["name"]}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                        maxLines: 2,
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Text(
-                                      "${place["location"]}",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: Colors.blueGrey[300],
-                                      ),
-                                      maxLines: 1,
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              RaisedButton(
-                                onPressed: () {},
-                                child: Text("Join"),
-                                shape: StadiumBorder(),
-                                color: Constants.buttonColor,
-                                textColor: Colors.white,
-                              )
-                            ],
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return CommunityHome();
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
-          }),
+                        );
+                      },
+                    );
+            }),
+      ),
     );
   }
 }

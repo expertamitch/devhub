@@ -43,11 +43,32 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  diacritic:
+    dependency: transitive
+    description:
+      name: diacritic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_chips_input:
+    dependency: "direct main"
+    description:
+      name: flutter_chips_input
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.0"
+  flutter_country_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_country_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -67,6 +88,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  image_picker:
+    dependency: "direct main"
+    description:
+      name: image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.2"
   intl:
     dependency: "direct main"
     description:

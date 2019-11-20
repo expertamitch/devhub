@@ -1,10 +1,18 @@
 import 'dart:math';
 
+import 'package:dev_hub/models/technology_model.dart';
+
 List<String> images = [
   "assets/image_04.jpg",
   "assets/image_03.jpg",
   "assets/image_02.jpg",
   "assets/image_01.png",
+];
+List<Technology> technologyList = [
+  Technology(1, "Java"),
+  Technology(2, "Dart"),
+  Technology(3, "Flutter"),
+  Technology(4, "Kotlin"),
 ];
 
 List jobsDetails = [
@@ -335,6 +343,60 @@ List events = [
     "time": "From 03:30 p.m to 5:30 p.m",
     "date": "30 October 2019",
     "location": "BMICH Colombo, Sri Lanka",
+    "details": "Pellentesque in ipsum id orci porta dapibus. "
+        "Nulla porttitor accumsan tincidunt. Donec rutrum "
+        "congue leo eget malesuada. "
+        "\n\nPraesent sapien massa, convallis a pellentesque "
+        "nec, egestas non nisi. Donec rutrum congue leo eget malesuada. "
+        "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. "
+        "Sed porttitor lectus nibh. Donec sollicitudin molestie malesuada. "
+        "\nCurabitur arcu erat, accumsan id imperdiet et, porttitor at sem. "
+        "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.",
+  },
+];
+
+
+
+
+List communities = [
+  {
+    "name": "Flutter Dev",
+    "img_logo": "assets/images/flutter_logo.png",
+    "img_cover": "assets/images/flutter_logo.png",
+    "joining_status": true,
+    "follower_count": "18K",
+    "details": "Pellentesque in ipsum id orci porta dapibus. "
+        "Nulla porttitor accumsan tincidunt. Donec rutrum "
+        "congue leo eget malesuada. "
+        "\n\nPraesent sapien massa, convallis a pellentesque "
+        "nec, egestas non nisi. Donec rutrum congue leo eget malesuada. "
+        "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. "
+        "Sed porttitor lectus nibh. Donec sollicitudin molestie malesuada. "
+        "\nCurabitur arcu erat, accumsan id imperdiet et, porttitor at sem. "
+        "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.",
+  },
+  {
+    "name": "StackOverflow",
+    "img_logo": "assets/images/stack.png",
+    "img_cover": "assets/images/stack.png",
+    "joining_status": true,
+    "follower_count": "18.6K",
+    "details": "Pellentesque in ipsum id orci porta dapibus. "
+        "Nulla porttitor accumsan tincidunt. Donec rutrum "
+        "congue leo eget malesuada. "
+        "\n\nPraesent sapien massa, convallis a pellentesque "
+        "nec, egestas non nisi. Donec rutrum congue leo eget malesuada. "
+        "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. "
+        "Sed porttitor lectus nibh. Donec sollicitudin molestie malesuada. "
+        "\nCurabitur arcu erat, accumsan id imperdiet et, porttitor at sem. "
+        "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.",
+  },
+  {
+    "name": "Swift Dev",
+    "img_logo": "assets/images/swift.png",
+    "img_cover": "assets/images/swift.png",
+    "joining_status": true,
+    "follower_count": "12K",
     "details": "Pellentesque in ipsum id orci porta dapibus. "
         "Nulla porttitor accumsan tincidunt. Donec rutrum "
         "congue leo eget malesuada. "

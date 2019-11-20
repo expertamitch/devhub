@@ -30,63 +30,20 @@ class EventsHomeState extends State<EventsHome> {
     return result;
   }
 
+
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         children: <Widget>[
           getSearch(),
-          carouselSlider = CarouselSlider(//todo need to add bloc here
-            height: 200.0,
-            initialPage: 0,
-            enlargeCenterPage: true,
-            autoPlay: true,
-            reverse: false,
-            enableInfiniteScroll: true,
-            autoPlayInterval: Duration(seconds: 3),
-            autoPlayAnimationDuration: Duration(milliseconds: 2000),
-            pauseAutoPlayOnTouch: Duration(seconds: 6),
-            scrollDirection: Axis.horizontal,
-            onPageChanged: (index) {
-              setState(() {
-                _current = index;
-              });
-            },
-            items: imgList.map((imgUrl) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                    ),
-                    child: Image.network(
-                      imgUrl,
-                      fit: BoxFit.fill,
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: map<Widget>(imgList, (index, url) {
-              return Container(
-                width: 6.0,
-                height: 6.0,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _current == index ? Colors.black : Colors.grey,
-                ),
-              );
-            }),
-          ),
+          carouselView(),
           SizedBox(height: 10.0),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -108,6 +65,75 @@ class EventsHomeState extends State<EventsHome> {
       ),
     );
   }
+
+  carouselView() {
+    return StreamBuilder<List<dynamic>>(
+        stream: _bloc.newEventsStream,
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          return snapshot.data == null
+              ? Container()
+              : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              carouselSlider = CarouselSlider(
+                height: 200.0,
+                initialPage: 0,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                reverse: false,
+                enableInfiniteScroll: true,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 2000),
+                pauseAutoPlayOnTouch: Duration(seconds: 6),
+                scrollDirection: Axis.horizontal,
+                onPageChanged: (index) {
+                  setState(() {
+                    _current = index;
+                  });
+                },
+                items: snapshot.data.map((imgUrl) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                        ),
+                        child: Image.network(
+                          imgUrl,
+                          fit: BoxFit.fill,
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: map<Widget>(snapshot.data, (index, url) {
+                  return Container(
+                    width: 6.0,
+                    height: 6.0,
+                    margin: EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color:
+                      _current == index ? Colors.black : Colors.grey,
+                    ),
+                  );
+                }),
+              ),
+            ],
+          );
+        });
+  }
+
 
   getSearch() {
     return Padding(
@@ -172,7 +198,7 @@ class EventsHomeState extends State<EventsHome> {
       child: StreamBuilder<List<dynamic>>(
           stream: _bloc.upcomingEventStream,
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-            return snapshot.hasError
+            return snapshot.data==null
                 ? Container()
                 : ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -180,109 +206,111 @@ class EventsHomeState extends State<EventsHome> {
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
                       Map place = snapshot.data.reversed.toList()[index];
-                      return Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: InkWell(
-                          child: Container(
-                            height: 140,
-                            width: 250,
-                            child: Column(
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    "${place["img"]}",
-                                    height: 140,
-                                    width: 200,
-                                    fit: BoxFit.cover,
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: InkWell(
+                            child: Container(
+                              height: 140,
+                              width: 250,
+                              child: Column(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      "${place["img"]}",
+                                      height: 140,
+                                      width: 200,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 8),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "${place["name"]}",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
+                                  SizedBox(height: 8),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  "${place["name"]}",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14,
+                                                  ),
+                                                  maxLines: 2,
+                                                  textAlign: TextAlign.left,
                                                 ),
-                                                maxLines: 2,
-                                                textAlign: TextAlign.left,
                                               ),
-                                            ),
-                                            SizedBox(height: 3),
-                                            Container(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "${place["location"]}",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12,
-                                                  color: Colors.blueGrey[300],
+                                              SizedBox(height: 3),
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  "${place["location"]}",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                    color: Colors.blueGrey[300],
+                                                  ),
+                                                  maxLines: 1,
+                                                  textAlign: TextAlign.left,
                                                 ),
-                                                maxLines: 1,
-                                                textAlign: TextAlign.left,
                                               ),
-                                            ),
-                                            SizedBox(height: 3),
-                                            Container(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "${place["time"]}",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12,
-                                                  color: Colors.blueGrey[300],
+                                              SizedBox(height: 3),
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  "${place["time"]}",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                    color: Colors.blueGrey[300],
+                                                  ),
+                                                  maxLines: 1,
+                                                  textAlign: TextAlign.left,
                                                 ),
-                                                maxLines: 1,
-                                                textAlign: TextAlign.left,
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8.0)),
-                                              color: Colors.blueGrey[200],
-                                              shape: BoxShape.rectangle),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 12,
-                                                bottom: 12,
-                                                left: 4,
-                                                right: 4),
-                                            child: Text(
-                                              CommonUtils.formatDateDayMonth("${place["date"]}"),
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          )),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return EventHomePage();
-                                },
+                                        Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8.0)),
+                                                color: Colors.blueGrey[200],
+                                                shape: BoxShape.rectangle),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 12,
+                                                  bottom: 12,
+                                                  left: 4,
+                                                  right: 4),
+                                              child: Text(
+                                                CommonUtils.formatDateDayMonth("${place["date"]}"),
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
-                            );
-                          },
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return EventDetails();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       );
                     },
@@ -306,103 +334,105 @@ class EventsHomeState extends State<EventsHome> {
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
                       Map place = snapshot.data.reversed.toList()[index];
-                      return InkWell(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8,left: 8,top: 4,bottom: 4),
-                          child: Container(
-                            height: 150,
-                            child: Row(
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    "${place["img"]}",
-                                    height: 100,
-                                    width: 120,
-                                    fit: BoxFit.cover,
+                      return Card(
+                        child: InkWell(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8,left: 8,top: 4,bottom: 4),
+                            child: Container(
+                              height: 150,
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      "${place["img"]}",
+                                      height: 100,
+                                      width: 120,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 4),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "${place["name"]}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                        maxLines: 2,
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "${place["location"]}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                          color: Colors.blueGrey[300],
-                                        ),
-                                        maxLines: 1,
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "${place["time"]}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                          color: Colors.blueGrey[300],
-                                        ),
-                                        maxLines: 1,
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: 4),
-                                Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8.0)),
-                                        color: Colors.blueGrey[200],
-                                        shape: BoxShape.rectangle),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 12,
-                                          bottom: 12,
-                                          left: 4,
-                                          right: 4),
-                                      child: Text(
-                                        CommonUtils.formatDateDayMonth("${place["date"]}"),
-                                        style: TextStyle(
+                                  SizedBox(width: 4),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "${place["name"]}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
                                             fontSize: 14,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
+                                          ),
+                                          maxLines: 2,
+                                          textAlign: TextAlign.left,
+                                        ),
                                       ),
-                                    )),
-                              ],
+                                      SizedBox(height: 3),
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "${place["location"]}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                            color: Colors.blueGrey[300],
+                                          ),
+                                          maxLines: 1,
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "${place["time"]}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                            color: Colors.blueGrey[300],
+                                          ),
+                                          maxLines: 1,
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(width: 4),
+                                  Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                          color: Colors.blueGrey[200],
+                                          shape: BoxShape.rectangle),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 12,
+                                            bottom: 12,
+                                            left: 4,
+                                            right: 4),
+                                        child: Text(
+                                          CommonUtils.formatDateDayMonth("${place["date"]}"),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      )),
+                                ],
+                              ),
                             ),
                           ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return EventDetails();
+                                },
+                              ),
+                            );
+                          },
                         ),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return EventHomePage();
-                              },
-                            ),
-                          );
-                        },
                       );
                     },
                   );

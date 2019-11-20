@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dev_hub/blocs/base_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ProfileBasicDetailsBloc implements BaseBloc {
   final _firstNameController = StreamController<String>();
@@ -9,8 +10,7 @@ class ProfileBasicDetailsBloc implements BaseBloc {
   final _profileTitleController = StreamController<String>();
   final _dobController = StreamController<String>();
   final _liveInController = StreamController<String>();
-  final _countryListController =
-      StreamController<List<DropdownMenuItem<String>>>();
+  final _countryListController =BehaviorSubject<List<dynamic>>();
 
   Stream<String> get firstNameStream => _firstNameController.stream;
 
@@ -22,7 +22,7 @@ class ProfileBasicDetailsBloc implements BaseBloc {
 
   Stream<String> get liveInStream => _liveInController.stream;
 
-  Stream<List<DropdownMenuItem<String>>> get countryListStream =>
+  Stream<List<dynamic>> get countryListStream =>
       _countryListController.stream;
 
   StreamSink<String> get firstNameSink => _firstNameController.sink;

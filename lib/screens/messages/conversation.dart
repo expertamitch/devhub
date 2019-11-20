@@ -73,7 +73,7 @@ class _ConversationState extends State<Conversation> {
               MaterialPageRoute(
                 builder: (BuildContext context) {
                   return widget.isCommunity
-                      ? CommunityHome()
+                      ? CommunityDetails()
                       : UserProfilePage();
                 },
               ),

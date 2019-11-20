@@ -3,23 +3,23 @@ import 'package:dev_hub/util/data.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CommunityHomeBloc implements BaseBloc{
-  final _upcomingEventsController = BehaviorSubject<List<dynamic>>();
-  final _suggestedEventsController = BehaviorSubject<List<dynamic>>();
+  final _yourCommunitiesController = BehaviorSubject<List<dynamic>>();
+  final _popularCommunitiesController = BehaviorSubject<List<dynamic>>();
 
-  Stream<List<dynamic>> get upcomingEventStream=>_upcomingEventsController.stream;
-  Stream<List<dynamic>> get suggestedEventStream=>_suggestedEventsController.stream;
+  Stream<List<dynamic>> get yourCommunitiesStream=>_yourCommunitiesController.stream;
+  Stream<List<dynamic>> get popularCommunitiesStream=>_popularCommunitiesController.stream;
 
 
   CommunityHomeBloc(){
-    _upcomingEventsController.add(events);
-    _suggestedEventsController.add(events);
+    _yourCommunitiesController.add(communities);
+    _popularCommunitiesController.add(communities);
 
   }
 
   @override
   void dispose() {
-    _upcomingEventsController.close();
-    _suggestedEventsController.close();
+    _yourCommunitiesController.close();
+    _popularCommunitiesController.close();
   }
 
 }

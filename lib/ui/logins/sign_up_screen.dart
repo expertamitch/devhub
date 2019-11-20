@@ -1,5 +1,6 @@
 import 'package:dev_hub/blocs/sign_up_bloc.dart';
 import 'package:dev_hub/ui/logins/login_screen.dart';
+import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,12 +21,13 @@ class SignUpState extends State<SignUp> {
     super.dispose();
   }
 
-  SignUpBloc _signUpBloc;
+  SignUpBloc _signUpBloc = SignUpBloc();
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _phoneFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    _signUpBloc = SignUpBloc();
-
     return Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.transparent,
@@ -41,7 +43,7 @@ class SignUpState extends State<SignUp> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
           child: ListView(
             children: <Widget>[
               Text(
@@ -53,59 +55,67 @@ class SignUpState extends State<SignUp> {
               ),
               StreamBuilder<String>(
                 stream: _signUpBloc.emailStream,
-                builder: (context, snapshot) =>
-                    TextFormField(
-                      onChanged: (String email) =>
-                          _signUpBloc.validateEmail(email),
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          errorText: snapshot.hasError ? snapshot.error : null,
-                          border: const OutlineInputBorder(),
-                          hintText: "Email",
-                          labelText: "Email"),
-                    ),
+                builder: (context, snapshot) => TextFormField(
+                  onChanged: (String email) => _signUpBloc.validateEmail(email),
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  focusNode: _emailFocus,
+                  onFieldSubmitted: (term) {
+                    CommonUtils.fieldFocusChange(
+                        context, _emailFocus, _phoneFocus);
+                  },
+                  decoration: InputDecoration(
+                      errorText: snapshot.hasError ? snapshot.error : null,
+                      border: const OutlineInputBorder(),
+                      hintText: "Email",
+                      labelText: "Email"),
+                ),
               ),
               SizedBox(
                 height: 20,
               ),
               StreamBuilder<String>(
                   stream: _signUpBloc.phoneStream,
-                  builder: (context, snapshot) =>
-                      TextFormField(
+                  builder: (context, snapshot) => TextFormField(
                         onChanged: (String phone) =>
                             _signUpBloc.validatePhone(phone),
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.next,
+                        focusNode: _phoneFocus,
+                        onFieldSubmitted: (term) {
+                          CommonUtils.fieldFocusChange(
+                              context, _phoneFocus, _passwordFocus);
+                        },
                         decoration: InputDecoration(
                             border: const OutlineInputBorder(),
                             hintText: "Phone",
                             labelText: "Phone"),
-                      )
-              ),
+                      )),
               SizedBox(
                 height: 20,
               ),
               StreamBuilder<String>(
                 stream: _signUpBloc.passwordStream,
-                builder: (context, snapshot) =>
-                    TextFormField(
-                      onChanged: (String password) =>
-                          _signUpBloc.validatePassword(password),
+                builder: (context, snapshot) => TextFormField(
+                  onChanged: (String password) =>
+                      _signUpBloc.validatePassword(password),
 //                      keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.next,
-
-                      decoration: InputDecoration(
-                          errorText: snapshot.hasError ? snapshot.error : null,
-                          border: const OutlineInputBorder(),
-                          hintText: "Password",
-                          labelText: "Password",
-                          suffixIcon: GestureDetector(
-                            child: Icon(Icons.remove_red_eye),
-                            onTap: _toggle,
-                          )),
-                      obscureText: eye,
-                    ),
+                  textInputAction: TextInputAction.done,
+                  focusNode: _passwordFocus,
+                  onFieldSubmitted: (term) {
+                    _passwordFocus.unfocus();
+                  },
+                  decoration: InputDecoration(
+                      errorText: snapshot.hasError ? snapshot.error : null,
+                      border: const OutlineInputBorder(),
+                      hintText: "Password",
+                      labelText: "Password",
+                      suffixIcon: GestureDetector(
+                        child: Icon(Icons.remove_red_eye),
+                        onTap: _toggle,
+                      )),
+                  obscureText: eye,
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -115,13 +125,12 @@ class SignUpState extends State<SignUp> {
                 height: 40,
                 child: StreamBuilder<bool>(
 //                    stream: signUpBloc.submitCheck,
-                  builder: (context, snapshot) =>
-                      RaisedButton(
-                          shape: StadiumBorder(),
-                          color: Constants.buttonColor,
-                          child: Text("Get Started"),
-                          textColor: Colors.white,
-                          onPressed: snapshot.hasError ? null : submit),
+                  builder: (context, snapshot) => RaisedButton(
+                      shape: StadiumBorder(),
+                      color: Constants.buttonColor,
+                      child: Text("Get Started"),
+                      textColor: Colors.white,
+                      onPressed: snapshot.hasError ? null : submit),
                 ),
               ),
               SizedBox(
@@ -166,21 +175,21 @@ class SignUpState extends State<SignUp> {
                   SizedBox(width: 5),
                   Expanded(
                       child: OutlineButton(
-                        shape: StadiumBorder(),
-                        onPressed: submit,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(FontAwesomeIcons.facebookF),
-                              SizedBox(width: 5),
-                              Text("Facebook")
-                            ],
-                          ),
-                        ),
-                        highlightedBorderColor: Colors.black,
-                        borderSide: BorderSide(color: Colors.grey),
-                      )),
+                    shape: StadiumBorder(),
+                    onPressed: submit,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.facebookF),
+                          SizedBox(width: 5),
+                          Text("Facebook")
+                        ],
+                      ),
+                    ),
+                    highlightedBorderColor: Colors.black,
+                    borderSide: BorderSide(color: Colors.grey),
+                  )),
                 ],
               ),
               Row(
@@ -206,21 +215,21 @@ class SignUpState extends State<SignUp> {
                   SizedBox(width: 5),
                   Expanded(
                       child: OutlineButton(
-                        shape: StadiumBorder(),
-                        onPressed: submit,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(FontAwesomeIcons.stackOverflow),
-                              SizedBox(width: 5),
-                              Text("StackOverFlow")
-                            ],
-                          ),
-                        ),
-                        highlightedBorderColor: Colors.black,
-                        borderSide: BorderSide(color: Colors.grey),
-                      )),
+                    shape: StadiumBorder(),
+                    onPressed: submit,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.stackOverflow),
+                          SizedBox(width: 5),
+                          Text("StackOverFlow")
+                        ],
+                      ),
+                    ),
+                    highlightedBorderColor: Colors.black,
+                    borderSide: BorderSide(color: Colors.grey),
+                  )),
                 ],
               ),
               Row(
