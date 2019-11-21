@@ -73,7 +73,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                           "${snapshot.data["img_cover"]}",
                           height: 200,
                           width: MediaQuery.of(context).size.width,
-                          fit: BoxFit.contain,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       Padding(

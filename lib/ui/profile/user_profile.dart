@@ -1,3 +1,4 @@
+import 'package:dev_hub/ui/profile/edit_profile_basic_details.dart';
 import 'package:flutter/material.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -42,8 +43,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       top: 100.0,
                       left: 10.0,
                       child: Container(
-                        height: 190.0,
-                        width: 190.0,
+                        height: 150.0,
+                        width: 150.0,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
@@ -59,7 +60,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 40.0, right: 10.0),
+                padding: EdgeInsets.only(left: 20.0, right: 10.0),
 
                 alignment: Alignment.bottomLeft,
                 height: 130.0,
@@ -69,7 +70,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     Text(
                       'Mark Stein',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 28.0),
+                          fontWeight: FontWeight.bold, fontSize: 24.0),
                     ),
                     SizedBox(
                       width: 5.0,
@@ -80,11 +81,32 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
                     Spacer(),
                     IconButton(
+                      onPressed: (){
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return EditProfileBasicDetails();
+                            },
+                          ),
+                        );
+                      },
                       icon: Icon(Icons.edit, color: Colors.black),
                     ),
-                    Text(
-                      'Edit Profile',
-                      style: TextStyle(color: Colors.black),
+                    FlatButton(
+                      onPressed: (){
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return EditProfileBasicDetails();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Edit Profile',
+                        style: TextStyle(color: Colors.black),
+
+                      ),
                     )
                   ],
                 ),

@@ -1,4 +1,5 @@
 import 'package:dev_hub/blocs/conversation_bloc.dart';
+import 'package:dev_hub/ui/communities/community_details.dart';
 import 'package:dev_hub/ui/profile/user_profile.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:dev_hub/widgets/chat_bubble.dart';
@@ -6,6 +7,10 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class Conversation extends StatefulWidget {
+  bool isCommunity;
+
+  Conversation(this.isCommunity);
+
   @override
   _ConversationState createState() => _ConversationState();
 }
@@ -67,65 +72,98 @@ class _ConversationState extends State<Conversation> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return UserProfilePage();
+                  return widget.isCommunity
+                      ? CommunityDetails()
+                      : UserProfilePage();
                 },
               ),
             );
           },
         ),
         actions: <Widget>[
-          PopupMenuButton<int>(
-            icon: Icon(Icons.more_horiz),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 1,
-                child: Text('Mute'),
-              ),
-              PopupMenuDivider(),
-              PopupMenuItem(
-                value: 2,
-                child: Text('Block'),
-              ),
-              PopupMenuDivider(),
-              PopupMenuItem(
-                value: 3,
-                child: Text('Report'),
-              ),
-              PopupMenuDivider(),
-              PopupMenuItem(
-                value: 4,
-                child: Text('Clear chat'),
-              )
-            ],
-            onSelected: (item) {
-              switch (item) {
-                case 1:
-                  {
-                    confirmationDialog(
-                        'Are you sure you want to Mute this chat?');
-                  }
-                  break;
-                case 2:
-                  {
-                    confirmationDialog(
-                        'Are you sure you want to Bloc this user?');
-                  }
-                  break;
-                case 3:
-                  {
-                    confirmationDialog(
-                        'Are you sure you want to Report this user?');
-                  }
-                  break;
-                case 4:
-                  {
-                    confirmationDialog(
-                        'Are you sure you want to Clear this chat?');
-                  }
-                  break;
-              }
-            },
-          )
+          widget.isCommunity
+              ? PopupMenuButton<int>(
+                  icon: Icon(Icons.more_horiz),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 1,
+                      child: Text('Mute'),
+                    ),
+                    PopupMenuDivider(),
+                    PopupMenuItem(
+                      value: 2,
+                      child: Text('Exit Community chat'),
+                    ),
+                  ],
+                  onSelected: (item) {
+                    switch (item) {
+                      case 1:
+                        {
+                          confirmationDialog(
+                              'Are you sure you want to Mute this chat?');
+                        }
+                        break;
+                      case 2:
+                        {
+                          confirmationDialog(
+                              'Are you sure you want to Exit Community chat?');
+                        }
+                        break;
+                    }
+                  },
+                )
+              : PopupMenuButton<int>(
+                  icon: Icon(Icons.more_horiz),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 1,
+                      child: Text('Mute'),
+                    ),
+                    PopupMenuDivider(),
+                    PopupMenuItem(
+                      value: 2,
+                      child: Text('Block'),
+                    ),
+                    PopupMenuDivider(),
+                    PopupMenuItem(
+                      value: 3,
+                      child: Text('Report'),
+                    ),
+                    PopupMenuDivider(),
+                    PopupMenuItem(
+                      value: 4,
+                      child: Text('Clear chat'),
+                    )
+                  ],
+                  onSelected: (item) {
+                    switch (item) {
+                      case 1:
+                        {
+                          confirmationDialog(
+                              'Are you sure you want to Mute this chat?');
+                        }
+                        break;
+                      case 2:
+                        {
+                          confirmationDialog(
+                              'Are you sure you want to Bloc this user?');
+                        }
+                        break;
+                      case 3:
+                        {
+                          confirmationDialog(
+                              'Are you sure you want to Report this user?');
+                        }
+                        break;
+                      case 4:
+                        {
+                          confirmationDialog(
+                              'Are you sure you want to Clear this chat?');
+                        }
+                        break;
+                    }
+                  },
+                )
         ],
       ),
       body: Container(

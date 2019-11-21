@@ -19,7 +19,6 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

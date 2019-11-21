@@ -80,6 +80,7 @@ class _ChatsState extends State<Chats>
                             counter: chat['counter'],
                             msg: chat['msg'],
                             time: chat['time'],
+                            isCommunity: false,
                           );
                         },
                       );
@@ -117,6 +118,7 @@ class _ChatsState extends State<Chats>
                             counter: chat['counter'],
                             msg: chat['msg'],
                             time: chat['time'],
+                            isCommunity: true,
                           );
                         },
                       );

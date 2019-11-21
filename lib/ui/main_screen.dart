@@ -1,5 +1,6 @@
 import 'package:dev_hub/ui/communities/communities_home.dart';
 import 'package:dev_hub/ui/events/events_home.dart';
+import 'package:dev_hub/ui/my_communities/my_communities.dart';
 import 'package:dev_hub/ui/my_events/my_events.dart';
 import 'package:dev_hub/ui/my_jobs/my_jobs.dart';
 import 'package:dev_hub/ui/profile/user_profile.dart';
@@ -98,7 +99,12 @@ class _MainScreenState extends State<MainScreen> {
             ListTile(
               leading: Icon(Icons.group),
               title: Text('My Communities'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return MyCommunities();
+                }));
+              },
             ),
             ListTile(
               leading: Icon(Icons.card_travel),

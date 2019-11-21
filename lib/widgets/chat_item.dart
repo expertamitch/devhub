@@ -8,16 +8,18 @@ class ChatItem extends StatefulWidget {
   final String msg;
   final bool isOnline;
   final int counter;
+  final bool isCommunity;
 
-  ChatItem({
-    Key key,
-    @required this.dp,
-    @required this.name,
-    @required this.time,
-    @required this.msg,
-    @required this.isOnline,
-    @required this.counter,
-  }) : super(key: key);
+  ChatItem(
+      {Key key,
+      @required this.dp,
+      @required this.name,
+      @required this.time,
+      @required this.msg,
+      @required this.isOnline,
+      @required this.counter,
+      @required this.isCommunity})
+      : super(key: key);
 
   @override
   _ChatItemState createState() => _ChatItemState();
@@ -111,7 +113,7 @@ class _ChatItemState extends State<ChatItem> {
           Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return Conversation();
+                return Conversation(widget.isCommunity);
               },
             ),
           );
