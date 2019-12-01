@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dev_hub/blocs/profile_basic_details_bloc.dart';
 import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/disabled_focus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_country_picker/flutter_country_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'edit_profile_professional_details.dart';
@@ -20,7 +20,8 @@ class EditProfileBasicDetails extends StatefulWidget {
 
 class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
   int _gender = 0;
-  Country _country;
+
+//  Country _country;
 
   @override
   void dispose() {
@@ -64,27 +65,27 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
             Container(
               alignment: Alignment.centerLeft,
               child: FlatButton(
-                  child: new Text("Cancel",textAlign: TextAlign.start,),
-                  onPressed:(){
+                  child: new Text(
+                    "Cancel",
+                    textAlign: TextAlign.start,
+                  ),
+                  onPressed: () {
                     Navigator.of(context).pop();
-                  }
-              ),
+                  }),
             ),
             // usually buttons at the bottom of the dialog
             FlatButton(
-              child: new Text("Camera"),
-              onPressed:(){
-                Navigator.of(context).pop();
-                _getViaCamera();
-              }
-            ),
+                child: new Text("Camera"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _getViaCamera();
+                }),
             FlatButton(
                 child: new Text("Gallery"),
-                onPressed:(){
+                onPressed: () {
                   Navigator.of(context).pop();
                   _getViaGallery();
-                }
-            ),
+                }),
           ],
         );
       },
@@ -246,7 +247,7 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -258,20 +259,12 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
                 SizedBox(
                   width: 10,
                 ),
-                CountryPicker(
-                  dense: false,
-                  showFlag: true,
-                  //displays flag, true by default
-                  showDialingCode: false,
-                  //displays dialing code, false by default
-                  showName: true,
-                  //displays country name, true by default
-                  onChanged: (Country country) {
-                    setState(() {
-                      _country = country;
-                    });
-                  },
-                  selectedCountry: _country,
+                CountryCodePicker(
+                  onChanged: print,
+                  initialSelection: '+94',
+                  favorite: ['+94'],
+                  showOnlyCountryWhenClosed: true,
+                  alignLeft: false,
                 ),
               ],
             ),
@@ -298,31 +291,18 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
             SizedBox(
               height: 20,
             ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                    child: RaisedButton(
-                  shape: StadiumBorder(),
-                  color: Constants.buttonColor,
-                  onPressed: cancel,
-                  textColor: Colors.white,
-                  child: Text(
-                    "Cancel",
-                  ),
-                )),
-                SizedBox(width: 20),
-                Expanded(
-                    child: RaisedButton(
-                  shape: StadiumBorder(),
-                  color: Constants.buttonColor,
-                  onPressed: next,
-                  textColor: Colors.white,
-                  child: Text(
-                    "Next",
-                  ),
-                )),
-              ],
-            )
+            Container(
+              width: 150,
+              child: RaisedButton(
+                shape: StadiumBorder(),
+                color: Constants.buttonColor,
+                onPressed: next,
+                textColor: Colors.white,
+                child: Text(
+                  "Next",
+                ),
+              ),
+            ),
           ]),
         ));
   }

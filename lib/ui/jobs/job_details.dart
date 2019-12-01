@@ -32,7 +32,6 @@ class _DetailsState extends State<Details> {
 
             return ListView(
               children: <Widget>[
-                SizedBox(height: 10),
                 Padding(
                   padding: EdgeInsets.all(10),
                   child: GestureDetector(
@@ -40,7 +39,7 @@ class _DetailsState extends State<Details> {
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
                         place["img"],
-                        height: 250,
+                        height: 220,
                         width: MediaQuery.of(context).size.width - 40,
                         fit: BoxFit.cover,
                       ),
@@ -180,10 +179,7 @@ class _DetailsState extends State<Details> {
                         )
                       ],
                     ),
-                    Divider(
-                      height: 40,
-                      color: Colors.blueGrey,
-                    ),
+                    Divider(height:40,color: Colors.grey.shade200,thickness: 5,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -272,7 +268,7 @@ class _DetailsState extends State<Details> {
                         )
                       ],
                     ),
-                    SizedBox(height: 10),
+                    Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -303,6 +299,7 @@ class _DetailsState extends State<Details> {
                         textAlign: TextAlign.left,
                       ),
                     ),
+                    SizedBox(height: 10,),
                     MaterialButton(
                       elevation: 1,
                       color: Colors.blueGrey,
@@ -315,6 +312,7 @@ class _DetailsState extends State<Details> {
                     SizedBox(height: 10),
                   ],
                 ),
+                Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
@@ -330,11 +328,11 @@ class _DetailsState extends State<Details> {
     );
   }
 
+
   getRecommended() {
     return Container(
+      height: 220,
       padding: EdgeInsets.only(top: 10, left: 20),
-      height: 250,
-//            color: Colors.red,
       width: MediaQuery.of(context).size.width,
       child: StreamBuilder<List<dynamic>>(
           stream: _recommendedJobsBloc.stream,
@@ -342,72 +340,83 @@ class _DetailsState extends State<Details> {
             return snapshot.data == null
                 ? Container()
                 : ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    primary: false,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Map place = snapshot.data.reversed.toList()[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: InkWell(
-                          child: Container(
-                            height: 250,
-                            width: 140,
-//                      color: Colors.green,
-                            child: Column(
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    "${place["img"]}",
-                                    height: 178,
-                                    width: 140,
-                                    fit: BoxFit.cover,
-                                  ),
+              scrollDirection: Axis.horizontal,
+              primary: false,
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                Map place = snapshot.data.reversed.toList()[index];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Card(
+                    elevation: 3,
+                    child: InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 200,
+                          width: 140,
+                          child: Column(
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  "${place["img"]}",
+                                  height: 120,
+                                  width: 140,
+                                  fit: BoxFit.cover,
                                 ),
-                                SizedBox(height: 7),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "${place["name"]}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
-                                    maxLines: 2,
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                                SizedBox(height: 3),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "${place["location"]}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                      color: Colors.blueGrey[300],
-                                    ),
-                                    maxLines: 1,
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return Details();
-                                },
                               ),
-                            );
-                          },
+                              SizedBox(height: 7),
+                              Center(
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "${place["name"]}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                        maxLines: 2,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    SizedBox(height: 3),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "${place["location"]}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: Colors.blueGrey[300],
+                                        ),
+                                        maxLines: 1,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      );
-                    },
-                  );
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return Details();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
+            );
           }),
     );
   }

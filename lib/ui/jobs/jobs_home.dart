@@ -41,7 +41,7 @@ class _JobsHomeState extends State<JobsHome> {
                 ),
               ),
               getFeatured(),
-              SizedBox(height: 12.0),
+              Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
@@ -56,8 +56,9 @@ class _JobsHomeState extends State<JobsHome> {
             height: 16,
           ),
           Divider(
-            height: 1,
-            color: Colors.blueGrey,
+            height: 10,
+            color: Colors.grey.shade200,
+            thickness: 2,
           ),
           getOther(),
         ],
@@ -67,7 +68,7 @@ class _JobsHomeState extends State<JobsHome> {
 
   getSearch() {
     return Padding(
-      padding: EdgeInsets.only(left: 20,right: 20),
+      padding: EdgeInsets.only(left: 20, right: 20),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.blueGrey[50],
@@ -129,61 +130,68 @@ class _JobsHomeState extends State<JobsHome> {
                     itemBuilder: (BuildContext context, int index) {
                       Map place = snapshot.data.reversed.toList()[index];
                       return Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: InkWell(
-                          child: Container(
-                            height: 250,
-                            width: 140,
-                            child: Column(
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    "${place["img"]}",
-                                    height: 178,
-                                    width: 140,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                SizedBox(height: 7),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "${place["name"]}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          margin: const EdgeInsets.only(right: 10),
+                          elevation: 3,
+                          child: InkWell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 180,
+                                width: 180,
+                                child: Column(
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(
+                                        "${place["img"]}",
+                                        height: 120,
+                                        width: 180,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    maxLines: 2,
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                                SizedBox(height: 3),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "${place["location"]}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                      color: Colors.blueGrey[300],
+                                    SizedBox(height: 7),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "${place["name"]}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                        maxLines: 2,
+                                        textAlign: TextAlign.left,
+                                      ),
                                     ),
-                                    maxLines: 1,
-                                    textAlign: TextAlign.left,
-                                  ),
+                                    SizedBox(height: 3),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "${place["location"]}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: Colors.blueGrey[300],
+                                        ),
+                                        maxLines: 1,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return Details();
-                                },
                               ),
-                            );
-                          },
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return Details();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       );
                     },
@@ -194,9 +202,8 @@ class _JobsHomeState extends State<JobsHome> {
 
   getRecommended() {
     return Container(
+      height: 220,
       padding: EdgeInsets.only(top: 10, left: 20),
-      height: 250,
-//            color: Colors.red,
       width: MediaQuery.of(context).size.width,
       child: StreamBuilder<List<dynamic>>(
           stream: _recommendedJobsBloc.stream,
@@ -210,62 +217,73 @@ class _JobsHomeState extends State<JobsHome> {
                     itemBuilder: (BuildContext context, int index) {
                       Map place = snapshot.data.reversed.toList()[index];
                       return Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: InkWell(
-                          child: Container(
-                            height: 250,
-                            width: 140,
-//                      color: Colors.green,
-                            child: Column(
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    "${place["img"]}",
-                                    height: 178,
-                                    width: 140,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                SizedBox(height: 7),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "${place["name"]}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Card(
+                          elevation: 3,
+                          child: InkWell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 200,
+                                width: 140,
+                                child: Column(
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(
+                                        "${place["img"]}",
+                                        height: 120,
+                                        width: 140,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    maxLines: 2,
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                                SizedBox(height: 3),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "${place["location"]}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                      color: Colors.blueGrey[300],
+                                    SizedBox(height: 7),
+                                    Center(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "${place["name"]}",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                          SizedBox(height: 3),
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "${place["location"]}",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13,
+                                                color: Colors.blueGrey[300],
+                                              ),
+                                              maxLines: 1,
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    maxLines: 1,
-                                    textAlign: TextAlign.left,
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return Details();
-                                },
                               ),
-                            );
-                          },
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return Details();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       );
                     },
@@ -293,84 +311,94 @@ class _JobsHomeState extends State<JobsHome> {
                         padding: const EdgeInsets.only(bottom: 15.0),
                         child: InkWell(
                           child: Container(
-                            height: 70,
-//                    color: Colors.red,
-                            child: Row(
+                            child: Column(
                               children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(5),
-                                  child: Image.asset(
-                                    "${place["img"]}",
-                                    height: 70,
-                                    width: 90,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                SizedBox(width: 15),
-                                Container(
-                                  height: 80,
-                                  width:
-                                      MediaQuery.of(context).size.width - 150,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Column(
+                                Row(
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Image.asset(
+                                        "${place["img"]}",
+                                        height: 70,
+                                        width: 90,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    SizedBox(width: 15),
+                                    Container(
+                                      height: 80,
+                                      width: MediaQuery.of(context).size.width -
+                                          150,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "${place["name"]}",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14,
-                                              ),
-                                              maxLines: 2,
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 3,
-                                          ),
-                                          Row(
+                                          Column(
                                             children: <Widget>[
-                                              Icon(
-                                                Icons.location_on,
-                                                size: 13,
-                                                color: Colors.blueGrey[300],
-                                              ),
-                                              SizedBox(width: 3),
                                               Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
-                                                  "${place["location"]}",
+                                                  "${place["name"]}",
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 13,
-                                                    color: Colors.blueGrey[300],
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 14,
                                                   ),
-                                                  maxLines: 1,
+                                                  maxLines: 2,
                                                   textAlign: TextAlign.left,
                                                 ),
                                               ),
+                                              SizedBox(
+                                                height: 3,
+                                              ),
+                                              Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.location_on,
+                                                    size: 13,
+                                                    color: Colors.blueGrey[300],
+                                                  ),
+                                                  SizedBox(width: 3),
+                                                  Container(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      "${place["location"]}",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 13,
+                                                        color: Colors
+                                                            .blueGrey[300],
+                                                      ),
+                                                      maxLines: 1,
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ],
+                                          ),
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "${place["time"]}",
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                              ),
+                                              maxLines: 1,
+                                              textAlign: TextAlign.left,
+                                            ),
                                           ),
                                         ],
                                       ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "${place["time"]}",
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                          ),
-                                          maxLines: 1,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
+                                SizedBox(height:8),
+                                Divider(
+                                  height: 1,
+                                  color: Colors.blueGrey,
+                                )
                               ],
                             ),
                           ),

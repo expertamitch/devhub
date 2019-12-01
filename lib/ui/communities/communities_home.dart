@@ -35,6 +35,7 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
               ),
             ),
             getYourCommunities(),
+            Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -116,6 +117,8 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
                           padding: const EdgeInsets.only(left:8.0),
                           child: InkWell(
                             child: Card(
+                              elevation: 3,
+
                               child: Container(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -199,6 +202,8 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
                       itemBuilder: (BuildContext context, int index) {
                         Map place = snapshot.data.reversed.toList()[index];
                         return Card(
+                          elevation: 3,
+
                           child: Padding(
                             padding: const EdgeInsets.all(8),
                             child: InkWell(

@@ -40,12 +40,9 @@ class _EventGoingState extends State<EventGoing> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
-                    /*decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/blank_ticket.png"),
-                            fit: BoxFit.fill)),
-                    */child: Row(
+                    elevation: 3,
+
+                    child: Row(
                       children: <Widget>[
                         RotatedBox(
                           quarterTurns: 3,

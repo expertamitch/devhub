@@ -18,6 +18,7 @@ class EditProfileContactDetailsState extends State<EditProfileContactDetails> {
   final FocusNode _stackFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _contactFocus = FocusNode();
+  final FocusNode _nicNumFocus = FocusNode();
 
   @override
   void dispose() {
@@ -100,12 +101,28 @@ class EditProfileContactDetailsState extends State<EditProfileContactDetails> {
               textInputAction: TextInputAction.next,
               focusNode: _contactFocus,
               onFieldSubmitted: (term) {
-                _contactFocus.unfocus();
+                CommonUtils.fieldFocusChange(
+                    context, _contactFocus,_nicNumFocus);
               },
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Contact Number",
                   labelText: "Contact Number"),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.next,
+              focusNode: _nicNumFocus,
+              onFieldSubmitted: (term) {
+                _nicNumFocus.unfocus();
+              },
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Add your NIC or Passport number",
+                  labelText: "NIC/Passport number"),
             ),
             SizedBox(
               height: 20,
@@ -118,7 +135,7 @@ class EditProfileContactDetailsState extends State<EditProfileContactDetails> {
                 onPressed: cancel,
                 textColor: Colors.white,
                 child: Text(
-                  "Cancel",
+                  "Previous",
                 ),
               )),
               SizedBox(width: 20),

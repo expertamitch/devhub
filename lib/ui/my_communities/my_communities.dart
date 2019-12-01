@@ -59,6 +59,7 @@ class _MyCommunitiesState extends State<MyCommunities>{
                   itemBuilder: (BuildContext context, int index) {
                     Map place = snapshot.data.reversed.toList()[index];
                     return Card(
+                      elevation: 3,
                       child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: InkWell(

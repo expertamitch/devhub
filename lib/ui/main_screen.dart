@@ -4,6 +4,8 @@ import 'package:dev_hub/ui/my_communities/my_communities.dart';
 import 'package:dev_hub/ui/my_events/my_events.dart';
 import 'package:dev_hub/ui/my_jobs/my_jobs.dart';
 import 'package:dev_hub/ui/profile/user_profile.dart';
+import 'package:dev_hub/util/constants.dart';
+import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/connects/friends.dart';
@@ -46,6 +48,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       drawer: Drawer(
         child: ListView(
+
           padding: EdgeInsets.zero,
           children: <Widget>[
             InkWell(
@@ -154,56 +157,45 @@ class _MainScreenState extends State<MainScreen> {
           EventsHome(),
         ],
       ),
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          // sets the background color of the `BottomNavigationBar`
-          canvasColor: Theme.of(context).primaryColor,
-
-          // sets the active color of the `BottomNavigationBar` if `Brightness` is light
-          primaryColor: Theme.of(context).accentColor,
-          textTheme: Theme.of(context).textTheme.copyWith(
-                caption: TextStyle(color: Colors.grey[500]),
-              ),
+      bottomNavigationBar:FFNavigationBar(
+        theme: FFNavigationBarTheme(
+          barBackgroundColor: Colors.white,
+          selectedItemBorderColor: Colors.blueGrey.shade50,
+          selectedItemBackgroundColor: Constants.lightPrimary,
+          selectedItemIconColor: Colors.white,
+          selectedItemLabelColor: Constants.lightPrimary,
+          unselectedItemIconColor: Colors.blueGrey,
+          unselectedItemLabelColor: Colors.blueGrey
         ),
-        child: BottomNavigationBar(
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.message,
-              ),
-              title: Container(height: 0.0),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.group_work,
-              ),
-              title: Container(height: 0.0),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-              ),
-              title: Container(height: 0.0),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.card_travel,
-              ),
-              title: Container(height: 0.0),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.event,
-              ),
-              title: Container(height: 0.0),
-            ),
-          ],
-          onTap: navigationTapped,
-          currentIndex: _page,
-        ),
+        selectedIndex: _page,
+        onSelectTab: (index) {
+          setState(() {
+            _page = index;
+            navigationTapped(_page);
+          });
+        },
+        items: [
+          FFNavigationBarItem(
+            iconData: Icons.message,
+            label: "Message",
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.group_work,
+            label: "Community",
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.home,
+            label: "Home",
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.card_travel,
+            label: "Jobs",
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.event,
+            label: "Events",
+          ),
+        ],
       ),
     );
   }

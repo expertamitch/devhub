@@ -14,39 +14,38 @@ class _ProfilePageState extends State<ProfilePage> {
           Column(
             children: <Widget>[
               Container(
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  overflow: Overflow.visible,
+                child:  Stack(
+                  alignment: Alignment.bottomLeft,
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            height: 200.0,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        'https://www.sageisland.com/wp-content/uploads/2017/06/beat-instagram-algorithm.jpg'))),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 75),
+                      child: Image.asset(
+                        "assets/images/cover_photo.jpeg",
+                        height: 200,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        decoration: ShapeDecoration(
+                            shape: CircleBorder(), color: Colors.grey),
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(75.0),
+                            child: Image.asset(
+                              "assets/images/profile_photo.png",
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                    Positioned(
-                      top: 100.0,
-                      left: 10.0,
-                      child: Container(
-                        height: 190.0,
-                        width: 190.0,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/neighbours-scott-mcgregor-mark-brennan-1552152995.jpg?resize=768:*'),
-                            ),
-                            border:
-                                Border.all(color: Colors.white, width: 6.0)),
                       ),
                     ),
                   ],

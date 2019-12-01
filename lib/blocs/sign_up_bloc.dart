@@ -51,11 +51,11 @@ class SignUpBloc implements BaseBloc {
   }
 
 
-  void validatePhone(String password) {
-    if (password.length > 10) {
-      passwordSink.add(password);
+  void validatePhone(String phone) {
+    if (phone.length==10) {
+      phoneSink.add(phone);
     } else {
-      passwordSink.addError("Invalid phone number");
+      phoneSink.addError("Invalid phone number");
     }
   }
 }

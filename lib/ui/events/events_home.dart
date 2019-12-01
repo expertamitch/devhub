@@ -44,7 +44,7 @@ class EventsHomeState extends State<EventsHome> {
         children: <Widget>[
           getSearch(),
           carouselView(),
-          SizedBox(height: 10.0),
+          Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -53,6 +53,7 @@ class EventsHomeState extends State<EventsHome> {
             ),
           ),
           getUpcomingEvents(),
+          Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -111,7 +112,7 @@ class EventsHomeState extends State<EventsHome> {
                 }).toList(),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -207,6 +208,8 @@ class EventsHomeState extends State<EventsHome> {
                     itemBuilder: (BuildContext context, int index) {
                       Map place = snapshot.data.reversed.toList()[index];
                       return Card(
+                        elevation: 3,
+
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: InkWell(
@@ -220,7 +223,7 @@ class EventsHomeState extends State<EventsHome> {
                                     child: Image.asset(
                                       "${place["img"]}",
                                       height: 140,
-                                      width: 200,
+                                      width: 250,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -326,7 +329,7 @@ class EventsHomeState extends State<EventsHome> {
       child: StreamBuilder<List<dynamic>>(
           stream: _bloc.suggestedEventStream,
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-            return snapshot.hasError
+            return snapshot.data==null
                 ? Container()
                 : ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -335,6 +338,7 @@ class EventsHomeState extends State<EventsHome> {
                     itemBuilder: (BuildContext context, int index) {
                       Map place = snapshot.data.reversed.toList()[index];
                       return Card(
+                        elevation: 3,
                         child: InkWell(
                           child: Padding(
                             padding: const EdgeInsets.only(right: 8,left: 8,top: 4,bottom: 4),

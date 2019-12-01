@@ -35,6 +35,7 @@ class _SavedJobsState extends State<SavedJobs>{
               Map place = snapshot.data.reversed.toList()[index];
               return InkWell(
                 child: Card(
+                  elevation: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(

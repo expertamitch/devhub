@@ -189,7 +189,8 @@ class _EventDetailsState extends State<EventDetails> {
                 color: Constants.buttonColor,
                 textColor: Colors.white,
               ),
-              SizedBox(height: 20.0),
+              Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
+
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -247,6 +248,7 @@ class _EventDetailsState extends State<EventDetails> {
                   height: 0,
                 ),
               ),
+              Divider(height:40,color: Colors.grey.shade200,thickness: 5,),
               Text(
                 "Speakers",
                 style: TextStyle(
@@ -259,77 +261,8 @@ class _EventDetailsState extends State<EventDetails> {
               SizedBox(
                 height: 10,
               ),
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                primary: false,
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: events.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Map place = events.reversed.toList()[index];
-                  return InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 8, left: 8, top: 4, bottom: 4),
-                      child: Container(
-                        height: 90,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(40),
-                              child: Image.asset(
-                                "${place["img"]}",
-                                height: 80,
-                                width: 80,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(width: 4),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "${place["name"]}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                  maxLines: 1,
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  "${place["name"]}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                  ),
-                                  maxLines: 1,
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  "${place["name"]}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                  ),
-                                  maxLines: 1,
-                                  textAlign: TextAlign.left,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      //todo apply on tap
-                    },
-                  );
-                },
-              ),
-              SizedBox(height: 20),
+            getSpeakers(),
+              Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
               Text(
                 "Partners & Sponsers",
                 style: TextStyle(
@@ -340,63 +273,8 @@ class _EventDetailsState extends State<EventDetails> {
                 textAlign: TextAlign.left,
               ),
               SizedBox(height: 10),
-              Container(
-                height: 120,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  primary: false,
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: events.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Map place = events.reversed.toList()[index];
-                    return InkWell(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 8, left: 8, top: 4, bottom: 4),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(5),
-                              child: Image.asset(
-                                "${place["img"]}",
-                                height: 80,
-                                width: 120,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              "${place["name"]}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                              maxLines: 1,
-                              textAlign: TextAlign.left,
-                            ),
-                            SizedBox(width: 4),
-                            Text(
-                              "${place["name"]}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
-                              maxLines: 1,
-                              textAlign: TextAlign.left,
-                            )
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        //todo apply tap
-                      },
-                    );
-                  },
-                ),
-              ),
-              SizedBox(height: 20.0),
+             getPartners(),
+              Divider(height:20,color: Colors.grey.shade200,thickness: 5,),
               Text(
                 "Contact the host",
                 style: TextStyle(
@@ -504,4 +382,136 @@ class _EventDetailsState extends State<EventDetails> {
       ),
     );
   }
+}
+
+getPartners() {
+  return  Container(
+    height: 120,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      primary: false,
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      itemCount: events.length,
+      itemBuilder: (BuildContext context, int index) {
+        Map place = events.reversed.toList()[index];
+        return InkWell(
+          child: Padding(
+            padding: const EdgeInsets.only(
+                right: 8, left: 8, top: 4, bottom: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.asset(
+                    "${place["img"]}",
+                    height: 80,
+                    width: 120,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(width: 8),
+                Text(
+                  "${place["name"]}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  maxLines: 1,
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(width: 4),
+                Text(
+                  "${place["name"]}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                  ),
+                  maxLines: 1,
+                  textAlign: TextAlign.left,
+                )
+              ],
+            ),
+          ),
+          onTap: () {
+            //todo apply tap
+          },
+        );
+      },
+    ),
+  );
+}
+
+getSpeakers() {
+ return ListView.builder(
+    scrollDirection: Axis.vertical,
+    primary: false,
+    shrinkWrap: true,
+    physics: ClampingScrollPhysics(),
+    itemCount: events.length,
+    itemBuilder: (BuildContext context, int index) {
+      Map place = events.reversed.toList()[index];
+      return InkWell(
+        child: Padding(
+          padding: const EdgeInsets.only(
+              right: 8, left: 8, top: 4, bottom: 4),
+          child: Container(
+            height: 90,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.asset(
+                    "${place["img"]}",
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(width: 4),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "${place["name"]}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      maxLines: 1,
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "${place["name"]}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "${place["name"]}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        onTap: () {
+          //todo apply on tap
+        },
+      );
+    },
+  );
 }
