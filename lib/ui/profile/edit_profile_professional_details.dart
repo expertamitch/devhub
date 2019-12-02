@@ -258,7 +258,7 @@ class EditProfileProfessionalDetailsState
                   onPressed: cancel,
                   textColor: Colors.white,
                   child: Text(
-                    "Cancel",
+                    "Previous",
                   ),
                 )),
                 SizedBox(width: 20),

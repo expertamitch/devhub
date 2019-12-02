@@ -1,5 +1,6 @@
 import 'package:dev_hub/blocs/community_details_bloc.dart';
 import 'package:dev_hub/util/common_utils.dart';
+import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/material.dart';
 
@@ -9,39 +10,19 @@ class CommunityDetails extends StatefulWidget {
 }
 
 class _CommunityDetailsState extends State<CommunityDetails> {
-  var _followingStatus = "Join";
   var _dropDownMenuItems;
-  List<String> _optionList = [
-    "Join",
-    "Joined",
-    "Unfollow",
-  ];
-
-
-
 
   CommunityDetailsBloc _bloc = CommunityDetailsBloc();
 
   @override
   void initState() {
-    _dropDownMenuItems = getDropDownMenuItems();
-    _followingStatus = _dropDownMenuItems[0].value;
     super.initState();
   }
-
 
   @override
   void dispose() {
     _bloc.dispose();
     super.dispose();
-  }
-
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
-    List<DropdownMenuItem<String>> items = new List();
-    for (String option in _optionList) {
-      items.add(new DropdownMenuItem(value: option, child: new Text(option)));
-    }
-    return items;
   }
 
   @override
@@ -72,8 +53,11 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                         child: Image.asset(
                           "${snapshot.data["img_cover"]}",
                           height: 200,
-                          width: MediaQuery.of(context).size.width,
-                          fit: BoxFit.contain,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       Padding(
@@ -113,10 +97,32 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                           textAlign: TextAlign.left,
                         ),
                       ),
-                      DropdownButton(
-                          value: _followingStatus,
-                          items: _dropDownMenuItems,
-                          onChanged: followUnfollow)
+                      PopupMenuButton(
+
+
+                        child: Card(
+                          elevation: 3,
+                          color: Constants.buttonColor,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left:16,right: 16,bottom: 8,top: 8),
+                            child: Row(children: <Widget>[ Icon(
+                                "${snapshot.data["joining_status"]}" == "true"
+                                    ? Icons.done
+                                    : Icons.add_box,color: Colors.white,size: 18,), Text(
+                                "${snapshot.data["joining_status"]}" == "true"
+                                    ? "Joined"
+                                    : "Join",style: TextStyle(color: Colors.white),
+                            )
+                            ],),
+                          ),
+                        ),
+                        itemBuilder: (context) => "${snapshot.data["joining_status"]}" == "true"?
+                        [
+                          PopupMenuItem(
+                            child: Text("Unfollow"),
+                          ),
+                        ]:[],
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -140,9 +146,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                     ),
                     textAlign: TextAlign.left,
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
+                  Divider(height:40,color: Colors.grey.shade200,thickness: 5,),
                   Text(
                     "Events",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -152,9 +156,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                     height: 8,
                   ),
                   getEvents(),
-                  SizedBox(
-                    height: 12,
-                  ),
+                  Divider(height:40,color: Colors.grey.shade200,thickness: 5,),
                   Text(
                     "Jobs",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -163,13 +165,38 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                   SizedBox(
                     height: 8,
                   ),
-                 getJobs()
+                  getJobs()
                 ],
               );
             }));
   }
 
   followUnfollow(value) {}
+
+  Widget _paddingPopup() =>
+      PopupMenuButton<int>(
+        itemBuilder: (context) =>
+        [
+          PopupMenuItem(
+            value: 1,
+            child: Text(
+              "English",
+              style:
+              TextStyle(fontWeight: FontWeight.w700),
+            ),
+          ),
+          PopupMenuItem(
+            value: 2,
+            child: Text(
+              "Chinese",
+              style:
+              TextStyle(fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+        elevation: 4,
+        padding: EdgeInsets.symmetric(horizontal: 50),
+      );
 
   getEvents() {
     return Container(
@@ -181,6 +208,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
         itemBuilder: (BuildContext context, int index) {
           Map place = events.reversed.toList()[index];
           return Card(
+            elevation: 3,
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: InkWell(
@@ -203,10 +231,8 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                           Row(
                             children: <Widget>[
                               Column(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Container(
                                     alignment: Alignment.centerLeft,
@@ -254,26 +280,20 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                               Container(
                                   alignment: Alignment.bottomRight,
                                   decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.all(
+                                      borderRadius: BorderRadius.all(
                                           Radius.circular(8.0)),
                                       color: Colors.blueGrey[200],
                                       shape: BoxShape.rectangle),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 12,
-                                        bottom: 12,
-                                        left: 4,
-                                        right: 4),
+                                        top: 12, bottom: 12, left: 4, right: 4),
                                     child: Text(
-                                      CommonUtils
-                                          .formatDateDayMonth(
+                                      CommonUtils.formatDateDayMonth(
                                           "${place["date"]}"),
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.white,
-                                          fontWeight:
-                                          FontWeight.w500),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   )),
                             ],
@@ -301,7 +321,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
   }
 
   getJobs() {
-    return  Container(
+    return Container(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         primary: false,
@@ -311,6 +331,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
         itemBuilder: (BuildContext context, int index) {
           Map place = jobsDetails.reversed.toList()[index];
           return Card(
+            elevation: 3,
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: InkWell(
@@ -329,10 +350,8 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                       SizedBox(width: 8),
                       Expanded(
                         child: Column(
-                          mainAxisAlignment:
-                          MainAxisAlignment.start,
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
                               alignment: Alignment.centerLeft,

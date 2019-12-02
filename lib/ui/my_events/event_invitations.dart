@@ -40,11 +40,8 @@ class _EventInvitationsState extends State<EventInvitations>{
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
-//                    decoration: BoxDecoration(
-//                        color: Colors.white,
-//                        image: DecorationImage(
-//                            image: AssetImage("assets/images/blank_ticket.png"),
-//                            fit: BoxFit.fill)),
+                    elevation: 3,
+
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: 16, right: 16, top: 12, bottom: 12),

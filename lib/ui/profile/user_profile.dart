@@ -1,3 +1,7 @@
+import 'package:dev_hub/ui/profile/edit_profile_basic_details.dart';
+import 'package:dev_hub/util/constants.dart';
+import 'package:dev_hub/util/data.dart';
+import 'package:dev_hub/widgets/description_text.dart';
 import 'package:flutter/material.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -8,12 +12,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext cx) {
     return new Scaffold(
       appBar: AppBar(
+        title: Text("Profile"),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
           ),
           onPressed: () => Navigator.pop(context),
         ),
+        centerTitle: true,
       ),
       body: new ListView(
         children: <Widget>[
@@ -21,55 +27,49 @@ class _UserProfilePageState extends State<UserProfilePage> {
             children: <Widget>[
               Container(
                 child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  overflow: Overflow.visible,
+                  alignment: Alignment.bottomLeft,
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            height: 200.0,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        'https://www.sageisland.com/wp-content/uploads/2017/06/beat-instagram-algorithm.jpg'))),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 75),
+                      child: Image.asset(
+                        "assets/images/cover_photo.jpeg",
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        decoration: ShapeDecoration(
+                            shape: CircleBorder(), color: Colors.white),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(75.0),
+                            child: Image.asset(
+                              "assets/images/profile_photo.png",
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                    Positioned(
-                      top: 100.0,
-                      left: 10.0,
-                      child: Container(
-                        height: 190.0,
-                        width: 190.0,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/neighbours-scott-mcgregor-mark-brennan-1552152995.jpg?resize=768:*'),
-                            ),
-                            border:
-                            Border.all(color: Colors.white, width: 6.0)),
                       ),
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 40.0, right: 10.0),
-
+                padding: EdgeInsets.only(left: 20.0, right: 10.0),
                 alignment: Alignment.bottomLeft,
-                height: 130.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       'Mark Stein',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 28.0),
+                          fontWeight: FontWeight.bold, fontSize: 24.0),
                     ),
                     SizedBox(
                       width: 5.0,
@@ -78,21 +78,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       Icons.check_circle,
                       color: Colors.blueAccent,
                     ),
-                    Spacer(),
-                    IconButton(
-                      icon: Icon(Icons.edit, color: Colors.black),
-                    ),
-                    Text(
-                      'Edit Profile',
-                      style: TextStyle(color: Colors.black),
-                    )
                   ],
                 ),
               ),
               SizedBox(
-                height: 32.0,
+                height: 24.0,
               ),
-
               Container(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0),
                 child: Column(
@@ -213,23 +204,42 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
                     Row(
                       children: <Widget>[
-                        Text(
-                          'See more..',
-                          style: TextStyle(fontSize: 18.0),
-                          textAlign: TextAlign.start,
+                        FlatButton(
+                          onPressed: () {
+//                        _showMoreOption(cx);
+                          },
+                          child: Text(
+                            'See more..',
+                            style: TextStyle(fontSize: 18.0),
+                            textAlign: TextAlign.start,
+                          ),
                         ),
                       ],
                     ),
-                    Container(
-                      height: 20.0,
-                      child: Divider(
-                        color: Colors.grey,
-                      ),
+                    Row(
+                      children: <Widget>[
+                        RaisedButton.icon(
+                            color: Colors.white70,
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return EditProfileBasicDetails();
+                                  },
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.edit, color: Colors.black),
+                            label: Text('Edit Profile',
+                                style: TextStyle(color: Colors.black))),
+                      ],
+                    ),
+                    Divider(
+                      height: 20,
+                      color: Colors.grey.shade200,
+                      thickness: 5,
                     ),
                     Container(
                       alignment: Alignment.topLeft,
@@ -237,35 +247,30 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         children: <Widget>[
                           Text(
                             'About me',
-                            style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.start,
-
                           ),
                           SizedBox(height: 5.0),
-                          Text(
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                                "\n Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an"
-                                "\n unknown printer took a galley of type and scrambled it to make a type specimen book. It"
-                                "\n has survived not only five centuries, but also the leap into electronic typesetting, remaining"
-                               "\n essentially unchanged. It was popularised"
-                          ),
+                          DescriptionTextWidget(text:
+                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                              "\nLorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an"
+                              "\nunknown printer took a galley of type and scrambled it to make a type specimen book. It"
+                              "\nhas survived not only five centuries, but also the leap into electronic typesetting, remaining"
+                              "\nessentially unchanged. It was popularised"),
                         ],
                       ),
                     ),
-                    Container(
-                      height: 20.0,
-                      child: Divider(
-                        color: Colors.grey,
-                      ),
+                    Divider(
+                      color: Colors.grey.shade200,
+                      thickness: 5,
                     ),
                     Container(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Technologies',
                           style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontSize: 20.0, fontWeight: FontWeight.bold),
                         )),
                     SizedBox(height: 10.0),
                     Container(
@@ -273,7 +278,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.blue,
@@ -305,7 +309,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               ),
                             ],
                           ),
-                          SizedBox(height:5.0),
+                          SizedBox(height: 5.0),
                           Row(
                             children: <Widget>[
                               Container(
@@ -342,49 +346,58 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         ],
                       ),
                     ),
-                    Container(
-                      height: 20.0,
-                      child: Divider(
-                        color: Colors.grey,
-                      ),
+                    Divider(
+                      height: 40,
+                      color: Colors.grey.shade200,
+                      thickness: 5,
                     ),
                     Container(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Work Experience',
                           style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                    Container(
-                      height: 20.0,
-                      child: Divider(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Container(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Contacts',
-                          style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
+                        )),
+                    getWorkExperience(),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Contacts',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
                         ),
-
+                      ),
                     ),
                     Container(
-                      child: Text('Github'),
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Github'),
+                      ),
                     ),
                     Container(
-                      child: Text('LinkedIn'),
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('LinkedIn'),
+                      ),
                     ),
                     Container(
-                      child: Text('Stackoverflow'),
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Stackoverflow'),
+                      ),
                     ),
                     Container(
-                      child: Text('Email'),
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Email'),
+                      ),
                     ),
                     Container(
                       height: 20.0,
@@ -392,9 +405,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         color: Colors.grey,
                       ),
                     ),
-
                     SizedBox(height: 5.0),
-
                   ],
                 ),
               )
@@ -488,5 +499,76 @@ class _UserProfilePageState extends State<UserProfilePage> {
         );
       },
     );
+  }
+
+  getWorkExperience() {
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          primary: false,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: jobsDetails.length,
+          itemBuilder: (BuildContext context, int index) {
+            Map place = jobsDetails.reversed.toList()[index];
+            return InkWell(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          "${place["img"]}",
+                          height: 80,
+                          width: 120,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${place["name"]}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                                maxLines: 2,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                            SizedBox(height: 3),
+                            Text(
+                              "Apr 2017 - Nov 2019",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                color: Colors.blueGrey[300],
+                              ),
+                              maxLines: 1,
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              )
+            );
+          },
+        ));
   }
 }
