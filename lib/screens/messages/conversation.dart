@@ -6,6 +6,7 @@ import 'package:dev_hub/ui/profile/user_profile.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:dev_hub/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'dart:math';
 
 import 'package:image_picker/image_picker.dart';
@@ -26,6 +27,8 @@ class _ConversationState extends State<Conversation> {
   File _image;
   TextEditingController textEditingController = TextEditingController();
   double offset = 0.0;
+  var toReplyText;
+  Widget replyWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -178,45 +181,95 @@ class _ConversationState extends State<Conversation> {
           children: <Widget>[
             SizedBox(height: 10),
             Flexible(
-              child: StreamBuilder<List<dynamic>>(
-                  stream: _bloc.conversationStream,
-                  builder: (context, snapshot) {
-                    return ListView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      itemCount: snapshot.data.length,
-                      reverse: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        Map msg = snapshot.data[index];
-                        return GestureDetector(
-                          child: Transform.translate(
-                            offset: Offset(offset, 0.0),
-                            child: ChatBubble(
-                              message: msg['type'] == "text"
-                                  ? msg["text"]
-                                  : msg["image"],
-                              username: msg["username"],
-                              time: msg["time"],
-                              type: msg['type'],
-                              replyText: msg["replyText"],
-                              isMe: msg['isMe'],
-                              isGroup: msg['isGroup'],
-                              isReply: msg['isReply'],
-                              replyName: name,
-                            ),
-                          ),
-                          onHorizontalDragUpdate: (i) {
-                            setState(() {
-                              offset = i.globalPosition.dx;
-                            });
-                            print(i.localPosition.toString());
-                          },
-                          onHorizontalDragStart: (i) {
-//                            print(i.localPosition.toString());
+              child: Stack(
+                alignment: AlignmentDirectional.bottomCenter,
+                children: <Widget>[
+                  StreamBuilder<List<dynamic>>(
+                      stream: _bloc.conversationStream,
+                      builder: (context, snapshot) {
+                        return ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          itemCount: snapshot.data.length,
+                          reverse: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            Map msg = snapshot.data[index];
+                            return Slidable(
+                              delegate: new SlidableDrawerDelegate(),
+                              secondaryActions: <Widget>[
+                                new IconSlideAction(
+                                  color: Colors.transparent,
+                                  icon: Icons.reply,
+                                  foregroundColor: Colors.lightBlue,
+                                  onTap: () {
+                                    setState(() {
+                                      toReplyText = msg['type'] == "text"
+                                          ? msg["text"]
+                                          : msg["image"];
+                                      replyWidget = Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                1,
+                                        color: Colors.black38,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Align(
+                                              child: IconButton(
+                                                icon: Icon(
+                                                  Icons.close,
+                                                  size: 18,
+                                                ),
+                                                color: Colors.white,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    replyWidget = null;
+                                                  });
+                                                },
+                                              ),
+                                              alignment: Alignment(1, 1),
+                                            ),
+                                            ChatBubble(
+                                              message: msg['type'] == "text"
+                                                  ? msg["text"]
+                                                  : msg["image"],
+                                              username: msg["username"],
+                                              time: msg["time"],
+                                              type: msg['type'],
+                                              replyText: msg["replyText"],
+                                              isMe: msg['isMe'],
+                                              isGroup: msg['isGroup'],
+                                              isReply: msg['isReply'],
+                                              replyName: name,
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    });
+                                  },
+                                )
+                              ],
+                              child: ChatBubble(
+                                message: msg['type'] == "text"
+                                    ? msg["text"]
+                                    : msg["image"],
+                                username: msg["username"],
+                                time: msg["time"],
+                                type: msg['type'],
+                                replyText: msg["replyText"],
+                                isMe: msg['isMe'],
+                                isGroup: msg['isGroup'],
+                                isReply: msg['isReply'],
+                                replyName: name,
+                              ),
+                            );
                           },
                         );
-                      },
-                    );
-                  }),
+                      }),
+                  replyWidget == null ? Container() : replyWidget
+                ],
+              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -281,7 +334,13 @@ class _ConversationState extends State<Conversation> {
                           controller: textEditingController,
                           onSubmitted: (text) {
                             textEditingController.text = "";
-                            _bloc.sendMessage(text, false);
+                            replyWidget == null
+                                ? _bloc.sendMessage(text, false)
+                                : _bloc.replyText(toReplyText, true, text);
+//                            _bloc.sendMessage(text, replyWidget != null);
+                            setState(() {
+                              replyWidget = null;
+                            });
                           },
                         ),
                         trailing: IconButton(
@@ -290,9 +349,16 @@ class _ConversationState extends State<Conversation> {
                             color: Theme.of(context).accentColor,
                           ),
                           onPressed: () {
-                            _bloc.sendMessage(
-                                textEditingController.text, false);
+                            replyWidget == null
+                                ? _bloc.sendMessage(
+                                    textEditingController.text, false)
+                                : _bloc.replyText(toReplyText, true,
+                                    textEditingController.text);
+
                             textEditingController.text = "";
+                            setState(() {
+                              replyWidget = null;
+                            });
                           },
                         ),
                       ),

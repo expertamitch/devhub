@@ -114,14 +114,21 @@ class _ChatBubbleState extends State<ChatBubble> {
                             ),
                             SizedBox(height: 2),
                             Container(
-                              child: Text(
-                                widget.replyText,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10,
-                                ),
-                                maxLines: 2,
-                              ),
+                              child: widget.replyText.startsWith("assets")
+                                  ? Image.asset(
+                                      "${widget.replyText}",
+                                      height: 30,
+                                      width: 30,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Text(
+                                      widget.replyText,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 10,
+                                      ),
+                                      maxLines: 2,
+                                    ),
                               alignment: Alignment.centerLeft,
                             ),
                           ],
