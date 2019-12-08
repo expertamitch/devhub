@@ -1,7 +1,10 @@
+import 'package:dev_hub/screens/messages/conversation.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/material.dart';
 
 class Connects extends StatefulWidget {
+  bool openChat;
+  Connects(this.openChat);
   @override
   _ConnectsState createState() => _ConnectsState();
 }
@@ -44,28 +47,42 @@ class _ConnectsState extends State<Connects> {
               contentPadding: EdgeInsets.all(0),
               title: Text(friend['name']),
               subtitle: Text(friend['status']),
-              trailing: friend['isAccept']
-                  ? FlatButton(
-                      child: Text(
-                        "Unfollow",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+              trailing: !widget.openChat
+                  ? friend['isAccept']
+                      ? FlatButton(
+                          child: Text(
+                            "Unfollow",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          color: Colors.grey,
+                          onPressed: () {},
+                        )
+                      : FlatButton(
+                          child: Text(
+                            "Follow",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          color: Theme.of(context).accentColor,
+                          onPressed: () {},
+                        )
+                  : IconButton(
+                      icon: Icon(Icons.navigate_next),
                       color: Colors.grey,
                       onPressed: () {},
-                    )
-                  : FlatButton(
-                      child: Text(
-                        "Follow",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      color: Theme.of(context).accentColor,
-                      onPressed: () {},
                     ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return Conversation(true);
+                    },
+                  ),
+                );
+              },
             ),
           );
         },

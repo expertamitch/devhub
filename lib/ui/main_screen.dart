@@ -48,7 +48,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
       drawer: Drawer(
         child: ListView(
-
           padding: EdgeInsets.zero,
           children: <Widget>[
             InkWell(
@@ -80,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return Connects();
+                      return Connects(false);
                     },
                   ),
                 );
@@ -157,16 +156,15 @@ class _MainScreenState extends State<MainScreen> {
           EventsHome(),
         ],
       ),
-      bottomNavigationBar:FFNavigationBar(
+      bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
-          barBackgroundColor: Colors.white,
-          selectedItemBorderColor: Colors.blueGrey.shade50,
-          selectedItemBackgroundColor: Constants.lightPrimary,
-          selectedItemIconColor: Colors.white,
-          selectedItemLabelColor: Constants.lightPrimary,
-          unselectedItemIconColor: Colors.blueGrey,
-          unselectedItemLabelColor: Colors.blueGrey
-        ),
+            barBackgroundColor: Colors.white,
+            selectedItemBorderColor: Colors.blueGrey.shade50,
+            selectedItemBackgroundColor: Constants.lightPrimary,
+            selectedItemIconColor: Colors.white,
+            selectedItemLabelColor: Constants.lightPrimary,
+            unselectedItemIconColor: Colors.blueGrey,
+            unselectedItemLabelColor: Colors.blueGrey),
         selectedIndex: _page,
         onSelectTab: (index) {
           setState(() {
