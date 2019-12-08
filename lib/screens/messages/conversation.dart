@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dev_hub/blocs/conversation_bloc.dart';
 import 'package:dev_hub/ui/communities/community_details.dart';
 import 'package:dev_hub/ui/profile/user_profile.dart';
@@ -5,6 +7,8 @@ import 'package:dev_hub/util/data.dart';
 import 'package:dev_hub/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:image_picker/image_picker.dart';
 
 class Conversation extends StatefulWidget {
   bool isCommunity;
@@ -19,7 +23,9 @@ class _ConversationState extends State<Conversation> {
   ConversationBloc _bloc = ConversationBloc();
   static Random random = Random();
   String name = names[random.nextInt(10)];
+  File _image;
   TextEditingController textEditingController = TextEditingController();
+  double offset = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -181,18 +187,32 @@ class _ConversationState extends State<Conversation> {
                       reverse: true,
                       itemBuilder: (BuildContext context, int index) {
                         Map msg = snapshot.data[index];
-                        return ChatBubble(
-                          message: msg['type'] == "text"
-                              ? msg["text"]
-                              : msg["image"],
-                          username: msg["username"],
-                          time: msg["time"],
-                          type: msg['type'],
-                          replyText: msg["replyText"],
-                          isMe: msg['isMe'],
-                          isGroup: msg['isGroup'],
-                          isReply: msg['isReply'],
-                          replyName: name,
+                        return GestureDetector(
+                          child: Transform.translate(
+                            offset: Offset(offset, 0.0),
+                            child: ChatBubble(
+                              message: msg['type'] == "text"
+                                  ? msg["text"]
+                                  : msg["image"],
+                              username: msg["username"],
+                              time: msg["time"],
+                              type: msg['type'],
+                              replyText: msg["replyText"],
+                              isMe: msg['isMe'],
+                              isGroup: msg['isGroup'],
+                              isReply: msg['isReply'],
+                              replyName: name,
+                            ),
+                          ),
+                          onHorizontalDragUpdate: (i) {
+                            setState(() {
+                              offset = i.globalPosition.dx;
+                            });
+                            print(i.localPosition.toString());
+                          },
+                          onHorizontalDragStart: (i) {
+//                            print(i.localPosition.toString());
+                          },
                         );
                       },
                     );
@@ -226,7 +246,9 @@ class _ConversationState extends State<Conversation> {
                             Icons.add,
                             color: Theme.of(context).accentColor,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _showImagePickOptionDialog(false);
+                          },
                         ),
                         contentPadding: EdgeInsets.all(0),
                         title: TextField(
@@ -308,5 +330,59 @@ class _ConversationState extends State<Conversation> {
             ],
           );
         });
+  }
+
+  Future _getViaGallery(bool isReply) async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+      _bloc.addMediaMesssage(image.path, isReply);
+    });
+  }
+
+  Future _getViaCamera(bool isReply) async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+      _bloc.addMediaMesssage(image.path, isReply);
+    });
+  }
+
+  void _showImagePickOptionDialog(bool isReply) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Select via"),
+          actions: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              child: FlatButton(
+                  child: new Text(
+                    "Cancel",
+                    textAlign: TextAlign.start,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ),
+            // usually buttons at the bottom of the dialog
+            FlatButton(
+                child: new Text("Camera"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _getViaCamera(isReply);
+                }),
+            FlatButton(
+                child: new Text("Gallery"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _getViaGallery(isReply);
+                }),
+          ],
+        );
+      },
+    );
   }
 }

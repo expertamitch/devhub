@@ -35,4 +35,28 @@ class ConversationBloc extends BaseBloc {
   void dispose() {
     _conversationController.close();
   }
+
+  void addMediaMesssage(String text, bool isReply) {
+    var data = {
+      "username": "Group ${random.nextInt(20)}",
+      "time": "${random.nextInt(50)} min ago",
+      "type": 'image',
+      "replyText": text,
+      "text": text,
+      "isMe": true,
+      "isGroup": false,
+      "image": text,
+      "isReply": isReply
+    };
+
+    List<dynamic> messages = _conversationController.value;
+    messages.insert(0, data);
+    _conversationController.add(messages);
+  }
+
+  void undo(int index, dynamic message) {
+    List<dynamic> messages = _conversationController.value;
+    messages.insert(index, message);
+    _conversationController.add(messages);
+  }
 }
