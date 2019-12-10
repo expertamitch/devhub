@@ -10,7 +10,6 @@ class ProfileProfessionDetailsBloc implements BaseBloc {
   final _companyController = StreamController<String>();
   final _educationController = StreamController<String>();
   final _collegeController = StreamController<String>();
-  final _aboutController = StreamController<String>();
 
   final _technologyListController =BehaviorSubject<List<Technology>>();
 
@@ -22,7 +21,6 @@ class ProfileProfessionDetailsBloc implements BaseBloc {
 
   Stream<String> get collegeStream => _collegeController.stream;
 
-  Stream<String> get aboutStream => _aboutController.stream;
 
   Stream<List<Technology>> get technologyListStream =>
       _technologyListController.stream;
@@ -34,8 +32,6 @@ class ProfileProfessionDetailsBloc implements BaseBloc {
   StreamSink<String> get educationSink => _educationController.sink;
 
   StreamSink<String> get collegeSink => _collegeController.sink;
-
-  StreamSink<String> get aboutSink => _aboutController.sink;
 
   StreamSink<List<Technology>> get technologyListSink =>
       _technologyListController.sink;
@@ -70,13 +66,6 @@ class ProfileProfessionDetailsBloc implements BaseBloc {
   }
 
 
-  void validateAbout(String about) {
-    if (about.isNotEmpty) {
-      aboutSink.add(about);
-    } else {
-      aboutSink.addError("Enter something about you");
-    }
-  }
 
   void validateCollege(String college) {
     if (college.isNotEmpty) {
@@ -89,7 +78,6 @@ class ProfileProfessionDetailsBloc implements BaseBloc {
   @override
   void dispose() {
     _jobTitleController.close();
-    _aboutController.close();
     _collegeController.close();
     _companyController.close();
     _educationController.close();

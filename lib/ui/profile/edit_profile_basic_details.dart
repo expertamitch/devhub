@@ -37,6 +37,7 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
   final FocusNode _lastNameFocus = FocusNode();
   final FocusNode _profileTitleFocus = FocusNode();
   final FocusNode _liveInFocus = FocusNode();
+  final FocusNode _aboutFocus = FocusNode();
 
   File _image;
 
@@ -279,13 +280,38 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
                     keyboardType: TextInputType.text,
                     focusNode: _liveInFocus,
                     onFieldSubmitted: (term) {
-                      _liveInFocus.unfocus();
+                      CommonUtils.fieldFocusChange(
+                          context, _liveInFocus, _aboutFocus);
                     },
                     decoration: InputDecoration(
                         errorText: snapshot.hasError ? snapshot.error : null,
                         border: OutlineInputBorder(),
                         hintText: "Live in",
                         labelText: "Live in"),
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            StreamBuilder<String>(
+                stream: null,
+                builder: (context, snapshot) {
+                  return TextFormField(
+                    onChanged: (String text) => _bloc.validateAbout(text),
+                    minLines: 5,
+                    maxLines: 10,
+                    textAlign: TextAlign.start,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.done,
+                    focusNode: _aboutFocus,
+                    onFieldSubmitted: (term) {
+                      _aboutFocus.unfocus();
+                    },
+                    decoration: InputDecoration(
+                        errorText: snapshot.hasError ? snapshot.error : null,
+                        border: OutlineInputBorder(),
+                        hintText: "About you",
+                        labelText: "About you"),
                   );
                 }),
             SizedBox(
@@ -325,7 +351,7 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return EditProfileProfessionalDetails();
+          return EditProfileProfessionalDetails(_bloc);
         },
       ),
     );

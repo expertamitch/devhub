@@ -9,6 +9,9 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  bool _seeMore=false;
+
+
   Widget build(BuildContext cx) {
     return new Scaffold(
       appBar: AppBar(
@@ -161,58 +164,65 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.home),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          'Lives in',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          'Colombo',
-                          style: TextStyle(
-                              fontSize: 18.0, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.location_on),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          'From',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          'Sri Lanka',
-                          style: TextStyle(
-                              fontSize: 18.0, fontWeight: FontWeight.bold),
-                        )
-                      ],
+                    Visibility(
+                      visible: _seeMore,
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.home),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                'Lives in',
+                                style: TextStyle(fontSize: 18.0),
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                'Colombo',
+                                style: TextStyle(
+                                    fontSize: 18.0, fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.location_on),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                'From',
+                                style: TextStyle(fontSize: 18.0),
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                'Sri Lanka',
+                                style: TextStyle(
+                                    fontSize: 18.0, fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     Row(
                       children: <Widget>[
                         FlatButton(
                           onPressed: () {
-//                        _showMoreOption(cx);
+                        seeMore();
                           },
-                          child: Text(
+                          child: Text(_seeMore?'See Less':
                             'See more..',
-                            style: TextStyle(fontSize: 18.0),
+                            style: TextStyle(fontSize: 14.0,color: Constants.lightPrimary),
                             textAlign: TextAlign.start,
                           ),
                         ),
@@ -570,5 +580,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
             );
           },
         ));
+  }
+
+  seeMore() {
+    setState(() {
+      _seeMore=!_seeMore;
+    });
   }
 }

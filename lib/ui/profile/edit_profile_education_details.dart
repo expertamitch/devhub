@@ -8,41 +8,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chips_input/flutter_chips_input.dart';
 
-import 'edit_profile_education_details.dart';
-
-class EditProfileProfessionalDetails extends StatefulWidget {
+class EditProfileEducationDetails extends StatefulWidget {
   ProfileBasicDetailsBloc _bloc;
-
-  EditProfileProfessionalDetails(ProfileBasicDetailsBloc bloc) {
-    this._bloc = bloc;
-  }
-
   @override
   State<StatefulWidget> createState() {
-    return EditProfileProfessionalDetailsState(_bloc);
+    return EditProfileEducationDetailsState();
   }
 }
 
-class EditProfileProfessionalDetailsState
-    extends State<EditProfileProfessionalDetails> {
+class EditProfileEducationDetailsState
+    extends State<EditProfileEducationDetails> {
   ProfileProfessionDetailsBloc _bloc = ProfileProfessionDetailsBloc();
 //  ProfileBasicDetailsBloc _bloc;
+
 
   final FocusNode _jobTitleFocus = FocusNode();
   final FocusNode _companyFocus = FocusNode();
   final FocusNode _educationFocus = FocusNode();
   final FocusNode _collegeFocus = FocusNode();
   final FocusNode _aboutFocus = FocusNode();
-
-  EditProfileProfessionalDetailsState(ProfileBasicDetailsBloc bloc) {
-//    this._bloc = bloc;
-  }
-
-  @override
-  void dispose() {
-    _bloc.dispose();
-    super.dispose();
-  }
 
   final List<String> _jobList = <String>[""];
   final List<String> _technologiesList = <String>[""];
@@ -80,8 +64,8 @@ class EditProfileProfessionalDetailsState
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Job Title",
-                        labelText: "Job Title"),
+                        hintText: "School/College",
+                        labelText: "School/College"),
                   ),
                   SizedBox(
                     height: 10,
@@ -91,8 +75,8 @@ class EditProfileProfessionalDetailsState
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Company",
-                        labelText: "Company"),
+                        hintText: "Degree",
+                        labelText: "Degree"),
                   ),
                   SizedBox(
                     height: 10,
@@ -175,9 +159,9 @@ class EditProfileProfessionalDetailsState
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Technology",
-                        ),
+                      border: OutlineInputBorder(),
+                      hintText: "Certification or Special Training",
+                    ),
                   ),
                 ],
               ),
@@ -197,7 +181,7 @@ class EditProfileProfessionalDetailsState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Professional Details"), centerTitle: true),
+        appBar: AppBar(title: Text("Education Details"), centerTitle: true),
         body: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
           child: ListView(physics: ScrollPhysics(), children: <Widget>[
@@ -225,7 +209,7 @@ class EditProfileProfessionalDetailsState
               height: 20,
             ),
             Text(
-              "Technologies",
+              "Training/Specialization",
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
             SizedBox(
@@ -252,7 +236,7 @@ class EditProfileProfessionalDetailsState
               ],
             ),
 
-         /*   StreamBuilder<List<Technology>>(
+            /*   StreamBuilder<List<Technology>>(
                 stream: _bloc.technologyListStream,
                 builder: (context, AsyncSnapshot<List<Technology>> snapshot) {
                   return ChipsInput(
@@ -342,7 +326,7 @@ class EditProfileProfessionalDetailsState
     Navigator.of(context).push(
       CupertinoPageRoute(
         builder: (BuildContext context) {
-          return EditProfileEducationDetails();
+          return EditProfileContactDetails();
         },
       ),
     );
