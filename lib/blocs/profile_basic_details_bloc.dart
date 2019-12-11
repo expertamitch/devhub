@@ -11,6 +11,8 @@ class ProfileBasicDetailsBloc implements BaseBloc {
   final _dobController = StreamController<String>();
   final _liveInController = StreamController<String>();
   final _countryListController =BehaviorSubject<List<dynamic>>();
+  final _aboutController = StreamController<String>();
+
 
   Stream<String> get firstNameStream => _firstNameController.stream;
 
@@ -24,6 +26,11 @@ class ProfileBasicDetailsBloc implements BaseBloc {
 
   Stream<List<dynamic>> get countryListStream =>
       _countryListController.stream;
+
+  Stream<String> get aboutStream => _aboutController.stream;
+
+  StreamSink<String> get aboutSink => _aboutController.sink;
+
 
   StreamSink<String> get firstNameSink => _firstNameController.sink;
 
@@ -83,6 +90,14 @@ class ProfileBasicDetailsBloc implements BaseBloc {
     }
   }
 
+  void validateAbout(String about) {
+    if (about.isNotEmpty) {
+      aboutSink.add(about);
+    } else {
+      aboutSink.addError("Enter something about you");
+    }
+  }
+
   @override
   void dispose() {
     _firstNameController.close();
@@ -91,6 +106,7 @@ class ProfileBasicDetailsBloc implements BaseBloc {
     _dobController.close();
     _liveInController.close();
     _countryListController.close();
+    _aboutController.close();
   }
 
   List<DropdownMenuItem<String>> getAllCountries() {
