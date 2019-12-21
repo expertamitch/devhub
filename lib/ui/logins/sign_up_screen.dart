@@ -34,23 +34,22 @@ class SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-           mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Container(
-              width: 100,
-              margin: const EdgeInsets.only(top: 30,right: 10),
-              child: OutlineButton(
-                child: Text(
-                  "Log In",
-                  style: TextStyle(
-                      color: Constants.flatButtonTextColor, fontSize: 16),
-                ),
-                shape: StadiumBorder(),
-                onPressed: toLogin,
-              ),
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: <Widget>[
+        Container(
+          width: 100,
+          margin: const EdgeInsets.only(top: 30, right: 10),
+          child: OutlineButton(
+            child: Text(
+              "Log In",
+              style:
+                  TextStyle(color: Constants.flatButtonTextColor, fontSize: 16),
             ),
-
+            shape: StadiumBorder(),
+            onPressed: toLogin,
+          ),
+        ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(right: 20, left: 20),
@@ -66,7 +65,8 @@ class SignUpState extends State<SignUp> {
                 StreamBuilder<String>(
                   stream: _signUpBloc.emailStream,
                   builder: (context, snapshot) => TextFormField(
-                    onChanged: (String email) => _signUpBloc.validateEmail(email),
+                    onChanged: (String email) =>
+                        _signUpBloc.validateEmail(email),
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     focusNode: _emailFocus,
@@ -90,12 +90,10 @@ class SignUpState extends State<SignUp> {
                     StreamBuilder<String>(
                         stream: _signUpBloc.phoneStream,
                         builder: (context, snapshot) => TextFormField(
-
                               onChanged: (String phone) =>
                                   _signUpBloc.validatePhone(phone),
                               keyboardType: TextInputType.phone,
-
-                          textInputAction: TextInputAction.next,
+                              textInputAction: TextInputAction.next,
                               focusNode: _phoneFocus,
                               onFieldSubmitted: (term) {
                                 CommonUtils.fieldFocusChange(
@@ -103,7 +101,11 @@ class SignUpState extends State<SignUp> {
                               },
                               decoration: InputDecoration(
                                   border: const OutlineInputBorder(),
-                                  contentPadding: const EdgeInsets.only(left: 100,top: 20,bottom: 20,right: 20),
+                                  contentPadding: const EdgeInsets.only(
+                                      left: 100,
+                                      top: 20,
+                                      bottom: 20,
+                                      right: 20),
                                   hintText: "Phone",
                                   labelText: "Phone"),
                             )),
@@ -315,8 +317,8 @@ class SignUpState extends State<SignUp> {
             ),
           ),
         ),
-          ],
-        ));
+      ],
+    ));
   }
 
   bool eye = true;

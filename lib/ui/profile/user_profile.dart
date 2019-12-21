@@ -3,14 +3,15 @@ import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:dev_hub/widgets/description_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserProfilePage extends StatefulWidget {
   _UserProfilePageState createState() => _UserProfilePageState();
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  bool _seeMore=false;
-
+  bool _seeMore = false;
 
   Widget build(BuildContext cx) {
     return new Scaffold(
@@ -184,7 +185,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               Text(
                                 'Colombo',
                                 style: TextStyle(
-                                    fontSize: 18.0, fontWeight: FontWeight.bold),
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
@@ -207,7 +209,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               Text(
                                 'Sri Lanka',
                                 style: TextStyle(
-                                    fontSize: 18.0, fontWeight: FontWeight.bold),
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
@@ -218,11 +221,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       children: <Widget>[
                         FlatButton(
                           onPressed: () {
-                        seeMore();
+                            seeMore();
                           },
-                          child: Text(_seeMore?'See Less':
-                            'See more..',
-                            style: TextStyle(fontSize: 14.0,color: Constants.lightPrimary),
+                          child: Text(
+                            _seeMore ? 'See Less' : 'See more..',
+                            style: TextStyle(
+                                fontSize: 14.0, color: Constants.lightPrimary),
                             textAlign: TextAlign.start,
                           ),
                         ),
@@ -262,12 +266,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             textAlign: TextAlign.start,
                           ),
                           SizedBox(height: 5.0),
-                          DescriptionTextWidget(text:
-                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                              "\nLorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an"
-                              "\nunknown printer took a galley of type and scrambled it to make a type specimen book. It"
-                              "\nhas survived not only five centuries, but also the leap into electronic typesetting, remaining"
-                              "\nessentially unchanged. It was popularised"),
+                          DescriptionTextWidget(
+                              text:
+                                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                                  "\nLorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an"
+                                  "\nunknown printer took a galley of type and scrambled it to make a type specimen book. It"
+                                  "\nhas survived not only five centuries, but also the leap into electronic typesetting, remaining"
+                                  "\nessentially unchanged. It was popularised"),
                         ],
                       ),
                     ),
@@ -381,32 +386,116 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         ),
                       ),
                     ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Github'),
-                      ),
+                    SizedBox(
+                      height: 8,
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('LinkedIn'),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Stackoverflow'),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Email'),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              launch('https://flutter.dev');
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                              child: Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    SvgPicture.asset(
+                                      "assets/svg/github.svg",
+                                      height: 14,
+                                      width: 14,
+                                    ),
+                                    SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text('Github'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              launch('https://flutter.dev');
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                              child: Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    SvgPicture.asset(
+                                      "assets/svg/linked_in.svg",
+                                      height: 14,
+                                      width: 14,
+                                    ),
+                                    SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text('LinkedIn'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              launch('https://flutter.dev');
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                              child: Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    SvgPicture.asset(
+                                      "assets/svg/stack_overflow.svg",
+                                      height: 14,
+                                      width: 14,
+                                    ),
+                                    SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text('Stackoverflow'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              launch('https://flutter.dev');
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                              child: Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    SvgPicture.asset(
+                                      "assets/svg/email.svg",
+                                      height: 14,
+                                      width: 14,
+                                    ),
+                                    SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text('Email'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Container(
@@ -523,68 +612,67 @@ class _UserProfilePageState extends State<UserProfilePage> {
           itemBuilder: (BuildContext context, int index) {
             Map place = jobsDetails.reversed.toList()[index];
             return InkWell(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          "${place["img"]}",
-                          height: 80,
-                          width: 120,
-                          fit: BoxFit.contain,
-                        ),
+                child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        "${place["img"]}",
+                        height: 80,
+                        width: 120,
+                        fit: BoxFit.contain,
                       ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "${place["name"]}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                                maxLines: 2,
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            SizedBox(height: 3),
-                            Text(
-                              "Apr 2017 - Nov 2019",
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "${place["name"]}",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                                color: Colors.blueGrey[300],
+                                fontSize: 14,
                               ),
-                              maxLines: 1,
+                              maxLines: 2,
                               textAlign: TextAlign.left,
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 3),
+                          Text(
+                            "Apr 2017 - Nov 2019",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.blueGrey[300],
+                            ),
+                            maxLines: 1,
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  Container(
-                    child: Divider(
-                      color: Colors.grey,
                     ),
+                  ],
+                ),
+                Container(
+                  child: Divider(
+                    color: Colors.grey,
                   ),
-                ],
-              )
-            );
+                ),
+              ],
+            ));
           },
         ));
   }
 
   seeMore() {
     setState(() {
-      _seeMore=!_seeMore;
+      _seeMore = !_seeMore;
     });
   }
 }
