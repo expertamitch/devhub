@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'logins/signup.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MyApp());
