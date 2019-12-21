@@ -613,18 +613,39 @@ class _UserProfilePageState extends State<UserProfilePage> {
             Map place = jobsDetails.reversed.toList()[index];
             return InkWell(
                 child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        "${place["img"]}",
-                        height: 80,
-                        width: 120,
-                        fit: BoxFit.contain,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        height: 60,
+                        width: 60,
+                        decoration: ShapeDecoration(
+                            shape: CircleBorder(), color: Colors.grey[50]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(90.0),
+                            child: Image.asset(
+                              "${place["img"]}",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
+//                    ClipRRect(
+//                      borderRadius: BorderRadius.circular(10),
+//                      child: Image.asset(
+//                        "${place["img"]}",
+//                        height: 80,
+//                        width: 120,
+//                        fit: BoxFit.contain,
+//                      ),
+//                    ),
                     SizedBox(width: 8),
                     Expanded(
                       child: Column(
@@ -659,11 +680,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
                   ],
                 ),
-                Container(
-                  child: Divider(
-                    color: Colors.grey,
-                  ),
-                ),
+                jobsDetails.length - 1 != index
+                    ? Container(
+                        margin: const EdgeInsets.only(left: 40),
+                        alignment: Alignment.centerLeft,
+                        height: 40,
+                        width: 1,
+                        color: Colors.grey[500],
+                      )
+                    : Container(),
               ],
             ));
           },
