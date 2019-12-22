@@ -215,7 +215,7 @@ class _EventDetailsState extends State<EventDetails> {
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: 10.0),
+              Divider(height:40,color: Colors.grey.shade200,thickness: 5,),
               Row(children: [
                 Text(
                   "Schedule -",
