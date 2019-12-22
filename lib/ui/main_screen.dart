@@ -6,6 +6,7 @@ import 'package:dev_hub/ui/my_jobs/my_jobs.dart';
 import 'package:dev_hub/ui/profile/user_profile.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/connects/friends.dart';
@@ -36,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
             tooltip: 'Notifications',
             onPressed: () {
               Navigator.of(context).push(
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (BuildContext context) {
                     return Notifications();
                   },
@@ -53,7 +54,7 @@ class _MainScreenState extends State<MainScreen> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
+                  CupertinoPageRoute(
                     builder: (BuildContext context) {
                       return UserProfilePage();
                     },
@@ -77,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
               title: Text('Connects'),
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
+                  CupertinoPageRoute(
                     builder: (BuildContext context) {
                       return Connects(false);
                     },
@@ -90,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
               title: Text('My Events'),
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
+                  CupertinoPageRoute(
                     builder: (BuildContext context) {
                       return MyEvents();
                     },
@@ -103,8 +104,8 @@ class _MainScreenState extends State<MainScreen> {
               title: Text('My Communities'),
               onTap: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (BuildContext context) {
-                  return MyCommunities();
+                    .push(CupertinoPageRoute(builder: (BuildContext context) {
+                  return MyCommunities("1");
                 }));
               },
             ),
@@ -113,7 +114,7 @@ class _MainScreenState extends State<MainScreen> {
               title: Text('My Jobs'),
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
+                  CupertinoPageRoute(
                     builder: (BuildContext context) {
                       return MyJobs();
                     },

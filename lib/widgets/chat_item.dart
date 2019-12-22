@@ -1,5 +1,6 @@
 import 'package:dev_hub/screens/messages/conversation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class ChatItem extends StatefulWidget {
   final String dp;
@@ -111,7 +112,7 @@ class _ChatItemState extends State<ChatItem> {
         ),
         onTap: () {
           Navigator.of(context, rootNavigator: true).push(
-            MaterialPageRoute(
+            CupertinoPageRoute(
               builder: (BuildContext context) {
                 return Conversation(widget.isCommunity);
               },

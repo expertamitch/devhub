@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
+
 import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
@@ -349,7 +351,7 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
 
   void next() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (BuildContext context) {
           return EditProfileProfessionalDetails(_bloc);
         },

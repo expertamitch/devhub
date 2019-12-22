@@ -22,6 +22,7 @@ List jobsDetails = [
     "time": "1 day ago",
     "location": "Colombo, Sri Lanka",
     "companyname": "DynamicTech",
+    "applied": random.nextBool(),
     "technologies": [
       "Java",
       "Android",
@@ -294,6 +295,8 @@ List events = [
     "img": "assets/ggl.jpg",
     "time": "From 03:30 p.m to 5:30 p.m",
     "date": "23 December 2019",
+    "applied": random.nextBool(),
+    "approved": random.nextBool(),
     "location": "SLIIT Colombo, Sri Lanka",
     "details": "Pellentesque in ipsum id orci porta dapibus. "
         "Nulla porttitor accumsan tincidunt. Donec rutrum "
@@ -354,9 +357,6 @@ List events = [
         "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.",
   },
 ];
-
-
-
 
 List communities = [
   {

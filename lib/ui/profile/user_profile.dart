@@ -2,6 +2,7 @@ import 'package:dev_hub/ui/profile/edit_profile_basic_details.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:dev_hub/widgets/description_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -238,7 +239,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             color: Colors.white70,
                             onPressed: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(
+                                CupertinoPageRoute(
                                   builder: (BuildContext context) {
                                     return EditProfileBasicDetails();
                                   },

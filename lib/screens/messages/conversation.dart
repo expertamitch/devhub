@@ -10,6 +10,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'dart:math';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/cupertino.dart';
 
 class Conversation extends StatefulWidget {
   bool isCommunity;
@@ -79,7 +80,7 @@ class _ConversationState extends State<Conversation> {
           ),
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(
+              CupertinoPageRoute(
                 builder: (BuildContext context) {
                   return widget.isCommunity
                       ? CommunityDetails()

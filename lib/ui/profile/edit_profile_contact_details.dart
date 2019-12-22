@@ -3,6 +3,7 @@ import 'package:dev_hub/ui/main_screen.dart';
 import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class EditProfileContactDetails extends StatefulWidget {
   @override
@@ -102,7 +103,7 @@ class EditProfileContactDetailsState extends State<EditProfileContactDetails> {
               focusNode: _contactFocus,
               onFieldSubmitted: (term) {
                 CommonUtils.fieldFocusChange(
-                    context, _contactFocus,_nicNumFocus);
+                    context, _contactFocus, _nicNumFocus);
               },
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -160,7 +161,7 @@ class EditProfileContactDetailsState extends State<EditProfileContactDetails> {
 
   void next() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (BuildContext context) {
           return MainScreen();
         },

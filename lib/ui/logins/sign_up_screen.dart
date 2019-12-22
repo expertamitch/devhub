@@ -3,6 +3,8 @@ import 'package:dev_hub/blocs/sign_up_bloc.dart';
 import 'package:dev_hub/ui/logins/login_screen.dart';
 import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -331,7 +333,7 @@ class SignUpState extends State<SignUp> {
 
   toLogin() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (BuildContext context) {
           return Login();
         },
@@ -341,7 +343,7 @@ class SignUpState extends State<SignUp> {
 
   submit() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (BuildContext context) {
           return EditProfileBasicDetails();
         },

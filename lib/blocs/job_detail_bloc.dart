@@ -16,4 +16,10 @@ class JobDetailBloc extends BaseBloc {
   void dispose() {
     _jobController.close();
   }
+
+  apply() {
+    var details = _jobController.value;
+    details['applied'] = true;
+    _jobController.add(details);
+  }
 }

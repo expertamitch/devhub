@@ -4,6 +4,8 @@ import 'package:dev_hub/ui/profile/edit_profile_basic_details.dart';
 import 'package:dev_hub/ui/logins/sign_up_screen.dart';
 import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -283,7 +285,7 @@ class LoginState extends State<Login> {
 
   toForgotPassword() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (BuildContext context) {
           return ForgotPassword();
         },
@@ -293,7 +295,7 @@ class LoginState extends State<Login> {
 
   toSignUp() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (BuildContext context) {
           return SignUp();
         },
@@ -303,7 +305,7 @@ class LoginState extends State<Login> {
 
   submit() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (BuildContext context) {
           return EditProfileBasicDetails();
         },

@@ -1,10 +1,13 @@
 import 'package:dev_hub/screens/messages/conversation.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class Connects extends StatefulWidget {
   bool openChat;
+
   Connects(this.openChat);
+
   @override
   _ConnectsState createState() => _ConnectsState();
 }
@@ -76,7 +79,7 @@ class _ConnectsState extends State<Connects> {
                     ),
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
+                  CupertinoPageRoute(
                     builder: (BuildContext context) {
                       return Conversation(true);
                     },

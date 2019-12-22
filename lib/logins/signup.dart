@@ -1,4 +1,5 @@
 import 'package:dev_hub/ui/main_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SecondRoute()),
+                  CupertinoPageRoute(builder: (context) => SecondRoute()),
                 );
               },
               highlightColor: Colors.black,
@@ -111,7 +112,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   splashColor: Colors.white54,
                   onPressed: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(
+                      CupertinoPageRoute(
                         builder: (BuildContext context) {
                           return MainScreen();
                         },

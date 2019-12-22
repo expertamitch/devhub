@@ -2,6 +2,7 @@ import 'package:dev_hub/blocs/chats_block.dart';
 import 'package:dev_hub/screens/connects/friends.dart';
 import 'package:dev_hub/widgets/chat_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class Chats extends StatefulWidget {
   @override
@@ -132,7 +133,7 @@ class _ChatsState extends State<Chats>
         ),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(
+            CupertinoPageRoute(
               builder: (BuildContext context) {
                 return Connects(true);
               },

@@ -53,10 +53,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                         child: Image.asset(
                           "${snapshot.data["img_cover"]}",
                           height: 200,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
+                          width: MediaQuery.of(context).size.width,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -98,30 +95,39 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                         ),
                       ),
                       PopupMenuButton(
-
-
                         child: Card(
                           elevation: 3,
                           color: Constants.buttonColor,
                           child: Padding(
-                            padding: const EdgeInsets.only(left:16,right: 16,bottom: 8,top: 8),
-                            child: Row(children: <Widget>[ Icon(
-                                "${snapshot.data["joining_status"]}" == "true"
-                                    ? Icons.done
-                                    : Icons.add_box,color: Colors.white,size: 18,), Text(
-                                "${snapshot.data["joining_status"]}" == "true"
-                                    ? "Joined"
-                                    : "Join",style: TextStyle(color: Colors.white),
-                            )
-                            ],),
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, bottom: 8, top: 8),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  "${snapshot.data["joining_status"]}" == "true"
+                                      ? Icons.done
+                                      : Icons.add_box,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                Text(
+                                  "${snapshot.data["joining_status"]}" == "true"
+                                      ? "Joined"
+                                      : "Join",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                        itemBuilder: (context) => "${snapshot.data["joining_status"]}" == "true"?
-                        [
-                          PopupMenuItem(
-                            child: Text("Unfollow"),
-                          ),
-                        ]:[],
+                        itemBuilder: (context) =>
+                            "${snapshot.data["joining_status"]}" == "true"
+                                ? [
+                                    PopupMenuItem(
+                                      child: Text("Unfollow"),
+                                    ),
+                                  ]
+                                : [],
                       ),
                     ],
                   ),
@@ -146,7 +152,11 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                     ),
                     textAlign: TextAlign.left,
                   ),
-                  Divider(height:40,color: Colors.grey.shade200,thickness: 5,),
+                  Divider(
+                    height: 40,
+                    color: Colors.grey.shade200,
+                    thickness: 5,
+                  ),
                   Text(
                     "Events",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -156,7 +166,11 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                     height: 8,
                   ),
                   getEvents(),
-                  Divider(height:40,color: Colors.grey.shade200,thickness: 5,),
+                  Divider(
+                    height: 40,
+                    color: Colors.grey.shade200,
+                    thickness: 5,
+                  ),
                   Text(
                     "Jobs",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -173,24 +187,20 @@ class _CommunityDetailsState extends State<CommunityDetails> {
 
   followUnfollow(value) {}
 
-  Widget _paddingPopup() =>
-      PopupMenuButton<int>(
-        itemBuilder: (context) =>
-        [
+  Widget _paddingPopup() => PopupMenuButton<int>(
+        itemBuilder: (context) => [
           PopupMenuItem(
             value: 1,
             child: Text(
               "English",
-              style:
-              TextStyle(fontWeight: FontWeight.w700),
+              style: TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
           PopupMenuItem(
             value: 2,
             child: Text(
               "Chinese",
-              style:
-              TextStyle(fontWeight: FontWeight.w700),
+              style: TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
         ],
@@ -305,7 +315,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                 ),
                 onTap: () {
 //                              Navigator.of(context).push(
-//                                MaterialPageRoute(
+//                                CupertinoPageRoute(
 //                                  builder: (BuildContext context) {
 //                                    return CommunityHome();
 //                                  },
@@ -401,7 +411,7 @@ class _CommunityDetailsState extends State<CommunityDetails> {
                 ),
                 onTap: () {
 //                              Navigator.of(context).push(
-//                                MaterialPageRoute(
+//                                CupertinoPageRoute(
 //                                  builder: (BuildContext context) {
 //                                    return CommunityHome();
 //                                  },
