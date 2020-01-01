@@ -170,7 +170,8 @@ class _MainScreenState extends State<MainScreen> {
         onSelectTab: (index) {
           setState(() {
             _page = index;
-            navigationTapped(_page);
+            _pageController.animateToPage(index,
+                duration: Duration(milliseconds: 300), curve: Curves.ease);
           });
         },
         items: [

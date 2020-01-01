@@ -7,6 +7,9 @@ class MyEventBloc implements BaseBloc{
   final _eventInvitationController = BehaviorSubject<List<dynamic>>();
   final _eventPendingController = BehaviorSubject<List<dynamic>>();
 
+
+
+
   Stream<dynamic> get eventGoingStream => _eventGoingController.stream;
   Stream<dynamic> get eventInvitationStream => _eventInvitationController.stream;
   Stream<dynamic> get eventPendingStream => _eventPendingController.stream;

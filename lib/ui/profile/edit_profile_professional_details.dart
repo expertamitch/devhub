@@ -27,7 +27,11 @@ class EditProfileProfessionalDetailsState
     extends State<EditProfileProfessionalDetails> {
   ProfileProfessionDetailsBloc _bloc = ProfileProfessionDetailsBloc();
 //  ProfileBasicDetailsBloc _bloc;
-
+  DateTime selectedDate = DateTime.now();
+  var starYear = TextEditingController();
+  var endYear = TextEditingController();
+  var startMonth = TextEditingController();
+  var endMonth = TextEditingController();
   final FocusNode _jobTitleFocus = FocusNode();
   final FocusNode _companyFocus = FocusNode();
   final FocusNode _educationFocus = FocusNode();
@@ -46,6 +50,101 @@ class EditProfileProfessionalDetailsState
 
   final List<String> _jobList = <String>[""];
   final List<String> _technologiesList = <String>[""];
+
+  Future<Null> _selectDate() async {
+     await showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return  SimpleDialog(
+            children: <Widget>[
+              Container(
+                height: 300,
+                width: 400,
+                child: YearPicker(selectedDate: selectedDate, onChanged:(val){
+    if (val != null)
+    setState(() {
+    selectedDate = val;
+    starYear.text = CommonUtils.formatDateForServer(
+    "${selectedDate.toLocal().year}");
+    });
+    Navigator.pop(context);
+    }, firstDate: DateTime(1920,1), lastDate: DateTime.now()),
+              ),
+            ],
+          );
+        });
+  }
+  Future<Null> _endYear() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return  SimpleDialog(
+            children: <Widget>[
+              Container(
+                height: 300,
+                width: 400,
+                child: YearPicker(selectedDate: selectedDate, onChanged:(val){
+                  if (val != null)
+                    setState(() {
+                      selectedDate = val;
+                      endYear.text = CommonUtils.formatDateForServer(
+                          "${selectedDate.toLocal().year}");
+                    });
+                  Navigator.pop(context);
+                }, firstDate: DateTime(1920,1), lastDate: DateTime.now()),
+              ),
+            ],
+          );
+        });
+  }
+  Future<Null> _starMonth() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return  SimpleDialog(
+            children: <Widget>[
+              Container(
+                height: 300,
+                width: 400,
+                child: MonthPicker(selectedDate: selectedDate, onChanged:(val){
+                  print("month $val");
+                  if (val != null)
+                    setState(() {
+                      selectedDate = val;
+                      startMonth.text = CommonUtils.formatMonthForServer(
+                          "${selectedDate.toLocal().month}");
+                    });
+                  Navigator.pop(context);
+                }, firstDate: DateTime(1920,1), lastDate: DateTime.now()),
+              ),
+            ],
+          );
+        });
+  }
+  Future<Null> _endMonth() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return  SimpleDialog(
+            children: <Widget>[
+              Container(
+                height: 300,
+                width: 400,
+                child: MonthPicker(selectedDate: selectedDate, onChanged:(val){
+                  print("month $val");
+                  if (val != null)
+                    setState(() {
+                      selectedDate = val;
+                      endMonth.text = CommonUtils.formatMonthForServer(
+                          "${selectedDate.toLocal().month}");
+                    });
+                  Navigator.pop(context);
+                }, firstDate: DateTime(1920,1), lastDate: DateTime.now()),
+              ),
+            ],
+          );
+        });
+  }
 
   _addItemJob() {
     setState(() {
@@ -101,12 +200,15 @@ class EditProfileProfessionalDetailsState
                     children: <Widget>[
                       Expanded(
                         child: TextFormField(
+                          controller: startMonth,
+                          onTap: () => _starMonth(),
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.next,
+                          focusNode: AlwaysDisabledFocusNode(),
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText: "Start Date",
-                              labelText: "Start Date"),
+                              hintText: "Start Month",
+                              labelText: "Start Month"),
                         ),
                       ),
                       SizedBox(
@@ -114,12 +216,51 @@ class EditProfileProfessionalDetailsState
                       ),
                       Expanded(
                         child: TextFormField(
+                          onTap: () => _selectDate(),
+                          controller: starYear,
                           keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
+                          focusNode: AlwaysDisabledFocusNode(),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: "Start Year",
+                              labelText: "Start year"),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextFormField(
+                          controller: endMonth,
+                          onTap: ()=>_endMonth(),
+                          keyboardType: TextInputType.text,
+                          focusNode: AlwaysDisabledFocusNode(),
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText: "End Date",
-                              labelText: "End Date"),
+                              hintText: "End Month",
+                              labelText: "End Month"),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          controller: endYear,
+                          onTap: () => _endYear(),
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
+                          focusNode: AlwaysDisabledFocusNode(),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: "End Year",
+                              labelText: "End Year"),
                         ),
                       ),
                     ],
