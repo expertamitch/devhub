@@ -14,8 +14,12 @@ class CommonUtils {
   }
 
   static String formatDateForServer(String dateToFormat) {
-    return DateFormat("dd-MM-yyyy")
-        .format(DateFormat("dd-MM-yyyy").parse(dateToFormat));
+    return DateFormat("yyyy")
+        .format(DateFormat("yyyy").parse(dateToFormat));
+  }
+  static String formatMonthForServer(String dateToFormat) {
+    return DateFormat("MM")
+        .format(DateFormat("MM").parse(dateToFormat));
   }
 
   static fieldFocusChange(

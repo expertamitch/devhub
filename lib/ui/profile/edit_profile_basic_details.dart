@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-
 import 'dart:io';
-
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dev_hub/blocs/profile_basic_details_bloc.dart';
 import 'package:dev_hub/util/common_utils.dart';
@@ -10,7 +8,6 @@ import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/disabled_focus.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'edit_profile_professional_details.dart';
 
 class EditProfileBasicDetails extends StatefulWidget {

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:dev_hub/ui/logins/sign_up_screen.dart';
 import 'package:dev_hub/ui/splash_screen.dart';

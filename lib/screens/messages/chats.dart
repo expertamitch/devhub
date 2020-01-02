@@ -1,5 +1,6 @@
 import 'package:dev_hub/blocs/chats_block.dart';
 import 'package:dev_hub/screens/connects/friends.dart';
+import 'package:dev_hub/screens/messages/search_screen.dart';
 import 'package:dev_hub/widgets/chat_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,11 +26,17 @@ class _ChatsState extends State<Chats>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
+        title: GestureDetector(onTap: ()=> Navigator.of(context).push(
+          CupertinoPageRoute(
+            builder: (BuildContext context) {
+              return SearchScreen();
+            },
+          ),
+          ),child: Text("Search",style: TextStyle(color: Colors.grey),))/*TextField(
           decoration: InputDecoration.collapsed(
             hintText: 'Search',
           ),
-        ),
+        )*/,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Theme.of(context).accentColor,

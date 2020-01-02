@@ -1,4 +1,5 @@
 import 'package:dev_hub/blocs/my_jobs_bloc.dart';
+import 'package:dev_hub/ui/jobs/apply_job.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -117,7 +118,9 @@ class _FeaturedOrRecommendedJobsState extends State<FeaturedOrRecommendedJobs> {
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 14),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(context, CupertinoPageRoute(builder: (context)=> ApplyJob()));
+                                        },
                                     )
                                   ],
                                 ),

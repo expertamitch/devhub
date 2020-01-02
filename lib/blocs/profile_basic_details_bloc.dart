@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProfileBasicDetailsBloc implements BaseBloc {
-  final _firstNameController = StreamController<String>();
+  final _firstNameController = BehaviorSubject<String>();
   final _lastNameController = StreamController<String>();
   final _profileTitleController = StreamController<String>();
   final _dobController = StreamController<String>();
@@ -50,6 +50,7 @@ class ProfileBasicDetailsBloc implements BaseBloc {
   }
 
   void validateFirstName(String fName) {
+    print("first name $fName");
     if (fName.isNotEmpty) {
       firstNameSink.add(fName);
     } else {

@@ -1,4 +1,5 @@
 import 'package:dev_hub/blocs/community_home_bloc.dart';
+import 'package:dev_hub/ui/communities/search_communities.dart';
 import 'package:dev_hub/ui/my_communities/my_communities.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/widgets/see_all.dart';
@@ -60,44 +61,31 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
   getSearch() {
     return Padding(
       padding: EdgeInsets.all(20),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.blueGrey[50],
-          borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
-          ),
-        ),
-        child: TextField(
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Colors.blueGrey[300],
-          ),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(10.0),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
-              borderSide: BorderSide(
-                color: Colors.white,
+      child: GestureDetector(
+        onTap: () => Navigator.push(context, CupertinoPageRoute(builder: (context)=>SearchCommunities())),
+        child: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey[50],
+              borderRadius: BorderRadius.all(
+                Radius.circular(5.0),
               ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
-              ),
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            hintText: "Search here for events",
-            prefixIcon: Icon(
-              Icons.calendar_today,
-              color: Colors.blueGrey[300],
-            ),
-            hintStyle: TextStyle(
-              fontSize: 15.0,
-              color: Colors.blueGrey[300],
-            ),
-          ),
-          maxLines: 1,
-          controller: _searchControl,
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.calendar_today,
+                  color: Colors.blueGrey[300],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text("Search here for events",style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.blueGrey[300],
+                  ),),
+                )
+              ],
+            )
         ),
       ),
     );
