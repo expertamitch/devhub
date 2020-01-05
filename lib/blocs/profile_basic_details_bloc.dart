@@ -6,12 +6,12 @@ import 'package:rxdart/rxdart.dart';
 
 class ProfileBasicDetailsBloc implements BaseBloc {
   final _firstNameController = BehaviorSubject<String>();
-  final _lastNameController = StreamController<String>();
-  final _profileTitleController = StreamController<String>();
-  final _dobController = StreamController<String>();
-  final _liveInController = StreamController<String>();
+  final _lastNameController = StreamController<String>.broadcast();
+  final _profileTitleController = StreamController<String>.broadcast();
+  final _dobController = StreamController<String>.broadcast();
+  final _liveInController = StreamController<String>.broadcast();
   final _countryListController =BehaviorSubject<List<dynamic>>();
-  final _aboutController = StreamController<String>();
+  final _aboutController = StreamController<String>.broadcast();
 
 
   Stream<String> get firstNameStream => _firstNameController.stream;

@@ -476,7 +476,7 @@ class EditProfileProfessionalDetailsState
   }
 
   void cancel() {
-    Navigator.of(context).deactivate();
+    Navigator.of(context).pop();
   }
 
   void next() {

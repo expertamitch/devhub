@@ -111,7 +111,9 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("Profile Setup"), centerTitle: true),
-        body: Padding(
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.all(20.0),
           child: ListView(children: <Widget>[
             Center(
@@ -293,7 +295,7 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
               height: 20,
             ),
             StreamBuilder<String>(
-                stream: null,
+                stream: _bloc.aboutStream,
                 builder: (context, snapshot) {
                   return TextFormField(
                     onChanged: (String text) => _bloc.validateAbout(text),
