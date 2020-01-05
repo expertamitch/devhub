@@ -1,5 +1,6 @@
 import 'package:dev_hub/blocs/jobs_bloc.dart';
 import 'package:dev_hub/ui/jobs/featured_recommended_jobs.dart';
+import 'package:dev_hub/ui/jobs/search_jobs.dart';
 import 'package:dev_hub/widgets/see_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,40 @@ class _JobsHomeState extends State<JobsHome> {
   }
 
   getSearch() {
-    return Padding(
+    return
+      Padding(
+        padding: EdgeInsets.all(20),
+        child: GestureDetector(
+          onTap: () => Navigator.push(context, CupertinoPageRoute(builder: (context)=>SearchJobs())),
+          child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey[50],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.calendar_today,
+                    color: Colors.blueGrey[300],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text("E.g: Software Engineer , Intern",style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.blueGrey[300],
+                    ),),
+                  )
+                ],
+              )
+          ),
+        ),
+      );
+
+
+    /*Padding(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Container(
         decoration: BoxDecoration(
@@ -116,7 +150,7 @@ class _JobsHomeState extends State<JobsHome> {
           controller: _searchControl,
         ),
       ),
-    );
+    );*/
   }
 
   getFeatured() {
