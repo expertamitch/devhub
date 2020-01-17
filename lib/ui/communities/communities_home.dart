@@ -1,6 +1,7 @@
 import 'package:dev_hub/blocs/community_home_bloc.dart';
 import 'package:dev_hub/ui/communities/search_communities.dart';
 import 'package:dev_hub/ui/my_communities/my_communities.dart';
+import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/widgets/see_all.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,8 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
     return Padding(
       padding: EdgeInsets.all(20),
       child: GestureDetector(
-        onTap: () => Navigator.push(context, CupertinoPageRoute(builder: (context)=>SearchCommunities())),
+        onTap: () => Navigator.push(context,
+            CupertinoPageRoute(builder: (context) => SearchCommunities())),
         child: Container(
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -79,14 +81,16 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
-                  child: Text("Search here for events",style: TextStyle(
-                    fontSize: 15.0,
-                    color: Colors.blueGrey[300],
-                  ),),
+                  child: Text(
+                    "Search here for events",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.blueGrey[300],
+                    ),
+                  ),
                 )
               ],
-            )
-        ),
+            )),
       ),
     );
   }
@@ -110,62 +114,70 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
                         return Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: InkWell(
-                            child: Card(
-                              elevation: 3,
-                              child: index == snapshot.data.length
-                                  ? Container(
-                                      child: SeeAll(),
-                                      width: 150,
-                                    )
-                                  : Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.asset(
-                                              "${snapshot.data.reversed.toList()[index]["img_logo"]}",
-                                              height: 80,
-                                              width: 150,
-                                              fit: BoxFit.contain,
+                            child: Container(
+                              decoration: CommonUtils.getBoxShadow(),
+                              child: Container(
+                                color: Colors.white,
+                                child: index == snapshot.data.length
+                                    ? Container(
+                                        child: SeeAll(),
+                                        width: 150,
+                                      )
+                                    : Container(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.asset(
+                                                "${snapshot.data.reversed.toList()[index]["img_logo"]}",
+                                                height: 80,
+                                                width: 150,
+                                                fit: BoxFit.contain,
+                                              ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  "${snapshot.data.reversed.toList()[index]["name"]}",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    "${snapshot.data.reversed.toList()[index]["name"]}",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14,
+                                                    ),
+                                                    maxLines: 1,
+                                                    textAlign: TextAlign.left,
                                                   ),
-                                                  maxLines: 1,
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                                SizedBox(height: 3),
-                                                Text(
-                                                  "${snapshot.data.reversed.toList()[index]["follower_count"]} followers",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12,
-                                                    color: Colors.blueGrey[300],
+                                                  SizedBox(height: 3),
+                                                  Text(
+                                                    "${snapshot.data.reversed.toList()[index]["follower_count"]} followers",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12,
+                                                      color:
+                                                          Colors.blueGrey[300],
+                                                    ),
+                                                    maxLines: 1,
+                                                    textAlign: TextAlign.left,
                                                   ),
-                                                  maxLines: 1,
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
+                              ),
                             ),
                             onTap: () {
                               Navigator.of(context).push(
@@ -204,98 +216,99 @@ class _CommunitiesHomeState extends State<CommunitiesHome> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data.length + 1,
                       itemBuilder: (BuildContext context, int index) {
-                        return index == snapshot.data.length
-                            ? Card(
-                                elevation: 3,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: InkWell(
-                                    child: SeeAll(),
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        CupertinoPageRoute(
-                                          builder: (BuildContext context) {
-                                            return MyCommunities("0");
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              )
-                            : Card(
-                                elevation: 3,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: InkWell(
-                                    child: Row(
-                                      children: <Widget>[
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: Image.asset(
-                                            "${snapshot.data.reversed.toList()[index]["img_logo"]}",
-                                            height: 80,
-                                            width: 120,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Container(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  "${snapshot.data.reversed.toList()[index]["name"]}",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
-                                                  ),
-                                                  maxLines: 2,
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                              SizedBox(height: 3),
-                                              Text(
-                                                "${snapshot.data.reversed.toList()[index]["follower_count"]} followers",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12,
-                                                  color: Colors.blueGrey[300],
-                                                ),
-                                                maxLines: 1,
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        RaisedButton(
-                                          onPressed: () {},
-                                          child: Text("Join"),
-                                          shape: StadiumBorder(),
-                                          color: Constants.buttonColor,
-                                          textColor: Colors.white,
-                                        )
-                                      ],
+                        if (index == snapshot.data.length) {
+                          return Card(
+                            elevation: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: InkWell(
+                                child: SeeAll(),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) {
+                                        return MyCommunities("0");
+                                      },
                                     ),
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        CupertinoPageRoute(
-                                          builder: (BuildContext context) {
-                                            return CommunityDetails();
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Card(
+                            elevation: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: InkWell(
+                                child: Row(
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(
+                                        "${snapshot.data.reversed.toList()[index]["img_logo"]}",
+                                        height: 80,
+                                        width: 120,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "${snapshot.data.reversed.toList()[index]["name"]}",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                          SizedBox(height: 3),
+                                          Text(
+                                            "${snapshot.data.reversed.toList()[index]["follower_count"]} followers",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.blueGrey[300],
+                                            ),
+                                            maxLines: 1,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 8),
+                                    RaisedButton(
+                                      onPressed: () {},
+                                      child: Text("Join"),
+                                      shape: StadiumBorder(),
+                                      color: Constants.buttonColor,
+                                      textColor: Colors.white,
+                                    )
+                                  ],
                                 ),
-                              );
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) {
+                                        return CommunityDetails();
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        }
                       },
                     );
             }),

@@ -4,6 +4,7 @@ import 'package:dev_hub/models/technology_model.dart';
 import 'package:dev_hub/ui/profile/edit_profile_contact_details.dart';
 import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
+import 'package:dev_hub/widgets/month_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chips_input/flutter_chips_input.dart';
@@ -26,6 +27,7 @@ class EditProfileProfessionalDetails extends StatefulWidget {
 class EditProfileProfessionalDetailsState
     extends State<EditProfileProfessionalDetails> {
   ProfileProfessionDetailsBloc _bloc = ProfileProfessionDetailsBloc();
+
 //  ProfileBasicDetailsBloc _bloc;
   DateTime selectedDate = DateTime.now();
   var starYear = TextEditingController();
@@ -38,8 +40,27 @@ class EditProfileProfessionalDetailsState
   final FocusNode _collegeFocus = FocusNode();
   final FocusNode _aboutFocus = FocusNode();
 
+  final List monthsArray = List();
+
   EditProfileProfessionalDetailsState(ProfileBasicDetailsBloc bloc) {
 //    this._bloc = bloc;
+  }
+
+  @override
+  void initState() {
+    monthsArray.add("January");
+    monthsArray.add("February");
+    monthsArray.add("March");
+    monthsArray.add("April");
+    monthsArray.add("May");
+    monthsArray.add("June");
+    monthsArray.add("July");
+    monthsArray.add("August");
+    monthsArray.add("September");
+    monthsArray.add("October");
+    monthsArray.add("November");
+    monthsArray.add("December");
+    super.initState();
   }
 
   @override
@@ -52,94 +73,117 @@ class EditProfileProfessionalDetailsState
   final List<String> _technologiesList = <String>[""];
 
   Future<Null> _selectDate() async {
-     await showDialog(
+    await showDialog(
         context: context,
-        builder: (BuildContext context){
-          return  SimpleDialog(
+        builder: (BuildContext context) {
+          return SimpleDialog(
             children: <Widget>[
               Container(
                 height: 300,
                 width: 400,
-                child: YearPicker(selectedDate: selectedDate, onChanged:(val){
-    if (val != null)
-    setState(() {
-    selectedDate = val;
-    starYear.text = CommonUtils.formatDateForServer(
-    "${selectedDate.toLocal().year}");
-    });
-    Navigator.pop(context);
-    }, firstDate: DateTime(1920,1), lastDate: DateTime.now()),
+                child: YearPicker(
+                    selectedDate: selectedDate,
+                    onChanged: (val) {
+                      if (val != null)
+                        setState(() {
+                          selectedDate = val;
+                          starYear.text = CommonUtils.formatYearForServer(
+                              "${selectedDate.toLocal().year}");
+                        });
+                      Navigator.pop(context);
+                    },
+                    firstDate: DateTime(1920, 1),
+                    lastDate: DateTime.now()),
               ),
             ],
           );
         });
   }
+
   Future<Null> _endYear() async {
     await showDialog(
         context: context,
-        builder: (BuildContext context){
-          return  SimpleDialog(
+        builder: (BuildContext context) {
+          return SimpleDialog(
             children: <Widget>[
               Container(
                 height: 300,
                 width: 400,
-                child: YearPicker(selectedDate: selectedDate, onChanged:(val){
-                  if (val != null)
-                    setState(() {
-                      selectedDate = val;
-                      endYear.text = CommonUtils.formatDateForServer(
-                          "${selectedDate.toLocal().year}");
-                    });
-                  Navigator.pop(context);
-                }, firstDate: DateTime(1920,1), lastDate: DateTime.now()),
+                child: YearPicker(
+                    selectedDate: selectedDate,
+                    onChanged: (val) {
+                      if (val != null)
+                        setState(() {
+                          selectedDate = val;
+                          endYear.text = CommonUtils.formatYearForServer(
+                              "${selectedDate.toLocal().year}");
+                        });
+                      Navigator.pop(context);
+                    },
+                    firstDate: DateTime(1920, 1),
+                    lastDate: DateTime.now()),
               ),
             ],
           );
         });
   }
+
   Future<Null> _starMonth() async {
     await showDialog(
         context: context,
-        builder: (BuildContext context){
-          return  SimpleDialog(
+        builder: (BuildContext context) {
+          return SimpleDialog(
             children: <Widget>[
               Container(
                 height: 300,
                 width: 400,
-                child: MonthPicker(selectedDate: selectedDate, onChanged:(val){
-                  print("month $val");
-                  if (val != null)
-                    setState(() {
-                      selectedDate = val;
-                      startMonth.text = CommonUtils.formatMonthForServer(
-                          "${selectedDate.toLocal().month}");
-                    });
-                  Navigator.pop(context);
-                }, firstDate: DateTime(1920,1), lastDate: DateTime.now()),
+                child: ListView.builder(
+                    itemCount: monthsArray.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                          onTap: () {
+                            setState(() {
+                              startMonth.text = (index + 1).toString();
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: MonthWidget(
+                              monthsArray[index],
+                              startMonth.text.isEmpty
+                                  ? false
+                                  : index == int.parse(startMonth.text) - 1));
+                    }),
               ),
             ],
           );
         });
   }
+
   Future<Null> _endMonth() async {
     await showDialog(
         context: context,
-        builder: (BuildContext context){
-          return  SimpleDialog(
+        builder: (BuildContext context) {
+          return SimpleDialog(
             children: <Widget>[
               Container(
                 height: 300,
                 width: 400,
-                child: MonthPicker(selectedDate: selectedDate, onChanged:(val){
-                  print("month $val");
-                  if (val != null)
-                    setState(() {
-                      selectedDate = val;
-                      endMonth.text = CommonUtils.formatMonthForServer(
-                          "${selectedDate.toLocal().month}");
-                    });
-                  Navigator.pop(context);
-                }, firstDate: DateTime(1920,1), lastDate: DateTime.now()),
+                child: ListView.builder(
+                    itemCount: monthsArray.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                          onTap: () {
+                            setState(() {
+                              endMonth.text = (index + 1).toString();
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: MonthWidget(
+                              monthsArray[index],
+                              endMonth.text.isEmpty
+                                  ? false
+                                  : index == int.parse(endMonth.text) - 1));
+                    }),
               ),
             ],
           );
@@ -161,15 +205,16 @@ class EditProfileProfessionalDetailsState
   _buildRowJob(int index) {
     return Column(
       children: <Widget>[
-        index>0?Divider(
-          height: 30,
-          color: Colors.grey.shade200,
-          thickness: 1,
-        ):Container(),
+        index > 0
+            ? Divider(
+                height: 30,
+                color: Colors.grey.shade200,
+                thickness: 1,
+              )
+            : Container(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: <Widget>[
             Expanded(
               child: Column(
@@ -237,7 +282,7 @@ class EditProfileProfessionalDetailsState
                       Expanded(
                         child: TextFormField(
                           controller: endMonth,
-                          onTap: ()=>_endMonth(),
+                          onTap: () => _endMonth(),
                           keyboardType: TextInputType.text,
                           focusNode: AlwaysDisabledFocusNode(),
                           textInputAction: TextInputAction.next,
@@ -269,18 +314,19 @@ class EditProfileProfessionalDetailsState
               ),
             ),
             IconButton(
-                icon: Icon(Icons.close,color: Colors.grey,size: 18,),
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.grey,
+                  size: 18,
+                ),
                 onPressed: () {
                   _removeItemJob(index);
                 })
           ],
         ),
-
       ],
     );
   }
-
-
 
   _addItemTechnology() {
     setState(() {
@@ -294,20 +340,19 @@ class EditProfileProfessionalDetailsState
     });
   }
 
-
-
   _buildRowTechnology(int index) {
     return Column(
       children: <Widget>[
-        index>0?Divider(
-          height: 30,
-          color: Colors.grey.shade200,
-          thickness: 1,
-        ):Container(),
+        index > 0
+            ? Divider(
+                height: 30,
+                color: Colors.grey.shade200,
+                thickness: 1,
+              )
+            : Container(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: <Widget>[
             Expanded(
               child: Column(
@@ -316,21 +361,24 @@ class EditProfileProfessionalDetailsState
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Technology",
-                        ),
+                      border: OutlineInputBorder(),
+                      hintText: "Technology",
+                    ),
                   ),
                 ],
               ),
             ),
             IconButton(
-                icon: Icon(Icons.close,color: Colors.grey,size: 18,),
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.grey,
+                  size: 18,
+                ),
                 onPressed: () {
                   _removeItemTechnology(index);
                 })
           ],
         ),
-
       ],
     );
   }
@@ -377,7 +425,8 @@ class EditProfileProfessionalDetailsState
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: this._technologiesList.length,
-                itemBuilder: (context, index) => this._buildRowTechnology(index)),
+                itemBuilder: (context, index) =>
+                    this._buildRowTechnology(index)),
             SizedBox(
               height: 10,
             ),
@@ -393,7 +442,7 @@ class EditProfileProfessionalDetailsState
               ],
             ),
 
-         /*   StreamBuilder<List<Technology>>(
+            /*   StreamBuilder<List<Technology>>(
                 stream: _bloc.technologyListStream,
                 builder: (context, AsyncSnapshot<List<Technology>> snapshot) {
                   return ChipsInput(
@@ -450,25 +499,25 @@ class EditProfileProfessionalDetailsState
               children: <Widget>[
                 Expanded(
                     child: RaisedButton(
-                      shape: StadiumBorder(),
-                      color: Constants.buttonColor,
-                      onPressed: cancel,
-                      textColor: Colors.white,
-                      child: Text(
-                        "Previous",
-                      ),
-                    )),
+                  shape: StadiumBorder(),
+                  color: Constants.buttonColor,
+                  onPressed: cancel,
+                  textColor: Colors.white,
+                  child: Text(
+                    "Previous",
+                  ),
+                )),
                 SizedBox(width: 20),
                 Expanded(
                     child: RaisedButton(
-                      shape: StadiumBorder(),
-                      color: Constants.buttonColor,
-                      onPressed: next,
-                      textColor: Colors.white,
-                      child: Text(
-                        "Next",
-                      ),
-                    )),
+                  shape: StadiumBorder(),
+                  color: Constants.buttonColor,
+                  onPressed: next,
+                  textColor: Colors.white,
+                  child: Text(
+                    "Next",
+                  ),
+                )),
               ],
             )
           ]),

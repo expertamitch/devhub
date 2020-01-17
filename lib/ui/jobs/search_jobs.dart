@@ -1,32 +1,33 @@
 import 'package:dev_hub/blocs/my_event_bloc.dart';
-import 'package:dev_hub/ui/events/event_details.dart';
+import 'package:dev_hub/blocs/my_jobs_bloc.dart';
+import 'package:dev_hub/ui/jobs/job_details.dart';
 import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
+import 'package:dev_hub/widgets/search_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class UpcomingOrSuggestedEvents extends StatefulWidget {
-//0:upcoming , 1:suggested
-  String type;
+import 'apply_job.dart';
 
-  UpcomingOrSuggestedEvents(this.type);
+class SearchJobs extends StatefulWidget {
+//0:upcoming , 1:suggested
 
   @override
-  State<StatefulWidget> createState() => _UpcomingOrSuggestedEventsState();
+  State<StatefulWidget> createState() => _SearchJobsState();
 }
 
-class _UpcomingOrSuggestedEventsState extends State<UpcomingOrSuggestedEvents> {
+class _SearchJobsState extends State<SearchJobs> {
   String title;
 
-  MyEventBloc _bloc = MyEventBloc();
+  MyJobsBloc _bloc = MyJobsBloc();
 
   @override
   void initState() {
-    if (widget.type == "0") {
+    /* if (widget.type == "0") {
       title = "Upcoming events";
     } else {
       title = "Suggested events";
-    }
+    }*/
     super.initState();
   }
 
@@ -39,19 +40,22 @@ class _UpcomingOrSuggestedEventsState extends State<UpcomingOrSuggestedEvents> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(title),
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-            ),
-            onPressed: () => Navigator.pop(context),
-          )),
-      body: Padding(
+        appBar: AppBar(
+            title: SearchField(),
+            centerTitle: true,
+            leading: IconButton(
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Icon(
+                  Icons.arrow_back,
+                ),
+              ),
+              onPressed: () => Navigator.pop(context),
+            )),
+        body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: StreamBuilder<List<dynamic>>(
-              stream: _bloc.eventPendingStream,
+              stream: _bloc.appliedJobsStream,
               builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
                 return snapshot.data == null
                     ? Container()
@@ -70,8 +74,6 @@ class _UpcomingOrSuggestedEventsState extends State<UpcomingOrSuggestedEvents> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
@@ -91,7 +93,7 @@ class _UpcomingOrSuggestedEventsState extends State<UpcomingOrSuggestedEvents> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
                                             "${place["name"]}",
@@ -102,20 +104,12 @@ class _UpcomingOrSuggestedEventsState extends State<UpcomingOrSuggestedEvents> {
                                             maxLines: 1,
                                             textAlign: TextAlign.left,
                                           ),
+                                          SizedBox(height: 4),
                                           Text(
                                             "${place["location"]}",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                            ),
-                                            maxLines: 2,
-                                            textAlign: TextAlign.left,
-                                          ),
-                                          Text(
-                                            "${place["time"]}",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
+                                              fontSize: 12,
                                             ),
                                             maxLines: 2,
                                             textAlign: TextAlign.left,
@@ -123,31 +117,22 @@ class _UpcomingOrSuggestedEventsState extends State<UpcomingOrSuggestedEvents> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.blueGrey[200],
-                                          shape: BoxShape.rectangle),
-                                      child: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 12,
-                                              bottom: 12,
-                                              left: 4,
-                                              right: 4),
-                                          child: Text(
-                                            CommonUtils.formatDateDayMonth(
-                                                "${place["date"]}"),
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
+                                    SizedBox(width: 4),
+                                    MaterialButton(
+                                      color: Colors.blueGrey[300],
+                                      child: Text(
+                                        'Apply',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14),
                                       ),
-                                    ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    ApplyJob()));
+                                      },
+                                    )
                                   ],
                                 ),
                               ),
@@ -156,7 +141,7 @@ class _UpcomingOrSuggestedEventsState extends State<UpcomingOrSuggestedEvents> {
                               Navigator.of(context).push(
                                 CupertinoPageRoute(
                                   builder: (BuildContext context) {
-                                    return EventDetails();
+                                    return Details();
                                   },
                                 ),
                               );
@@ -164,7 +149,7 @@ class _UpcomingOrSuggestedEventsState extends State<UpcomingOrSuggestedEvents> {
                           );
                         },
                       );
-              })),
-    );
+              }),
+        ));
   }
 }

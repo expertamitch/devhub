@@ -14,6 +14,7 @@ class _ChatsState extends State<Chats>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   ChatsBloc _chatsBloc = ChatsBloc();
   TabController _tabController;
+  bool _visible = false;
 
   @override
   void initState() {

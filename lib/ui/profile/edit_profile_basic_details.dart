@@ -7,6 +7,7 @@ import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/constants.dart';
 import 'package:dev_hub/util/disabled_focus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_country_picker/flutter_country_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'edit_profile_professional_details.dart';
 
@@ -20,7 +21,7 @@ class EditProfileBasicDetails extends StatefulWidget {
 class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
   int _gender = 0;
 
-//  Country _country;
+  Country _country;
 
   @override
   void dispose() {
@@ -102,9 +103,21 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
     if (picked != null)
       setState(() {
         selectedDate = picked;
-        selectedDob.text = CommonUtils.formatDateForServer(
-            "${selectedDate.toLocal().day}-${selectedDate.toLocal().month}-${selectedDate.toLocal().year}");
+        selectedDob.text =
+            "${selectedDate.toLocal().day}-${selectedDate.toLocal().month}-${selectedDate.toLocal().year}";
       });
+  }
+
+  @override
+  void initState() {
+    _country = Country(
+        asset: "assets/flags/lk_flag.png",
+        currency: "Sri Lankan rupee",
+        currencyISO: "LKR",
+        dialingCode: "94",
+        isoCode: "LK",
+        name: "Sri Lanka");
+    super.initState();
   }
 
   @override
@@ -261,13 +274,42 @@ class EditProfileBasicDetailsState extends State<EditProfileBasicDetails> {
                 SizedBox(
                   width: 10,
                 ),
-                CountryCodePicker(
-                  onChanged: print,
-                  initialSelection: '+94',
-                  favorite: ['+94'],
-                  showOnlyCountryWhenClosed: true,
-                  alignLeft: false,
+                CountryPicker(
+                  dense: false,
+                  showFlag: true,
+                  //displays flag, true by default
+                  showDialingCode: false,
+                  //displays dialing code, false by default
+                  showName: true,
+                  //displays country name, true by default
+                  showCurrency: false,
+                  //eg. 'British pound'
+                  showCurrencyISO: false,
+                  //eg. '
+                  // GBP'
+                  onChanged: (Country country) {
+                    setState(() {
+//                      assets/flags/ag_flag.png
+//                      Sri Lanka
+
+                      print(country.asset);
+                      print(country.name);
+                      print(country.currencyISO);
+                      print(country.dialingCode);
+                      print(country.isoCode);
+                      _country = country;
+                    });
+                  },
+                  selectedCountry: _country,
                 ),
+
+//                CountryCodePicker(
+//                  onChanged: print,
+//                  initialSelection: '+94',
+//                  favorite: ['+94'],
+//                  showOnlyCountryWhenClosed: true,
+//                  alignLeft: false,
+//                ),
               ],
             ),
             SizedBox(

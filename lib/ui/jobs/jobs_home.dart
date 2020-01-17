@@ -1,5 +1,7 @@
 import 'package:dev_hub/blocs/jobs_bloc.dart';
 import 'package:dev_hub/ui/jobs/featured_recommended_jobs.dart';
+import 'package:dev_hub/ui/jobs/search_jobs.dart';
+import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/widgets/see_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,46 +77,69 @@ class _JobsHomeState extends State<JobsHome> {
 
   getSearch() {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.blueGrey[50],
-          borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
-          ),
-        ),
-        child: TextField(
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Colors.blueGrey[300],
-          ),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(10.0),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
-              borderSide: BorderSide(
-                color: Colors.white,
+      padding: EdgeInsets.all(20),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+            context, CupertinoPageRoute(builder: (context) => SearchJobs())),
+        child: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey[50],
+              borderRadius: BorderRadius.all(
+                Radius.circular(5.0),
               ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
-              ),
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            hintText: "E.g: Software Engineer , Intern",
-            prefixIcon: Icon(
-              Icons.computer,
-              color: Colors.blueGrey[300],
-            ),
-            hintStyle: TextStyle(
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.calendar_today,
+                  color: Colors.blueGrey[300],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text(
+                    "Search here for jobs",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.blueGrey[300],
+                    ),
+                  ),
+                )
+              ],
+            ) /*TextField(
+            showCursor: false,
+            style: TextStyle(
               fontSize: 15.0,
               color: Colors.blueGrey[300],
             ),
-          ),
-          maxLines: 1,
-          controller: _searchControl,
-        ),
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(10.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              hintText: "Search here for events",
+              prefixIcon: Icon(
+                Icons.calendar_today,
+                color: Colors.blueGrey[300],
+              ),
+              hintStyle: TextStyle(
+                fontSize: 15.0,
+                color: Colors.blueGrey[300],
+              ),
+            ),
+            maxLines: 1,
+            controller: _searchControl,
+          ),*/
+            ),
       ),
     );
   }
@@ -137,71 +162,74 @@ class _JobsHomeState extends State<JobsHome> {
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          margin: const EdgeInsets.only(right: 10),
-                          elevation: 3,
-                          child: InkWell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 180,
-                                width: 180,
-                                child: index == snapshot.data.length
-                                    ? SeeAll()
-                                    : Column(
-                                        children: <Widget>[
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.asset(
-                                              "${snapshot.data.reversed.toList()[index]["img"]}",
-                                              height: 120,
-                                              width: 180,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          SizedBox(height: 7),
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "${snapshot.data.reversed.toList()[index]["name"]}",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
+                        child: Container(
+                          decoration: CommonUtils.getBoxShadow(),
+                          child: Container(
+                            color: Colors.white,
+                            margin: const EdgeInsets.only(right: 10),
+                            child: InkWell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 180,
+                                  width: 180,
+                                  child: index == snapshot.data.length
+                                      ? SeeAll()
+                                      : Column(
+                                          children: <Widget>[
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.asset(
+                                                "${snapshot.data.reversed.toList()[index]["img"]}",
+                                                height: 120,
+                                                width: 180,
+                                                fit: BoxFit.cover,
                                               ),
-                                              maxLines: 2,
-                                              textAlign: TextAlign.left,
                                             ),
-                                          ),
-                                          SizedBox(height: 3),
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "${snapshot.data.reversed.toList()[index]["location"]}",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                                color: Colors.blueGrey[300],
+                                            SizedBox(height: 7),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "${snapshot.data.reversed.toList()[index]["name"]}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                                maxLines: 2,
+                                                textAlign: TextAlign.left,
                                               ),
-                                              maxLines: 1,
-                                              textAlign: TextAlign.left,
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                  builder: (BuildContext context) {
-                                    return index == snapshot.data.length
-                                        ? FeaturedOrRecommendedJobs("0")
-                                        : Details();
-                                  },
+                                            SizedBox(height: 3),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "${snapshot.data.reversed.toList()[index]["location"]}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  color: Colors.blueGrey[300],
+                                                ),
+                                                maxLines: 1,
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                 ),
-                              );
-                            },
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  CupertinoPageRoute(
+                                    builder: (BuildContext context) {
+                                      return index == snapshot.data.length
+                                          ? FeaturedOrRecommendedJobs("0")
+                                          : Details();
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       );
@@ -229,71 +257,74 @@ class _JobsHomeState extends State<JobsHome> {
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          margin: const EdgeInsets.only(right: 10),
-                          elevation: 3,
-                          child: InkWell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 180,
-                                width: 180,
-                                child: index == snapshot.data.length
-                                    ? SeeAll()
-                                    : Column(
-                                        children: <Widget>[
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.asset(
-                                              "${snapshot.data.reversed.toList()[index]["img"]}",
-                                              height: 120,
-                                              width: 180,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          SizedBox(height: 7),
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "${snapshot.data.reversed.toList()[index]["name"]}",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
+                        child: Container(
+                          decoration: CommonUtils.getBoxShadow(),
+                          child: Container(
+                            color: Colors.white,
+                            margin: const EdgeInsets.only(right: 10),
+                            child: InkWell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 180,
+                                  width: 180,
+                                  child: index == snapshot.data.length
+                                      ? SeeAll()
+                                      : Column(
+                                          children: <Widget>[
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.asset(
+                                                "${snapshot.data.reversed.toList()[index]["img"]}",
+                                                height: 120,
+                                                width: 180,
+                                                fit: BoxFit.cover,
                                               ),
-                                              maxLines: 2,
-                                              textAlign: TextAlign.left,
                                             ),
-                                          ),
-                                          SizedBox(height: 3),
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "${snapshot.data.reversed.toList()[index]["location"]}",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                                color: Colors.blueGrey[300],
+                                            SizedBox(height: 7),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "${snapshot.data.reversed.toList()[index]["name"]}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                                maxLines: 2,
+                                                textAlign: TextAlign.left,
                                               ),
-                                              maxLines: 1,
-                                              textAlign: TextAlign.left,
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                  builder: (BuildContext context) {
-                                    return index == snapshot.data.length
-                                        ? FeaturedOrRecommendedJobs("0")
-                                        : Details();
-                                  },
+                                            SizedBox(height: 3),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "${snapshot.data.reversed.toList()[index]["location"]}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  color: Colors.blueGrey[300],
+                                                ),
+                                                maxLines: 1,
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                 ),
-                              );
-                            },
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  CupertinoPageRoute(
+                                    builder: (BuildContext context) {
+                                      return index == snapshot.data.length
+                                          ? FeaturedOrRecommendedJobs("0")
+                                          : Details();
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       );

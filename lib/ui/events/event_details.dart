@@ -191,17 +191,15 @@ class _EventDetailsState extends State<EventDetails> {
                   ),
                 ),
                 SizedBox(height: 20.0),
-                !snapshot.data['applied']
-                    ? RaisedButton(
-                        onPressed: () {
-                          applyEvent();
-                        },
-                        child: Text("Apply Event"),
-                        shape: StadiumBorder(),
-                        color: Constants.buttonColor,
-                        textColor: Colors.white,
-                      )
-                    : Container(),
+                RaisedButton(
+                  onPressed: () {
+                    applyEvent();
+                  },
+                  child: Text("Apply Event"),
+                  shape: StadiumBorder(),
+                  color: Constants.buttonColor,
+                  textColor: Colors.white,
+                ),
                 Divider(
                   height: 20,
                   color: Colors.grey.shade200,

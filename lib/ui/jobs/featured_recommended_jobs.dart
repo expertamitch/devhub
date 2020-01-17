@@ -3,6 +3,8 @@ import 'package:dev_hub/ui/jobs/apply_job.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'job_details.dart';
+
 class FeaturedOrRecommendedJobs extends StatefulWidget {
 //  0: featured, 1: recommended
 
@@ -119,15 +121,25 @@ class _FeaturedOrRecommendedJobsState extends State<FeaturedOrRecommendedJobs> {
                                             color: Colors.white, fontSize: 14),
                                       ),
                                       onPressed: () {
-                                        Navigator.push(context, CupertinoPageRoute(builder: (context)=> ApplyJob()));
-                                        },
+                                        Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    ApplyJob()));
+                                      },
                                     )
                                   ],
                                 ),
                               ),
                             ),
                             onTap: () {
-                              //todo apply on tap
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (BuildContext context) {
+                                    return Details();
+                                  },
+                                ),
+                              );
                             },
                           );
                         },

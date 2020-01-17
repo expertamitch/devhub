@@ -17,7 +17,7 @@ class ApplyJobState extends State<ApplyJob> {
   bool stackEditable = false;
   String _filePath;
   int _choice = 0;
-
+  bool check1, check2;
   final TextEditingController _controller = new TextEditingController();
 
   @override
@@ -185,7 +185,7 @@ class ApplyJobState extends State<ApplyJob> {
             height: 8,
           ),
           Text(
-            "Custom #1",
+            "Question 1",
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
           ),
           TextField(
@@ -196,7 +196,7 @@ class ApplyJobState extends State<ApplyJob> {
             height: 8,
           ),
           Text(
-            "Custom #2",
+            "Question 2",
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
           ),
           TextField(
@@ -206,7 +206,7 @@ class ApplyJobState extends State<ApplyJob> {
           Row(
             children: <Widget>[
               Text(
-                "Custom #3",
+                "Qusstion 3",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               Radio(value: 0, groupValue: _choice, onChanged: _handleChoice),
@@ -223,16 +223,54 @@ class ApplyJobState extends State<ApplyJob> {
           ),
           Row(
             children: <Widget>[
+              Text(
+                "Qusstion 4",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+              Checkbox(
+                value: check1 == null ? false : check1,
+                onChanged: (check) {
+                  setState(() {
+                    check1 = check;
+                  });
+                },
+              ),
+              Text(
+                "Option 1",
+                style: TextStyle(fontSize: 14),
+              ),
+              Checkbox(
+                value: check2 == null ? false : check2,
+                onChanged: (check) {
+                  setState(() {
+                    check2 = check;
+                  });
+                },
+              ),
+              Text(
+                "Option 2",
+                style: TextStyle(fontSize: 14),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
               RaisedButton(
                 shape: StadiumBorder(),
                 textColor: Colors.white,
                 color: Constants.buttonColor,
-                onPressed: (){uploadCV();},child: Text("Upload CV"),),
+                onPressed: () {
+                  uploadCV();
+                },
+                child: Text("Upload CV"),
+              ),
               Expanded(child: Container())
             ],
           ),
           _filePath == null || _filePath == "" ? Container() : Text(_filePath),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -242,7 +280,8 @@ class ApplyJobState extends State<ApplyJob> {
                 color: Constants.buttonColor,
                 onPressed: () {},
                 child: Text("Cancel"),
-              ), RaisedButton(
+              ),
+              RaisedButton(
                 shape: StadiumBorder(),
                 textColor: Colors.white,
                 color: Constants.buttonColor,
@@ -256,7 +295,7 @@ class ApplyJobState extends State<ApplyJob> {
     );
   }
 
-Future  uploadCV() async{
+  Future uploadCV() async {
     File file = await FilePicker.getFile();
     print("file .... ${file.path}");
     setState(() {
@@ -264,6 +303,7 @@ Future  uploadCV() async{
     });
     return file;
   }
+
   _handleChoice(int value) {
     setState(() {
       _choice = value;

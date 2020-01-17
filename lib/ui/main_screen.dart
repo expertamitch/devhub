@@ -146,7 +146,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: ClampingScrollPhysics(),
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: <Widget>[
@@ -202,6 +202,8 @@ class _MainScreenState extends State<MainScreen> {
 
   void navigationTapped(int page) {
     _pageController.jumpToPage(page);
+    //    _pageController.animateToPage(page,
+//        duration: Duration(milliseconds: 500), curve: null);
   }
 
   @override

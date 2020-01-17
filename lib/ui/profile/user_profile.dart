@@ -13,6 +13,7 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   bool _seeMore = false;
+  bool _seeMoreExperienceExpanded = false;
 
   Widget build(BuildContext cx) {
     return new Scaffold(
@@ -259,6 +260,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     Container(
                       alignment: Alignment.topLeft,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             'About me',
@@ -602,6 +604,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   getWorkExperience() {
+    var length = jobsDetails.length > 2
+        ? _seeMoreExperienceExpanded ? jobsDetails.length : 2
+        : jobsDetails.length;
     return Container(
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(
@@ -609,7 +614,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           primary: false,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: jobsDetails.length,
+          itemCount: length,
           itemBuilder: (BuildContext context, int index) {
             Map place = jobsDetails.reversed.toList()[index];
             return InkWell(
@@ -681,7 +686,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
                   ],
                 ),
-                jobsDetails.length - 1 != index
+                length - 1 != index
                     ? Container(
                         margin: const EdgeInsets.only(left: 40),
                         alignment: Alignment.centerLeft,
@@ -689,7 +694,28 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         width: 1,
                         color: Colors.grey[500],
                       )
-                    : Container(),
+                    : Container(
+                        margin: const EdgeInsets.only(left: 8, bottom: 8),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _seeMoreExperienceExpanded =
+                                  !_seeMoreExperienceExpanded;
+                            });
+                          },
+                          child: Text(
+                            jobsDetails.length > 2
+                                ? _seeMoreExperienceExpanded
+                                    ? "See less"
+                                    : "See more"
+                                : "",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
               ],
             ));
           },

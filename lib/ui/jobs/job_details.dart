@@ -1,10 +1,13 @@
 import 'package:dev_hub/blocs/job_detail_bloc.dart';
 import 'package:dev_hub/blocs/jobs_bloc.dart';
 import 'package:dev_hub/ui/zoom_image.dart';
+import 'package:dev_hub/util/common_utils.dart';
 import 'package:dev_hub/util/data.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'apply_job.dart';
 
 class Details extends StatefulWidget {
   @override
@@ -181,19 +184,19 @@ class _DetailsState extends State<Details> {
                             )
                           ],
                         ),
-                        place['applied'] == false
-                            ? MaterialButton(
-                                color: Colors.blueGrey[300],
-                                child: Text(
-                                  'Apply',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 14),
-                                ),
-                                onPressed: () {
-                                  _jobsBloc.apply();
-                                },
-                              )
-                            : Container()
+                        MaterialButton(
+                          color: Colors.blueGrey[300],
+                          child: Text(
+                            'Apply',
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => ApplyJob()));
+                          },
+                        )
                       ],
                     ),
                     Divider(
@@ -377,71 +380,74 @@ class _DetailsState extends State<Details> {
                       Map place = snapshot.data.reversed.toList()[index];
                       return Padding(
                         padding: const EdgeInsets.only(right: 8),
-                        child: Card(
-                          elevation: 3,
-                          child: InkWell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 200,
-                                width: 140,
-                                child: Column(
-                                  children: <Widget>[
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.asset(
-                                        "${place["img"]}",
-                                        height: 120,
-                                        width: 140,
-                                        fit: BoxFit.cover,
+                        child: Container(
+                          decoration: CommonUtils.getBoxShadow(),
+                          child: Container(
+                            color: Colors.white,
+                            child: InkWell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 200,
+                                  width: 140,
+                                  child: Column(
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          "${place["img"]}",
+                                          height: 120,
+                                          width: 140,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: 7),
-                                    Center(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "${place["name"]}",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
+                                      SizedBox(height: 7),
+                                      Center(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "${place["name"]}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                                maxLines: 2,
+                                                textAlign: TextAlign.left,
                                               ),
-                                              maxLines: 2,
-                                              textAlign: TextAlign.left,
                                             ),
-                                          ),
-                                          SizedBox(height: 3),
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "${place["location"]}",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                                color: Colors.blueGrey[300],
+                                            SizedBox(height: 3),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "${place["location"]}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  color: Colors.blueGrey[300],
+                                                ),
+                                                maxLines: 1,
+                                                textAlign: TextAlign.left,
                                               ),
-                                              maxLines: 1,
-                                              textAlign: TextAlign.left,
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  CupertinoPageRoute(
+                                    builder: (BuildContext context) {
+                                      return Details();
+                                    },
+                                  ),
+                                );
+                              },
                             ),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                  builder: (BuildContext context) {
-                                    return Details();
-                                  },
-                                ),
-                              );
-                            },
                           ),
                         ),
                       );

@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'logins/signup.dart';
 
@@ -146,7 +147,24 @@ class _MyAppState extends State<MyApp> {
         });
         break;
       case ConnectivityResult.mobile:
+//        Fluttertoast.showToast(
+//            msg: "Connected",
+//            toastLength: Toast.LENGTH_SHORT,
+//            gravity: ToastGravity.CENTER,
+//            timeInSecForIos: 1,
+//            backgroundColor: Colors.red,
+//            textColor: Colors.white,
+//            fontSize: 16.0);
+        break;
       case ConnectivityResult.none:
+        Fluttertoast.showToast(
+            msg: "Disconnected",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
         setState(() => _connectionStatus = result.toString());
         break;
       default:
