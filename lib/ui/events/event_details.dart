@@ -82,7 +82,7 @@ class _EventDetailsState extends State<EventDetails> {
                               Container(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "${snapshot.data["name"]}",
+                                  "${snapshot.data["name"]}asdasd",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 20,
