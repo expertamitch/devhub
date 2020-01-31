@@ -169,6 +169,7 @@ class HomeState extends State<HomePage> {
                     itemCount: snapshot.data.length + 1,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
+                        margin: const EdgeInsets.only(bottom: 4),
                         decoration: CommonUtils.getBoxShadow(),
                         child: Container(
                           color: Colors.white,

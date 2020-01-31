@@ -53,6 +53,7 @@ class _MainScreenState extends State<MainScreen> {
           children: <Widget>[
             InkWell(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.of(context).push(
                   CupertinoPageRoute(
                     builder: (BuildContext context) {
@@ -77,6 +78,8 @@ class _MainScreenState extends State<MainScreen> {
               leading: Icon(Icons.link),
               title: Text('Connects'),
               onTap: () {
+                Navigator.pop(context);
+
                 Navigator.of(context).push(
                   CupertinoPageRoute(
                     builder: (BuildContext context) {
@@ -90,6 +93,8 @@ class _MainScreenState extends State<MainScreen> {
               leading: Icon(Icons.event),
               title: Text('My Events'),
               onTap: () {
+                Navigator.pop(context);
+
                 Navigator.of(context).push(
                   CupertinoPageRoute(
                     builder: (BuildContext context) {
@@ -103,6 +108,8 @@ class _MainScreenState extends State<MainScreen> {
               leading: Icon(Icons.group),
               title: Text('My Communities'),
               onTap: () {
+                Navigator.pop(context);
+
                 Navigator.of(context)
                     .push(CupertinoPageRoute(builder: (BuildContext context) {
                   return MyCommunities("1");
@@ -113,6 +120,8 @@ class _MainScreenState extends State<MainScreen> {
               leading: Icon(Icons.card_travel),
               title: Text('My Jobs'),
               onTap: () {
+                Navigator.pop(context);
+
                 Navigator.of(context).push(
                   CupertinoPageRoute(
                     builder: (BuildContext context) {

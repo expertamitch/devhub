@@ -15,9 +15,70 @@ List<Technology> technologyList = [
   Technology(4, "Kotlin"),
 ];
 
+List applyEventQuestions = [
+  {"type": "TEXT", "question": "Why are you applying?"},
+  {"type": "TEXT", "question": "How much can you spend?"},
+  {
+    "type": "SINGLE_CHOICE",
+    "question": "Choose 1",
+    "answer": ["ANSWER1", "ANSWER2", "ANSWER3"],
+    "choice": 0
+  },
+  {
+    "type": "SINGLE_CHOICE",
+    "question": "Choose 1",
+    "answer": ["ANSWER1", "ANSWER2", "ANSWER3"],
+    "choice": 0
+  },
+];
+
+List applyJobQuestions = [
+  {"type": "TEXT", "question": "Why are you applying?"},
+  {"type": "TEXT", "question": "How much can you spend?"},
+  {
+    "type": "SINGLE_CHOICE",
+    "question": "Choose 1",
+    "answer": ["ANSWER1", "ANSWER2", "ANSWER3"],
+    "choice": 0
+  },
+  {
+    "type": "SINGLE_CHOICE",
+    "question": "Choose 1",
+    "answer": ["ANSWER1", "ANSWER2", "ANSWER3"],
+    "choice": 0
+  },
+  {
+    "type": "MULTIPLE_CHOICE",
+    "question": "Choose 1",
+    "answer": [
+      {"name": "ANSWER1", "checked": false},
+      {"name": "ANSWER1", "checked": false},
+      {"name": "ANSWER1", "checked": false}
+    ],
+  },
+];
+
+Map contactInfo = {
+  "name": "Mark",
+  "job": [
+    {"name": "Founder and CEO", "location": "Exselcior IT"},
+    {"name": "Works", "location": "Exselcior IT"},
+  ],
+  "study": [
+    {"name": "Bca", "location": "DAV College"},
+    {"name": "Mca", "location": "DAV College"},
+  ],
+  "address": {"state_and_city": "Colombo", "location": "Sri Lanka"},
+  "desc": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+      "\nLorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an"
+      "\nunknown printer took a galley of type and scrambled it to make a type specimen book. It"
+      "\nhas survived not only five centuries, but also the leap into electronic typesetting, remaining"
+      "\nessentially unchanged. It was popularised"
+};
 List jobsDetails = [
   {
     "name": "Associate Software Engineer Java",
+    "education": "Bca",
     "img": "assets/1.jpeg",
     "time": "1 day ago",
     "location": "Colombo, Sri Lanka",
@@ -51,6 +112,7 @@ List jobsDetails = [
   {
     "name": "Senior Software Engineer",
     "img": "assets/2.jpeg",
+    "education": "Mca",
     "time": r"1 day ago",
     "technologies": [
       "Java",
@@ -82,6 +144,7 @@ List jobsDetails = [
   {
     "name": "Tech Lead",
     "img": "assets/3.jpeg",
+    "education": "PGDCA",
     "time": r"1 week ago",
     "location": "Paris, France",
     "technologies": [
@@ -113,6 +176,7 @@ List jobsDetails = [
   {
     "name": "UI/UX Engineer",
     "img": "assets/4.jpeg",
+    "education": "Bca",
     "time": r"1 week ago",
     "location": "Colombo, Sri lanka",
     "companyname": "DynamicTech",
@@ -144,7 +208,8 @@ List jobsDetails = [
   {
     "name": "Intern Quality Engineer",
     "img": "assets/5.jpeg",
-    "time": r"2 weeks ago",
+    "time": "2 weeks ago",
+    "education": "Bca",
     "location": "Colombo, Sri Lanka",
     "companyname": "DynamicTech",
     "technologies": [
@@ -295,6 +360,8 @@ List events = [
     "img": "assets/ggl.jpg",
     "time": "From 03:30 p.m to 5:30 p.m",
     "date": "23 December 2019",
+    "schedule_time": "4:00PM - 5:00PM",
+    "activity_name": "Registration",
     "applied": random.nextBool(),
     "approved": random.nextBool(),
     "location": "SLIIT Colombo, Sri Lanka",
@@ -312,6 +379,8 @@ List events = [
     "name": "Angular 2 Event",
     "img": "assets/anglr2.png",
     "time": "From 03:30 p.m to 5:30 p.m",
+    "schedule_time": "5:10PM - 6:00PM",
+    "activity_name": "Welcome Address",
     "date": "23 October 2019",
     "location": "Shangri La Colombo, Sri Lanka",
     "details": "Pellentesque in ipsum id orci porta dapibus."
@@ -328,6 +397,8 @@ List events = [
     "name": "Flutter Sri Lanka 2019",
     "img": "assets/Fluttercmb.png",
     "time": "From 03:30 p.m to 5:30 p.m",
+    "schedule_time": "6:00PM - 6:15PM",
+    "activity_name": "Presentation on IO",
     "date": "3 November 2019",
     "location": "Hilton Ballroom Colombo, Sri Lanka",
     "details": "Pellentesque in ipsum id orci porta dapibus. "
@@ -345,6 +416,8 @@ List events = [
     "img": "assets/aws.jpg",
     "time": "From 03:30 p.m to 5:30 p.m",
     "date": "30 October 2019",
+    "schedule_time": "7:00PM - 7:15PM",
+    "activity_name": "Gala Dinner",
     "location": "BMICH Colombo, Sri Lanka",
     "details": "Pellentesque in ipsum id orci porta dapibus. "
         "Nulla porttitor accumsan tincidunt. Donec rutrum "
@@ -356,6 +429,26 @@ List events = [
         "\nCurabitur arcu erat, accumsan id imperdiet et, porttitor at sem. "
         "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.",
   },
+  {
+    "name": "Google I/O 2019",
+    "img": "assets/ggl.jpg",
+    "time": "From 03:30 p.m to 5:30 p.m",
+    "date": "23 December 2019",
+    "schedule_time": "4:00PM - 5:00PM",
+    "activity_name": "Registration",
+    "applied": random.nextBool(),
+    "approved": random.nextBool(),
+    "location": "SLIIT Colombo, Sri Lanka",
+    "details": "Pellentesque in ipsum id orci porta dapibus. "
+        "Nulla porttitor accumsan tincidunt. Donec rutrum "
+        "congue leo eget malesuada. "
+        "\n\nPraesent sapien massa, convallis a pellentesque "
+        "nec, egestas non nisi. Donec rutrum congue leo eget malesuada. "
+        "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. "
+        "Sed porttitor lectus nibh. Donec sollicitudin molestie malesuada. "
+        "\nCurabitur arcu erat, accumsan id imperdiet et, porttitor at sem. "
+        "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.",
+  }
 ];
 
 List communities = [

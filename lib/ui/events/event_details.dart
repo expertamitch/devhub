@@ -15,6 +15,10 @@ class EventDetails extends StatefulWidget {
 
 class _EventDetailsState extends State<EventDetails> {
   EventDetailsBloc _bloc = EventDetailsBloc();
+  bool _seeMoreSpeakersExpanded = false;
+
+  bool _seeMoreScheduleExpanded = false;
+  int scheduleLength = 0;
 
   @override
   void dispose() {
@@ -80,9 +84,10 @@ class _EventDetailsState extends State<EventDetails> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
+                                width: MediaQuery.of(context).size.width * 0.5,
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "${snapshot.data["name"]}asdasd",
+                                  "${snapshot.data["name"]}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 20,
@@ -253,17 +258,40 @@ class _EventDetailsState extends State<EventDetails> {
                   )
                 ]),
                 SizedBox(height: 10.0),
-                Stepper(
-                  physics: NeverScrollableScrollPhysics(),
-                  steps: getScheduleSteps(),
-                  type: StepperType.vertical,
-                  controlsBuilder: (BuildContext context,
-                          {VoidCallback onStepContinue,
-                          VoidCallback onStepCancel}) =>
-                      Container(
-                    height: 0,
-                  ),
-                ),
+//                Stepper(
+//                  physics: NeverScrollableScrollPhysics(),
+//                  steps: getScheduleSteps(),
+//                  type: StepperType.vertical,
+//                  controlsBuilder: (BuildContext context,
+//                          {VoidCallback onStepContinue,
+//                          VoidCallback onStepCancel}) =>
+//                      Container(
+//                    height: 0,
+//                  ),
+//                ),
+//                events.length > 3
+//                    ? Container(
+//                        margin:
+//                            const EdgeInsets.only(left: 8, bottom: 8, top: 4),
+//                        child: InkWell(
+//                          onTap: () {
+//                            setState(() {
+//                              _seeMoreScheduleExpanded =
+//                                  !_seeMoreScheduleExpanded;
+//                            });
+//                          },
+//                          child: Text(
+//                            _seeMoreScheduleExpanded ? "See less" : "See more",
+//                            style: TextStyle(
+//                                fontWeight: FontWeight.bold,
+//                                fontSize: 14,
+//                                color: Colors.blue),
+//                          ),
+//                        ),
+//                      )
+//                    : Container(),
+
+                getScheduleSteps(),
                 Divider(
                   height: 40,
                   color: Colors.grey.shade200,
@@ -357,46 +385,66 @@ class _EventDetailsState extends State<EventDetails> {
     );
   }
 
-  List<Step> getScheduleSteps() {
-    List<Step> scheduleSteps = [
-      Step(
-          title: Text("4:00PM-5:00PM"),
-          subtitle: Text("Registeration"),
-          isActive: true,
-          content: SizedBox(
-            height: 0,
-          )),
-      Step(
-          title: Text("5:00PM-5:15PM"),
-          subtitle: Text("Welcome Address"),
-          isActive: true,
-          content: SizedBox(
-            height: 0,
-          )),
-      Step(
-          title: Text("5:10PM-7:00PM"),
-          subtitle: Text("Presentation on IO"),
-          isActive: true,
-          content: SizedBox(
-            height: 0,
-          )),
-      Step(
-          title: Text("7:00PM-8:00PM"),
-          subtitle: Text("Award Distribution"),
-          isActive: true,
-          content: SizedBox(
-            height: 0,
-          )),
-      Step(
-          title: Text("8:00PM-9:00PM"),
-          subtitle: Text("Gala Dinner"),
-          isActive: true,
-          content: SizedBox(
-            height: 0,
-          )),
-    ];
-    return scheduleSteps;
-  }
+//  List<Step> getScheduleSteps() {
+//    scheduleLength = events.length > 3
+//        ? _seeMoreScheduleExpanded ? events.length : 3
+//        : events.length;
+//
+//    List<Step> scheduleSteps = [];
+//
+//    for (int i = 0; i < scheduleLength; i++) {
+//      Map place = events.reversed.toList()[i];
+//
+//      scheduleSteps.add(
+//        Step(
+//            title: Text(place["schedule_time"]),
+//            subtitle: Text(place["activity_name"]),
+//            isActive: true,
+//            content: SizedBox(
+//              height: 0,
+//            )),
+//      );
+//    }
+//
+////    scheduleSteps = [
+////      Step(
+////          title: Text("4:00PM-5:00PM"),
+////          subtitle: Text("Registeration"),
+////          isActive: true,
+////          content: SizedBox(
+////            height: 0,
+////          )),
+////      Step(
+////          title: Text("5:00PM-5:15PM"),
+////          subtitle: Text("Welcome Address"),
+////          isActive: true,
+////          content: SizedBox(
+////            height: 0,
+////          )),
+////      Step(
+////          title: Text("5:10PM-7:00PM"),
+////          subtitle: Text("Presentation on IO"),
+////          isActive: true,
+////          content: SizedBox(
+////            height: 0,
+////          )),
+////      Step(
+////          title: Text("7:00PM-8:00PM"),
+////          subtitle: Text("Award Distribution"),
+////          isActive: true,
+////          content: SizedBox(
+////            height: 0,
+////          )),
+////      Step(
+////          title: Text("8:00PM-9:00PM"),
+////          subtitle: Text("Gala Dinner"),
+////          isActive: true,
+////          content: SizedBox(
+////            height: 0,
+////          )),
+////    ];
+//    return scheduleSteps;
+//  }
 
   applyEvent() {
     Navigator.of(context).push(
@@ -407,135 +455,299 @@ class _EventDetailsState extends State<EventDetails> {
       ),
     );
   }
-}
 
-getPartners() {
-  return Container(
-    height: 120,
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
+  getPartners() {
+    return Container(
+      height: 120,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        primary: false,
+        shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
+        itemCount: events.length,
+        itemBuilder: (BuildContext context, int index) {
+          Map place = events.reversed.toList()[index];
+          return InkWell(
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(right: 8, left: 8, top: 4, bottom: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.asset(
+                      "${place["img"]}",
+                      height: 80,
+                      width: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    "${place["name"]}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                    maxLines: 1,
+                    textAlign: TextAlign.left,
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    "${place["name"]}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12,
+                    ),
+                    maxLines: 1,
+                    textAlign: TextAlign.left,
+                  )
+                ],
+              ),
+            ),
+            onTap: () {
+              //todo apply tap
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  getSpeakers() {
+    var length = events.length > 4
+        ? _seeMoreSpeakersExpanded ? events.length : 4
+        : events.length;
+
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
       primary: false,
       shrinkWrap: true,
       physics: ClampingScrollPhysics(),
-      itemCount: events.length,
+      itemCount: length,
       itemBuilder: (BuildContext context, int index) {
         Map place = events.reversed.toList()[index];
         return InkWell(
           child: Padding(
             padding:
                 const EdgeInsets.only(right: 8, left: 8, top: 4, bottom: 4),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.asset(
-                    "${place["img"]}",
-                    height: 80,
-                    width: 120,
-                    fit: BoxFit.cover,
+            child: Container(
+              height: 90,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.asset(
+                      "${place["img"]}",
+                      height: 80,
+                      width: 80,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                SizedBox(width: 8),
-                Text(
-                  "${place["name"]}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                  maxLines: 1,
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(width: 4),
-                Text(
-                  "${place["name"]}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12,
-                  ),
-                  maxLines: 1,
-                  textAlign: TextAlign.left,
-                )
-              ],
+                  SizedBox(width: 4),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        child: Text(
+                          "${place["name"]} ",
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        child: Text(
+                          "${place["name"]} ",
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        child: Text(
+                          "${place["name"]} ",
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      length - 1 == index && events.length > 4
+                          ? Container(
+                              margin: const EdgeInsets.only(
+                                  left: 8, bottom: 8, top: 4),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _seeMoreSpeakersExpanded =
+                                        !_seeMoreSpeakersExpanded;
+                                  });
+                                },
+                                child: Text(
+                                  jobsDetails.length > 4
+                                      ? _seeMoreSpeakersExpanded
+                                          ? "See less"
+                                          : "See more"
+                                      : "",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      color: Colors.blue),
+                                ),
+                              ),
+                            )
+                          : Container(),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           onTap: () {
-            //todo apply tap
+            //todo apply on tap
           },
         );
       },
-    ),
-  );
-}
+    );
+  }
 
-getSpeakers() {
-  return ListView.builder(
-    scrollDirection: Axis.vertical,
-    primary: false,
-    shrinkWrap: true,
-    physics: ClampingScrollPhysics(),
-    itemCount: events.length,
-    itemBuilder: (BuildContext context, int index) {
-      Map place = events.reversed.toList()[index];
-      return InkWell(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 8, left: 8, top: 4, bottom: 4),
-          child: Container(
-            height: 90,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+  getScheduleSteps() {
+    var length = events.length > 2
+        ? _seeMoreScheduleExpanded ? events.length : 4
+        : events.length;
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          primary: false,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: length,
+          itemBuilder: (BuildContext context, int index) {
+            Map place = events.reversed.toList()[index];
+            return InkWell(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: Image.asset(
-                    "${place["img"]}",
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(width: 4),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Row(
                   children: <Widget>[
-                    Text(
-                      "${place["name"]}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: ShapeDecoration(
+                            shape: CircleBorder(), color: Colors.blue),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Center(
+                              child: Text(
+                            (index + 1).toString(),
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          )),
+                        ),
                       ),
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
                     ),
-                    Text(
-                      "${place["name"]}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
+//                    ClipRRect(
+//                      borderRadius: BorderRadius.circular(10),
+//                      child: Image.asset(
+//                        "${place["img"]}",
+//                        height: 80,
+//                        width: 120,
+//                        fit: BoxFit.contain,
+//                      ),
+//                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "${place["schedule_time"]}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                              maxLines: 2,
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          SizedBox(height: 3),
+                          Text(
+                            "${place["activity_name"]}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                            maxLines: 1,
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
                       ),
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "${place["name"]}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
                     ),
                   ],
-                )
+                ),
+                length - 1 != index
+                    ? Container(
+                        margin:
+                            const EdgeInsets.only(left: 22, top: 4, bottom: 4),
+                        alignment: Alignment.centerLeft,
+                        height: 40,
+                        width: 1,
+                        color: Colors.grey[500],
+                      )
+                    : Container(
+                        margin: const EdgeInsets.only(left: 8, bottom: 8),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _seeMoreScheduleExpanded =
+                                  !_seeMoreScheduleExpanded;
+                            });
+                          },
+                          child: Text(
+                            events.length > 4
+                                ? _seeMoreScheduleExpanded
+                                    ? "See less"
+                                    : "See more"
+                                : "",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
               ],
-            ),
-          ),
-        ),
-        onTap: () {
-          //todo apply on tap
-        },
-      );
-    },
-  );
+            ));
+          },
+        ));
+  }
 }
