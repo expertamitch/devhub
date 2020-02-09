@@ -20,6 +20,7 @@ class EditProfileContactDetailsState extends State<EditProfileContactDetails> {
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _contactFocus = FocusNode();
   final FocusNode _nicNumFocus = FocusNode();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -33,125 +34,147 @@ class EditProfileContactDetailsState extends State<EditProfileContactDetails> {
         appBar: AppBar(title: Text("Contact Details"), centerTitle: true),
         body: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
-          child: ListView(physics: ScrollPhysics(), children: <Widget>[
-            TextFormField(
-              keyboardType: TextInputType.url,
-              textInputAction: TextInputAction.next,
-              focusNode: _linkedInFocus,
-              onFieldSubmitted: (term) {
-                CommonUtils.fieldFocusChange(
-                    context, _linkedInFocus, _gitHubFocus);
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "LinkedIn Profile Url",
-                  labelText: "LinkedIn Profile"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.url,
-              textInputAction: TextInputAction.next,
-              focusNode: _gitHubFocus,
-              onFieldSubmitted: (term) {
-                CommonUtils.fieldFocusChange(
-                    context, _gitHubFocus, _stackFocus);
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "GitHub Profile Url",
-                  labelText: "GitHub Profile"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.url,
-              textInputAction: TextInputAction.next,
-              focusNode: _stackFocus,
-              onFieldSubmitted: (term) {
-                CommonUtils.fieldFocusChange(context, _stackFocus, _emailFocus);
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "StackOverFlow Profile Url",
-                  labelText: "StackOverFlow Profile"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              focusNode: _emailFocus,
-              onFieldSubmitted: (term) {
-                CommonUtils.fieldFocusChange(
-                    context, _emailFocus, _contactFocus);
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Email address",
-                  labelText: "Email address"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.next,
-              focusNode: _contactFocus,
-              onFieldSubmitted: (term) {
-                CommonUtils.fieldFocusChange(
-                    context, _contactFocus, _nicNumFocus);
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Contact Number",
-                  labelText: "Contact Number"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
-              focusNode: _nicNumFocus,
-              onFieldSubmitted: (term) {
-                _nicNumFocus.unfocus();
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Add your NIC or Passport number",
-                  labelText: "NIC/Passport number"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(children: <Widget>[
-              Expanded(
-                  child: RaisedButton(
-                shape: StadiumBorder(),
-                color: Constants.buttonColor,
-                onPressed: cancel,
-                textColor: Colors.white,
-                child: Text(
-                  "Previous",
-                ),
-              )),
-              SizedBox(width: 20),
-              Expanded(
-                  child: RaisedButton(
-                shape: StadiumBorder(),
-                color: Constants.buttonColor,
-                onPressed: next,
-                textColor: Colors.white,
-                child: Text(
-                  "Next",
-                ),
-              )),
+          child: Form(
+            key: _formKey,
+            child: ListView(physics: ScrollPhysics(), children: <Widget>[
+              TextFormField(
+                keyboardType: TextInputType.url,
+                textInputAction: TextInputAction.next,
+                focusNode: _linkedInFocus,
+                onFieldSubmitted: (term) {
+                  CommonUtils.fieldFocusChange(
+                      context, _linkedInFocus, _gitHubFocus);
+                },
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "LinkedIn Profile Url",
+                    labelText: "LinkedIn Profile"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.url,
+                textInputAction: TextInputAction.next,
+                focusNode: _gitHubFocus,
+                onFieldSubmitted: (term) {
+                  CommonUtils.fieldFocusChange(
+                      context, _gitHubFocus, _stackFocus);
+                },
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "GitHub Profile Url",
+                    labelText: "GitHub Profile"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.url,
+                textInputAction: TextInputAction.next,
+                focusNode: _stackFocus,
+                onFieldSubmitted: (term) {
+                  CommonUtils.fieldFocusChange(
+                      context, _stackFocus, _emailFocus);
+                },
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "StackOverFlow Profile Url",
+                    labelText: "StackOverFlow Profile"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value.trim().isEmpty) {
+                    return 'Should not be empty';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                focusNode: _emailFocus,
+                onFieldSubmitted: (term) {
+                  CommonUtils.fieldFocusChange(
+                      context, _emailFocus, _contactFocus);
+                },
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "Email address",
+                    labelText: "Email address"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value.trim().isEmpty) {
+                    return 'Should not be empty';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.phone,
+                textInputAction: TextInputAction.next,
+                focusNode: _contactFocus,
+                onFieldSubmitted: (term) {
+                  CommonUtils.fieldFocusChange(
+                      context, _contactFocus, _nicNumFocus);
+                },
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "Contact Number",
+                    labelText: "Contact Number"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value.trim().isEmpty) {
+                    return 'Should not be empty';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+                focusNode: _nicNumFocus,
+                onFieldSubmitted: (term) {
+                  _nicNumFocus.unfocus();
+                },
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "Add your NIC or Passport number",
+                    labelText: "NIC/Passport number"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(children: <Widget>[
+                Expanded(
+                    child: RaisedButton(
+                  shape: StadiumBorder(),
+                  color: Constants.buttonColor,
+                  onPressed: cancel,
+                  textColor: Colors.white,
+                  child: Text(
+                    "Previous",
+                  ),
+                )),
+                SizedBox(width: 20),
+                Expanded(
+                    child: RaisedButton(
+                  shape: StadiumBorder(),
+                  color: Constants.buttonColor,
+                  onPressed: next,
+                  textColor: Colors.white,
+                  child: Text(
+                    "Next",
+                  ),
+                )),
+              ]),
             ]),
-          ]),
+          ),
         ));
   }
 
@@ -160,12 +183,13 @@ class EditProfileContactDetailsState extends State<EditProfileContactDetails> {
   }
 
   void next() {
-    Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (BuildContext context) {
-          return MainScreen();
-        },
-      ),
-    );
+    if (!_formKey.currentState.validate())
+      Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (BuildContext context) {
+            return MainScreen();
+          },
+        ),
+      );
   }
 }

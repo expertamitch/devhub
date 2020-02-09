@@ -29,6 +29,8 @@ class EditProfileProfessionalDetailsState
   ProfileProfessionDetailsBloc _bloc = ProfileProfessionDetailsBloc();
 
 //  ProfileBasicDetailsBloc _bloc;
+
+  final _formKey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
   var starYear = TextEditingController();
   var endYear = TextEditingController();
@@ -203,6 +205,8 @@ class EditProfileProfessionalDetailsState
   }
 
   _buildRowJob(int index) {
+    TextEditingController _controller = TextEditingController();
+
     return Column(
       children: <Widget>[
         index > 0
@@ -220,6 +224,7 @@ class EditProfileProfessionalDetailsState
               child: Column(
                 children: <Widget>[
                   TextFormField(
+                    controller: _controller,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
@@ -231,6 +236,13 @@ class EditProfileProfessionalDetailsState
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (value) {
+                      if (value.trim().isEmpty &&
+                          _controller.text.trim().isNotEmpty) {
+                        return 'Should not be empty';
+                      }
+                      return null;
+                    },
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
@@ -245,6 +257,13 @@ class EditProfileProfessionalDetailsState
                     children: <Widget>[
                       Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value.trim().isEmpty &&
+                                _controller.text.trim().isNotEmpty) {
+                              return 'Should not be empty';
+                            }
+                            return null;
+                          },
                           controller: startMonth,
                           onTap: () => _starMonth(),
                           keyboardType: TextInputType.text,
@@ -261,6 +280,13 @@ class EditProfileProfessionalDetailsState
                       ),
                       Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value.trim().isEmpty &&
+                                _controller.text.trim().isNotEmpty) {
+                              return 'Should not be empty';
+                            }
+                            return null;
+                          },
                           onTap: () => _selectDate(),
                           controller: starYear,
                           keyboardType: TextInputType.text,
@@ -281,6 +307,13 @@ class EditProfileProfessionalDetailsState
                     children: <Widget>[
                       Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value.trim().isEmpty &&
+                                _controller.text.trim().isNotEmpty) {
+                              return 'Should not be empty';
+                            }
+                            return null;
+                          },
                           controller: endMonth,
                           onTap: () => _endMonth(),
                           keyboardType: TextInputType.text,
@@ -297,6 +330,13 @@ class EditProfileProfessionalDetailsState
                       ),
                       Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value.trim().isEmpty &&
+                                _controller.text.trim().isNotEmpty) {
+                              return 'Should not be empty';
+                            }
+                            return null;
+                          },
                           controller: endYear,
                           onTap: () => _endYear(),
                           keyboardType: TextInputType.text,
@@ -389,60 +429,62 @@ class EditProfileProfessionalDetailsState
         appBar: AppBar(title: Text("Professional Details"), centerTitle: true),
         body: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
-          child: ListView(physics: ScrollPhysics(), children: <Widget>[
-            ListView.builder(
-                scrollDirection: Axis.vertical,
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: this._jobList.length,
-                itemBuilder: (context, index) => this._buildRowJob(index)),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: <Widget>[
-                Spacer(),
-                RaisedButton(
-                  child: Text("Add another"),
-                  onPressed: _addItemJob,
-                  color: Constants.buttonColor,
-                  textColor: Colors.white,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Technologies",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ListView.builder(
-                scrollDirection: Axis.vertical,
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: this._technologiesList.length,
-                itemBuilder: (context, index) =>
-                    this._buildRowTechnology(index)),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: <Widget>[
-                Spacer(),
-                RaisedButton(
-                  child: Text("Add another"),
-                  onPressed: _addItemTechnology,
-                  color: Constants.buttonColor,
-                  textColor: Colors.white,
-                ),
-              ],
-            ),
+          child: Form(
+            key: _formKey,
+            child: ListView(physics: ScrollPhysics(), children: <Widget>[
+              ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: this._jobList.length,
+                  itemBuilder: (context, index) => this._buildRowJob(index)),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  RaisedButton(
+                    child: Text("Add another"),
+                    onPressed: _addItemJob,
+                    color: Constants.buttonColor,
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Technologies",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: this._technologiesList.length,
+                  itemBuilder: (context, index) =>
+                      this._buildRowTechnology(index)),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  RaisedButton(
+                    child: Text("Add another"),
+                    onPressed: _addItemTechnology,
+                    color: Constants.buttonColor,
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
 
-            /*   StreamBuilder<List<Technology>>(
+              /*   StreamBuilder<List<Technology>>(
                 stream: _bloc.technologyListStream,
                 builder: (context, AsyncSnapshot<List<Technology>> snapshot) {
                   return ChipsInput(
@@ -492,35 +534,36 @@ class EditProfileProfessionalDetailsState
                     },
                   );
                 }),*/
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                    child: RaisedButton(
-                  shape: StadiumBorder(),
-                  color: Constants.buttonColor,
-                  onPressed: cancel,
-                  textColor: Colors.white,
-                  child: Text(
-                    "Previous",
-                  ),
-                )),
-                SizedBox(width: 20),
-                Expanded(
-                    child: RaisedButton(
-                  shape: StadiumBorder(),
-                  color: Constants.buttonColor,
-                  onPressed: next,
-                  textColor: Colors.white,
-                  child: Text(
-                    "Next",
-                  ),
-                )),
-              ],
-            )
-          ]),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: RaisedButton(
+                    shape: StadiumBorder(),
+                    color: Constants.buttonColor,
+                    onPressed: cancel,
+                    textColor: Colors.white,
+                    child: Text(
+                      "Previous",
+                    ),
+                  )),
+                  SizedBox(width: 20),
+                  Expanded(
+                      child: RaisedButton(
+                    shape: StadiumBorder(),
+                    color: Constants.buttonColor,
+                    onPressed: next,
+                    textColor: Colors.white,
+                    child: Text(
+                      "Next",
+                    ),
+                  )),
+                ],
+              )
+            ]),
+          ),
         ));
   }
 
@@ -529,12 +572,13 @@ class EditProfileProfessionalDetailsState
   }
 
   void next() {
-    Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (BuildContext context) {
-          return EditProfileEducationDetails();
-        },
-      ),
-    );
+    if (!_formKey.currentState.validate())
+      Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (BuildContext context) {
+            return EditProfileEducationDetails();
+          },
+        ),
+      );
   }
 }

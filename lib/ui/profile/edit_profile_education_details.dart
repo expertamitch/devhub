@@ -21,13 +21,12 @@ class EditProfileEducationDetailsState
   ProfileProfessionDetailsBloc _bloc = ProfileProfessionDetailsBloc();
 //  ProfileBasicDetailsBloc _bloc;
 
-
   final FocusNode _jobTitleFocus = FocusNode();
   final FocusNode _companyFocus = FocusNode();
   final FocusNode _educationFocus = FocusNode();
   final FocusNode _collegeFocus = FocusNode();
   final FocusNode _aboutFocus = FocusNode();
-
+  final _formKey = GlobalKey<FormState>();
   final List<String> _jobList = <String>[""];
   final List<String> _technologiesList = <String>[""];
 
@@ -44,22 +43,25 @@ class EditProfileEducationDetailsState
   }
 
   _buildRowJob(int index) {
+    TextEditingController _controller = TextEditingController();
     return Column(
       children: <Widget>[
-        index>0?Divider(
-          height: 30,
-          color: Colors.grey.shade200,
-          thickness: 1,
-        ):Container(),
+        index > 0
+            ? Divider(
+                height: 30,
+                color: Colors.grey.shade200,
+                thickness: 1,
+              )
+            : Container(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: <Widget>[
             Expanded(
               child: Column(
                 children: <Widget>[
                   TextFormField(
+                    controller: _controller,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
@@ -71,6 +73,13 @@ class EditProfileEducationDetailsState
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (value) {
+                      if (value.trim().isEmpty &&
+                          _controller.text.trim().isNotEmpty) {
+                        return 'Should not be empty';
+                      }
+                      return null;
+                    },
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
@@ -85,6 +94,13 @@ class EditProfileEducationDetailsState
                     children: <Widget>[
                       Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value.trim().isEmpty &&
+                                _controller.text.trim().isNotEmpty) {
+                              return 'Should not be empty';
+                            }
+                            return null;
+                          },
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
@@ -98,6 +114,13 @@ class EditProfileEducationDetailsState
                       ),
                       Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value.trim().isEmpty &&
+                                _controller.text.trim().isNotEmpty) {
+                              return 'Should not be empty';
+                            }
+                            return null;
+                          },
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
@@ -112,18 +135,19 @@ class EditProfileEducationDetailsState
               ),
             ),
             IconButton(
-                icon: Icon(Icons.close,color: Colors.grey,size: 18,),
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.grey,
+                  size: 18,
+                ),
                 onPressed: () {
                   _removeItemJob(index);
                 })
           ],
         ),
-
       ],
     );
   }
-
-
 
   _addItemTechnology() {
     setState(() {
@@ -137,20 +161,19 @@ class EditProfileEducationDetailsState
     });
   }
 
-
-
   _buildRowTechnology(int index) {
     return Column(
       children: <Widget>[
-        index>0?Divider(
-          height: 30,
-          color: Colors.grey.shade200,
-          thickness: 1,
-        ):Container(),
+        index > 0
+            ? Divider(
+                height: 30,
+                color: Colors.grey.shade200,
+                thickness: 1,
+              )
+            : Container(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: <Widget>[
             Expanded(
               child: Column(
@@ -167,13 +190,16 @@ class EditProfileEducationDetailsState
               ),
             ),
             IconButton(
-                icon: Icon(Icons.close,color: Colors.grey,size: 18,),
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.grey,
+                  size: 18,
+                ),
                 onPressed: () {
                   _removeItemTechnology(index);
                 })
           ],
         ),
-
       ],
     );
   }
@@ -184,59 +210,62 @@ class EditProfileEducationDetailsState
         appBar: AppBar(title: Text("Education Details"), centerTitle: true),
         body: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
-          child: ListView(physics: ScrollPhysics(), children: <Widget>[
-            ListView.builder(
-                scrollDirection: Axis.vertical,
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: this._jobList.length,
-                itemBuilder: (context, index) => this._buildRowJob(index)),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: <Widget>[
-                Spacer(),
-                RaisedButton(
-                  child: Text("Add another"),
-                  onPressed: _addItemJob,
-                  color: Constants.buttonColor,
-                  textColor: Colors.white,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Training/Specialization",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ListView.builder(
-                scrollDirection: Axis.vertical,
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: this._technologiesList.length,
-                itemBuilder: (context, index) => this._buildRowTechnology(index)),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: <Widget>[
-                Spacer(),
-                RaisedButton(
-                  child: Text("Add another"),
-                  onPressed: _addItemTechnology,
-                  color: Constants.buttonColor,
-                  textColor: Colors.white,
-                ),
-              ],
-            ),
+          child: Form(
+            key: _formKey,
+            child: ListView(physics: ScrollPhysics(), children: <Widget>[
+              ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: this._jobList.length,
+                  itemBuilder: (context, index) => this._buildRowJob(index)),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  RaisedButton(
+                    child: Text("Add another"),
+                    onPressed: _addItemJob,
+                    color: Constants.buttonColor,
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Training/Specialization",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: this._technologiesList.length,
+                  itemBuilder: (context, index) =>
+                      this._buildRowTechnology(index)),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  RaisedButton(
+                    child: Text("Add another"),
+                    onPressed: _addItemTechnology,
+                    color: Constants.buttonColor,
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
 
-            /*   StreamBuilder<List<Technology>>(
+              /*   StreamBuilder<List<Technology>>(
                 stream: _bloc.technologyListStream,
                 builder: (context, AsyncSnapshot<List<Technology>> snapshot) {
                   return ChipsInput(
@@ -286,35 +315,36 @@ class EditProfileEducationDetailsState
                     },
                   );
                 }),*/
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                    child: RaisedButton(
-                      shape: StadiumBorder(),
-                      color: Constants.buttonColor,
-                      onPressed: cancel,
-                      textColor: Colors.white,
-                      child: Text(
-                        "Previous",
-                      ),
-                    )),
-                SizedBox(width: 20),
-                Expanded(
-                    child: RaisedButton(
-                      shape: StadiumBorder(),
-                      color: Constants.buttonColor,
-                      onPressed: next,
-                      textColor: Colors.white,
-                      child: Text(
-                        "Next",
-                      ),
-                    )),
-              ],
-            )
-          ]),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: RaisedButton(
+                    shape: StadiumBorder(),
+                    color: Constants.buttonColor,
+                    onPressed: cancel,
+                    textColor: Colors.white,
+                    child: Text(
+                      "Previous",
+                    ),
+                  )),
+                  SizedBox(width: 20),
+                  Expanded(
+                      child: RaisedButton(
+                    shape: StadiumBorder(),
+                    color: Constants.buttonColor,
+                    onPressed: next,
+                    textColor: Colors.white,
+                    child: Text(
+                      "Next",
+                    ),
+                  )),
+                ],
+              )
+            ]),
+          ),
         ));
   }
 
@@ -323,12 +353,13 @@ class EditProfileEducationDetailsState
   }
 
   void next() {
-    Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (BuildContext context) {
-          return EditProfileContactDetails();
-        },
-      ),
-    );
+    if (!_formKey.currentState.validate())
+      Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (BuildContext context) {
+            return EditProfileContactDetails();
+          },
+        ),
+      );
   }
 }
